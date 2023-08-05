@@ -4,12 +4,14 @@
 
 @layer base {
 	:root {
-		--primary: #000000;
-		--secondary: #808080;
+		--primary: #ffffff;
+		--secondary: #ffffff;
+		--tertiary: #ffffff;
 		--background: #ffffff;
 		--primary-text: #ffffff;
-		--secondary-text: #000000;
-		--background-text: #000000;
+		--secondary-text: #ffffff;
+		--tertiary-text: #ffffff;
+		--background-text: #ffffff;
 	}
 
 	body {
@@ -28,5 +30,9 @@
 
 	.button-secondary {
 		@apply button bg-[var(--secondary)] text-[var(--secondary-text)];
+	}
+
+	.button-tertiary {
+		@apply button bg-[var(--tertiary)] text-[var(--tertiary-text)];
 	}
 }
