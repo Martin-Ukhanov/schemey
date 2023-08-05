@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	:root {
+		--primary: #000000;
+		--secondary: #808080;
+		--background: #ffffff;
+		--primary-text: #ffffff;
+		--secondary-text: #000000;
+		--background-text: #000000;
+	}
+
+	body {
+		@apply bg-[var(--background)] text-[var(--background-text)] transition-colors duration-150;
+	}
+}
+
+@layer components {
+	.button {
+		@apply block p-4 active:scale-95 rounded-lg uppercase bg-gray-500 hover:brightness-75 active:brightness-75 text-black cursor-pointer transition-[transform,background-color,color,filter] duration-150;
+	}
+
+	.button-primary {
+		@apply button bg-[var(--primary)] text-[var(--primary-text)];
+	}
+
+	.button-secondary {
+		@apply button bg-[var(--secondary)] text-[var(--secondary-text)];
+	}
+}
