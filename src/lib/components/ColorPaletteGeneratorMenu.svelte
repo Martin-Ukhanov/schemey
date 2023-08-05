@@ -38,8 +38,18 @@
 	}
 
 	function pushColorPalette(): void {
+		const lockedColorsCount = lockedColors.filter((color) => color).length;
+		const newColorPalette = [...lockedColors];
+		const newColors = generateColorPalette(4 - lockedColorsCount);
+
+		for (let i = 0; i < newColorPalette.length; i++) {
+			if (!newColorPalette[i]) {
+				newColorPalette[i] = <string>newColors.shift();
+			}
+		}
+
 		colorPalettes = colorPalettes.slice(colorPaletteIndex);
-		colorPalettes = [generateColorPalette(4), ...colorPalettes];
+		colorPalettes = [<string[]>newColorPalette, ...colorPalettes];
 		colorPaletteIndex = 0;
 	}
 
@@ -52,11 +62,11 @@
 		colorPaletteIndex = colorPaletteIndex > 0 ? colorPaletteIndex - 1 : colorPaletteIndex;
 	}
 
-	function lockColor(index: number): void {
-		lockedColors[index] = colorPalette[index];
+	function toggleLockedColor(index: number): void {
+		lockedColors[index] = lockedColors[index] ? null : colorPalette[index];
 	}
 
-	const lockedColors: (string | null)[] = [];
+	const lockedColors: (string | null)[] = [null, null, null, null];
 	let colorPalettes: string[][] = [generateColorPalette(4)];
 	let colorPaletteIndex = 0;
 
@@ -109,4 +119,12 @@
 	<div class="w-8 h-8 bg-[var(--secondary)]" />
 	<div class="w-8 h-8 bg-[var(--tertiary)]" />
 	<div class="w-8 h-8 bg-[var(--background)]" />
+	<button
+		class="button"
+		on:click={() => {
+			toggleLockedColor(0);
+		}}
+	>
+		Lock Primary
+	</button>
 </menu>
