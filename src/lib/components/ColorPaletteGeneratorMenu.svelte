@@ -14,8 +14,8 @@
 		return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
 	}
 
-	function generateColorPalette(count: number): string[] {
-		return iwanthue(count, {
+	function generateColorPalette(size: number): string[] {
+		return iwanthue(size, {
 			clustering: 'force-vector',
 			colorSpace: [0, 360, 0, 100, 0, 100]
 		});
@@ -40,69 +40,84 @@
 	function undoColorPalette(): void {
 		colorPaletteIndex =
 			colorPaletteIndex < colorPalettes.length - 1 ? colorPaletteIndex + 1 : colorPaletteIndex;
+		lockedColors = new Array(colorPaletteSize).fill(null);
 	}
 
 	function redoColorPalette(): void {
 		colorPaletteIndex = colorPaletteIndex > 0 ? colorPaletteIndex - 1 : colorPaletteIndex;
+		lockedColors = new Array(colorPaletteSize).fill(null);
 	}
 
 	function toggleLockedColor(index: number): void {
 		lockedColors[index] = lockedColors[index] ? null : colorPalette[index];
 	}
 
-	const lockedColors: (string | null)[] = [null, null, null, null];
-	let colorPalettes: string[][] = [generateColorPalette(4)];
+	export let colorPaletteSize: 2 | 3 | 4 = 3;
+	let colorPalettes: string[][] = [generateColorPalette(colorPaletteSize)];
 	let colorPaletteIndex = 0;
+	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
 
 	$: colorPalette = colorPalettes[colorPaletteIndex];
 
 	$: if (browser) {
-		const root: HTMLElement | null = document.querySelector(':root');
+		const root = <HTMLElement>document.querySelector(':root');
 
-		root?.style.setProperty('--primary', colorPalette[0]);
-		root?.style.setProperty('--secondary', colorPalette[1]);
-		root?.style.setProperty('--tertiary', colorPalette[2]);
-		root?.style.setProperty('--background', colorPalette[3]);
+		const primaryColor = colorPalette[0];
+		const backgroundColor = colorPalette[1];
 
-		const primaryRgb = hexToRgb(colorPalette[0]);
-		const secondaryRgb = hexToRgb(colorPalette[1]);
-		const tertiaryRgb = hexToRgb(colorPalette[2]);
-		const backgroundRgb = hexToRgb(colorPalette[3]);
+		root?.style.setProperty('--primary', primaryColor);
+		root?.style.setProperty('--background', backgroundColor);
 
-		if (rgbLuminance(primaryRgb) <= 0.5) {
+		if (rgbLuminance(hexToRgb(primaryColor)) <= 0.5) {
 			root?.style.setProperty('--primary-text', '#ffffff');
 		} else {
 			root?.style.setProperty('--primary-text', '#000000');
 		}
 
-		if (rgbLuminance(secondaryRgb) <= 0.5) {
-			root?.style.setProperty('--secondary-text', '#ffffff');
-		} else {
-			root?.style.setProperty('--secondary-text', '#000000');
-		}
-
-		if (rgbLuminance(tertiaryRgb) <= 0.5) {
-			root?.style.setProperty('--tertiary-text', '#ffffff');
-		} else {
-			root?.style.setProperty('--tertiary-text', '#000000');
-		}
-
-		if (rgbLuminance(backgroundRgb) <= 0.5) {
+		if (rgbLuminance(hexToRgb(backgroundColor)) <= 0.5) {
 			root?.style.setProperty('--background-text', '#ffffff');
 		} else {
 			root?.style.setProperty('--background-text', '#000000');
 		}
+
+		if (colorPaletteSize >= 3) {
+			const secondaryColor = colorPalette[2];
+
+			root?.style.setProperty('--secondary', secondaryColor);
+
+			if (rgbLuminance(hexToRgb(secondaryColor)) <= 0.5) {
+				root?.style.setProperty('--secondary-text', '#ffffff');
+			} else {
+				root?.style.setProperty('--secondary-text', '#000000');
+			}
+		}
+
+		if (colorPaletteSize >= 4) {
+			const tertiaryColor = colorPalette[3];
+
+			root?.style.setProperty('--tertiary', tertiaryColor);
+
+			if (rgbLuminance(hexToRgb(tertiaryColor)) <= 0.5) {
+				root?.style.setProperty('--tertiary-text', '#ffffff');
+			} else {
+				root?.style.setProperty('--tertiary-text', '#000000');
+			}
+		}
 	}
 </script>
 
-<menu class="fixed bottom-4 left-4 right-4 p-4 flex gap-4 rounded-lg bg-gray-100">
+<menu class="fixed bottom-4 left-4 right-4 p-4 flex gap-4 rounded-lg bg-white">
 	<button class="button" on:click={pushColorPalette}>Generate</button>
 	<button class="button" on:click={undoColorPalette}>Undo</button>
 	<button class="button" on:click={redoColorPalette}>Redo</button>
 	<div class="w-8 h-8 bg-[var(--primary)]" />
-	<div class="w-8 h-8 bg-[var(--secondary)]" />
-	<div class="w-8 h-8 bg-[var(--tertiary)]" />
 	<div class="w-8 h-8 bg-[var(--background)]" />
+	{#if colorPaletteSize >= 3}
+		<div class="w-8 h-8 bg-[var(--secondary)]" />
+	{/if}
+	{#if colorPaletteSize >= 4}
+		<div class="w-8 h-8 bg-[var(--tertiary)]" />
+	{/if}
 	<button
 		class="button"
 		on:click={() => {
@@ -110,5 +125,29 @@
 		}}
 	>
 		Lock Primary
+	</button>
+	<button
+		class="button"
+		on:click={() => {
+			toggleLockedColor(2);
+		}}
+	>
+		Lock Secondary
+	</button>
+	<button
+		class="button"
+		on:click={() => {
+			toggleLockedColor(2);
+		}}
+	>
+		Lock Tertiary
+	</button>
+	<button
+		class="button"
+		on:click={() => {
+			toggleLockedColor(1);
+		}}
+	>
+		Lock Background
 	</button>
 </menu>
