@@ -17,23 +17,7 @@
 	function generateColorPalette(count: number): string[] {
 		return iwanthue(count, {
 			clustering: 'force-vector',
-			colorSpace: [0, 360, 0, 100, 0, 100],
-			colorFilter: (rgb) => {
-				lockedColors.forEach((color) => {
-					if (color) {
-						const rgb2 = hexToRgb(color);
-
-						if (
-							Math.abs(rgb[0] - rgb2[0]) + Math.abs(rgb[1] - rgb2[1]) + Math.abs(rgb[2] - rgb2[2]) <
-							50
-						) {
-							return false;
-						}
-					}
-				});
-
-				return true;
-			}
+			colorSpace: [0, 360, 0, 100, 0, 100]
 		});
 	}
 
