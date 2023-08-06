@@ -1,8 +1,8 @@
 <script lang="ts">
-	import iwanthue from 'iwanthue';
+	import iwanthue, { type RGBColor } from 'iwanthue';
 	import { browser } from '$app/environment';
 
-	function hexToRgb(hex: string): [r: number, g: number, b: number] {
+	function hexToRgb(hex: string): RGBColor {
 		const r = parseInt(hex.slice(1, 3), 16);
 		const g = parseInt(hex.slice(3, 5), 16);
 		const b = parseInt(hex.slice(5, 7), 16);
@@ -10,8 +10,8 @@
 		return [r, g, b];
 	}
 
-	function rgbLuminance(r: number, g: number, b: number): number {
-		return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+	function rgbLuminance(rgb: RGBColor): number {
+		return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
 	}
 
 	function generateColorPalette(count: number): string[] {
@@ -85,25 +85,25 @@
 		const tertiaryRgb = hexToRgb(colorPalette[2]);
 		const backgroundRgb = hexToRgb(colorPalette[3]);
 
-		if (rgbLuminance(primaryRgb[0], primaryRgb[1], primaryRgb[2]) <= 0.5) {
+		if (rgbLuminance(primaryRgb) <= 0.5) {
 			root?.style.setProperty('--primary-text', '#ffffff');
 		} else {
 			root?.style.setProperty('--primary-text', '#000000');
 		}
 
-		if (rgbLuminance(secondaryRgb[0], secondaryRgb[1], secondaryRgb[2]) <= 0.5) {
+		if (rgbLuminance(secondaryRgb) <= 0.5) {
 			root?.style.setProperty('--secondary-text', '#ffffff');
 		} else {
 			root?.style.setProperty('--secondary-text', '#000000');
 		}
 
-		if (rgbLuminance(tertiaryRgb[0], tertiaryRgb[1], tertiaryRgb[2]) <= 0.5) {
+		if (rgbLuminance(tertiaryRgb) <= 0.5) {
 			root?.style.setProperty('--tertiary-text', '#ffffff');
 		} else {
 			root?.style.setProperty('--tertiary-text', '#000000');
 		}
 
-		if (rgbLuminance(backgroundRgb[0], backgroundRgb[1], backgroundRgb[2]) <= 0.5) {
+		if (rgbLuminance(backgroundRgb) <= 0.5) {
 			root?.style.setProperty('--background-text', '#ffffff');
 		} else {
 			root?.style.setProperty('--background-text', '#000000');
