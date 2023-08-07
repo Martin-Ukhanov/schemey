@@ -58,18 +58,24 @@
 		resetLockedColors();
 	}
 
-	function resetColorPalettes(): void {
-		colorPalettes = [generateColorPalette(colorPaletteSize)];
-		colorPaletteIndex = 0;
-		resetLockedColors();
-	}
-
 	function toggleLockedColor(index: number): void {
 		lockedColors[index] = lockedColors[index] ? null : colorPalette[index];
 	}
 
 	function resetLockedColors(): void {
 		lockedColors = new Array(colorPaletteSize).fill(null);
+	}
+
+	function onChangeColorPaletteSize(): void {
+		if (colorPaletteSize < colorPalette.length) {
+			colorPalettes = [colorPalette.slice(0, colorPaletteSize)];
+		} else {
+			const newColorsCount = colorPaletteSize - colorPalette.length;
+			colorPalettes = [[...colorPalette, ...generateColorPalette(newColorsCount)]];
+		}
+
+		colorPaletteIndex = 0;
+		resetLockedColors();
 	}
 
 	$: colorPalette = colorPalettes[colorPaletteIndex];
@@ -161,7 +167,7 @@
 	>
 		Lock Background
 	</button>
-	<select class="text-black" bind:value={colorPaletteSize} on:change={resetColorPalettes}>
+	<select class="text-black" bind:value={colorPaletteSize} on:change={onChangeColorPaletteSize}>
 		<option value={2}>2</option>
 		<option value={3}>3</option>
 		<option value={4}>4</option>
