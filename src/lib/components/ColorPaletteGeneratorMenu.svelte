@@ -2,6 +2,12 @@
 	import iwanthue, { type RGBColor } from 'iwanthue';
 	import { browser } from '$app/environment';
 
+	export let colorPaletteSize: 2 | 3 | 4 | 5;
+
+	let colorPalettes: string[][] = [generateColorPalette(colorPaletteSize)];
+	let colorPaletteIndex = 0;
+	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
+
 	function hexToRgb(hex: string): RGBColor {
 		const r = parseInt(hex.slice(1, 3), 16);
 		const g = parseInt(hex.slice(3, 5), 16);
@@ -14,6 +20,12 @@
 		return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
 	}
 
+	function resetColorPalettes(): void {
+		colorPalettes = [generateColorPalette(colorPaletteSize)];
+		colorPaletteIndex = 0;
+		resetLockedColors();
+	}
+
 	function generateColorPalette(size: number): string[] {
 		return iwanthue(size, {
 			clustering: 'force-vector',
@@ -24,7 +36,7 @@
 	function pushColorPalette(): void {
 		const lockedColorsCount = lockedColors.filter((color) => color).length;
 		const newColorPalette = [...lockedColors];
-		const newColors = generateColorPalette(4 - lockedColorsCount);
+		const newColors = generateColorPalette(colorPaletteSize - lockedColorsCount);
 
 		for (let i = 0; i < newColorPalette.length; i++) {
 			if (!newColorPalette[i]) {
@@ -40,22 +52,21 @@
 	function undoColorPalette(): void {
 		colorPaletteIndex =
 			colorPaletteIndex < colorPalettes.length - 1 ? colorPaletteIndex + 1 : colorPaletteIndex;
-		lockedColors = new Array(colorPaletteSize).fill(null);
+		resetLockedColors();
 	}
 
 	function redoColorPalette(): void {
 		colorPaletteIndex = colorPaletteIndex > 0 ? colorPaletteIndex - 1 : colorPaletteIndex;
-		lockedColors = new Array(colorPaletteSize).fill(null);
+		resetLockedColors();
 	}
 
 	function toggleLockedColor(index: number): void {
 		lockedColors[index] = lockedColors[index] ? null : colorPalette[index];
 	}
 
-	export let colorPaletteSize: 2 | 3 | 4 = 3;
-	let colorPalettes: string[][] = [generateColorPalette(colorPaletteSize)];
-	let colorPaletteIndex = 0;
-	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
+	function resetLockedColors(): void {
+		lockedColors = new Array(colorPaletteSize).fill(null);
+	}
 
 	$: colorPalette = colorPalettes[colorPaletteIndex];
 
@@ -63,10 +74,10 @@
 		const root = <HTMLElement>document.querySelector(':root');
 
 		const primaryColor = colorPalette[0];
-		const backgroundColor = colorPalette[1];
+		const primaryBackgroundColor = colorPalette[1];
 
 		root?.style.setProperty('--primary', primaryColor);
-		root?.style.setProperty('--background', backgroundColor);
+		root?.style.setProperty('--primary-background', primaryBackgroundColor);
 
 		if (rgbLuminance(hexToRgb(primaryColor)) <= 0.5) {
 			root?.style.setProperty('--primary-text', '#ffffff');
@@ -74,13 +85,13 @@
 			root?.style.setProperty('--primary-text', '#000000');
 		}
 
-		if (rgbLuminance(hexToRgb(backgroundColor)) <= 0.5) {
-			root?.style.setProperty('--background-text', '#ffffff');
+		if (rgbLuminance(hexToRgb(primaryBackgroundColor)) <= 0.5) {
+			root?.style.setProperty('--primary-background-text', '#ffffff');
 		} else {
-			root?.style.setProperty('--background-text', '#000000');
+			root?.style.setProperty('--primary-background-text', '#000000');
 		}
 
-		if (colorPaletteSize >= 3) {
+		if (colorPalette[2]) {
 			const secondaryColor = colorPalette[2];
 
 			root?.style.setProperty('--secondary', secondaryColor);
@@ -92,7 +103,7 @@
 			}
 		}
 
-		if (colorPaletteSize >= 4) {
+		if (colorPalette[3]) {
 			const tertiaryColor = colorPalette[3];
 
 			root?.style.setProperty('--tertiary', tertiaryColor);
@@ -103,6 +114,18 @@
 				root?.style.setProperty('--tertiary-text', '#000000');
 			}
 		}
+
+		if (colorPalette[4]) {
+			const secondaryBackgroundColor = colorPalette[4];
+
+			root?.style.setProperty('--secondary-background', secondaryBackgroundColor);
+
+			if (rgbLuminance(hexToRgb(secondaryBackgroundColor)) <= 0.5) {
+				root?.style.setProperty('--secondary-background-text', '#ffffff');
+			} else {
+				root?.style.setProperty('--secondary-background-text', '#000000');
+			}
+		}
 	}
 </script>
 
@@ -111,12 +134,15 @@
 	<button class="button" on:click={undoColorPalette}>Undo</button>
 	<button class="button" on:click={redoColorPalette}>Redo</button>
 	<div class="w-8 h-8 bg-[var(--primary)]" />
-	<div class="w-8 h-8 bg-[var(--background)]" />
 	{#if colorPaletteSize >= 3}
 		<div class="w-8 h-8 bg-[var(--secondary)]" />
 	{/if}
 	{#if colorPaletteSize >= 4}
 		<div class="w-8 h-8 bg-[var(--tertiary)]" />
+	{/if}
+	<div class="w-8 h-8 bg-[var(--primary-background)]" />
+	{#if colorPaletteSize === 5}
+		<div class="w-8 h-8 bg-[var(--secondary-background)]" />
 	{/if}
 	<button
 		class="button"
@@ -150,4 +176,10 @@
 	>
 		Lock Background
 	</button>
+	<select class="text-black" bind:value={colorPaletteSize} on:change={resetColorPalettes}>
+		<option value={2}>2</option>
+		<option value={3}>3</option>
+		<option value={4}>4</option>
+		<option value={5}>5</option>
+	</select>
 </menu>

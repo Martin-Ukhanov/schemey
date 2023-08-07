@@ -7,15 +7,17 @@
 		--primary: #ffffff;
 		--secondary: #ffffff;
 		--tertiary: #ffffff;
-		--background: #ffffff;
+		--primary-background: #ffffff;
+		--secondary-background: #ffffff;
 		--primary-text: #ffffff;
 		--secondary-text: #ffffff;
 		--tertiary-text: #ffffff;
-		--background-text: #ffffff;
+		--primary-background-text: #ffffff;
+		--secondary-background-text: #ffffff;
 	}
 
 	body {
-		@apply bg-[var(--background)] text-[var(--background-text)] transition-colors duration-150;
+		@apply bg-[var(--primary-background)] text-[var(--primary-background-text)] transition-colors duration-150;
 	}
 }
 
