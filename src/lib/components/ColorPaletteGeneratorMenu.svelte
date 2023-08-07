@@ -20,6 +20,10 @@
 		return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
 	}
 
+	function constrastingTextColor(hex: string): '#000000' | '#ffffff' {
+		return rgbLuminance(hexToRgb(hex)) <= 0.5 ? '#ffffff' : '#000000';
+	}
+
 	function resetColorPalettes(): void {
 		colorPalettes = [generateColorPalette(colorPaletteSize)];
 		colorPaletteIndex = 0;
@@ -78,53 +82,34 @@
 
 		root?.style.setProperty('--primary', primaryColor);
 		root?.style.setProperty('--primary-background', primaryBackgroundColor);
-
-		if (rgbLuminance(hexToRgb(primaryColor)) <= 0.5) {
-			root?.style.setProperty('--primary-text', '#ffffff');
-		} else {
-			root?.style.setProperty('--primary-text', '#000000');
-		}
-
-		if (rgbLuminance(hexToRgb(primaryBackgroundColor)) <= 0.5) {
-			root?.style.setProperty('--primary-background-text', '#ffffff');
-		} else {
-			root?.style.setProperty('--primary-background-text', '#000000');
-		}
+		root?.style.setProperty('--primary-text', constrastingTextColor(primaryColor));
+		root?.style.setProperty(
+			'--primary-background-text',
+			constrastingTextColor(primaryBackgroundColor)
+		);
 
 		if (colorPalette[2]) {
 			const secondaryColor = colorPalette[2];
 
 			root?.style.setProperty('--secondary', secondaryColor);
-
-			if (rgbLuminance(hexToRgb(secondaryColor)) <= 0.5) {
-				root?.style.setProperty('--secondary-text', '#ffffff');
-			} else {
-				root?.style.setProperty('--secondary-text', '#000000');
-			}
+			root?.style.setProperty('--secondary-text', constrastingTextColor(secondaryColor));
 		}
 
 		if (colorPalette[3]) {
 			const tertiaryColor = colorPalette[3];
 
 			root?.style.setProperty('--tertiary', tertiaryColor);
-
-			if (rgbLuminance(hexToRgb(tertiaryColor)) <= 0.5) {
-				root?.style.setProperty('--tertiary-text', '#ffffff');
-			} else {
-				root?.style.setProperty('--tertiary-text', '#000000');
-			}
+			root?.style.setProperty('--tertiary-text', constrastingTextColor(tertiaryColor));
 		}
 
 		if (colorPalette[4]) {
 			const secondaryBackgroundColor = colorPalette[4];
 
 			root?.style.setProperty('--secondary-background', secondaryBackgroundColor);
-
-			if (rgbLuminance(hexToRgb(secondaryBackgroundColor)) <= 0.5) {
-				root?.style.setProperty('--secondary-background-text', '#ffffff');
-			} else {
-				root?.style.setProperty('--secondary-background-text', '#000000');
-			}
+			root?.style.setProperty(
+				'--secondary-background-text',
+				constrastingTextColor(secondaryBackgroundColor)
+			);
 		}
 	}
 </script>
