@@ -86,10 +86,10 @@
 		const primaryColor = colorPalette[0];
 		const primaryBackgroundColor = colorPalette[1];
 
-		root?.style.setProperty('--primary', primaryColor);
-		root?.style.setProperty('--primary-background', primaryBackgroundColor);
-		root?.style.setProperty('--primary-text', constrastingTextColor(primaryColor));
-		root?.style.setProperty(
+		root.style.setProperty('--primary', primaryColor);
+		root.style.setProperty('--primary-background', primaryBackgroundColor);
+		root.style.setProperty('--primary-text', constrastingTextColor(primaryColor));
+		root.style.setProperty(
 			'--primary-background-text',
 			constrastingTextColor(primaryBackgroundColor)
 		);
@@ -97,22 +97,22 @@
 		if (colorPalette[2]) {
 			const secondaryColor = colorPalette[2];
 
-			root?.style.setProperty('--secondary', secondaryColor);
-			root?.style.setProperty('--secondary-text', constrastingTextColor(secondaryColor));
+			root.style.setProperty('--secondary', secondaryColor);
+			root.style.setProperty('--secondary-text', constrastingTextColor(secondaryColor));
 		}
 
 		if (colorPalette[3]) {
 			const tertiaryColor = colorPalette[3];
 
-			root?.style.setProperty('--tertiary', tertiaryColor);
-			root?.style.setProperty('--tertiary-text', constrastingTextColor(tertiaryColor));
+			root.style.setProperty('--tertiary', tertiaryColor);
+			root.style.setProperty('--tertiary-text', constrastingTextColor(tertiaryColor));
 		}
 
 		if (colorPalette[4]) {
 			const secondaryBackgroundColor = colorPalette[4];
 
-			root?.style.setProperty('--secondary-background', secondaryBackgroundColor);
-			root?.style.setProperty(
+			root.style.setProperty('--secondary-background', secondaryBackgroundColor);
+			root.style.setProperty(
 				'--secondary-background-text',
 				constrastingTextColor(secondaryBackgroundColor)
 			);
