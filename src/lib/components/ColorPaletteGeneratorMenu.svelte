@@ -24,12 +24,6 @@
 		return rgbLuminance(hexToRgb(hex)) <= 0.5 ? '#ffffff' : '#000000';
 	}
 
-	function resetColorPalettes(): void {
-		colorPalettes = [generateColorPalette(colorPaletteSize)];
-		colorPaletteIndex = 0;
-		resetLockedColors();
-	}
-
 	function generateColorPalette(size: number): string[] {
 		return iwanthue(size, {
 			clustering: 'force-vector',
@@ -61,6 +55,12 @@
 
 	function redoColorPalette(): void {
 		colorPaletteIndex = colorPaletteIndex > 0 ? colorPaletteIndex - 1 : colorPaletteIndex;
+		resetLockedColors();
+	}
+
+	function resetColorPalettes(): void {
+		colorPalettes = [generateColorPalette(colorPaletteSize)];
+		colorPaletteIndex = 0;
 		resetLockedColors();
 	}
 
