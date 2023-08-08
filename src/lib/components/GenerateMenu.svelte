@@ -1,5 +1,5 @@
 <script lang="ts">
-	import iwanthue from 'iwanthue';
+	import { generateColorPalette, colorPaletteToSlug } from '$lib/utils';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
@@ -13,29 +13,8 @@
 	let colorPaletteIndex = 0;
 	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
 
-	function colorPaletteToSlug(colorPalette: string[]): string {
-		let slug = '';
-
-		for (let i = 0; i < colorPalette.length; i++) {
-			slug += colorPalette[i].slice(1);
-
-			if (i !== colorPalette.length - 1) {
-				slug += '-';
-			}
-		}
-
-		return slug;
-	}
-
 	function gotoColorPalette(): void {
 		goto(`/generate/${colorPaletteToSlug(colorPalettes[colorPaletteIndex])}`);
-	}
-
-	function generateColorPalette(size: number): string[] {
-		return iwanthue(size, {
-			clustering: 'force-vector',
-			colorSpace: [0, 360, 0, 100, 0, 100]
-		});
 	}
 
 	function pushColorPalette(): void {
