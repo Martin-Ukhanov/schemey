@@ -1,10 +1,15 @@
 <script lang="ts">
-	import iwanthue, { type RGBColor } from 'iwanthue';
+	import iwanthue from 'iwanthue';
+	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	export let colorPaletteSize: 2 | 3 | 4 | 5;
-
-	let colorPalettes: string[][] = [generateColorPalette(colorPaletteSize)];
+	let colorPalettes: string[][] = [
+		$page.url.pathname
+			.slice(10)
+			.split('-')
+			.map((color) => '#' + color)
+	];
+	let colorPaletteSize: number = colorPalettes[0].length;
 	let colorPaletteIndex = 0;
 	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
 
@@ -20,6 +25,10 @@
 		}
 
 		return slug;
+	}
+
+	function gotoColorPalette(): void {
+		goto(`/generate/${colorPaletteToSlug(colorPalettes[colorPaletteIndex])}`);
 	}
 
 	function generateColorPalette(size: number): string[] {
@@ -44,26 +53,24 @@
 		colorPalettes = [<string[]>newColorPalette, ...colorPalettes];
 		colorPaletteIndex = 0;
 
-		goto(`/generate/${colorPaletteToSlug(colorPalette)}`);
+		gotoColorPalette();
 	}
 
 	function undoColorPalette(): void {
 		colorPaletteIndex =
 			colorPaletteIndex < colorPalettes.length - 1 ? colorPaletteIndex + 1 : colorPaletteIndex;
 		resetLockedColors();
-
-		goto(`/generate/${colorPaletteToSlug(colorPalette)}`);
+		gotoColorPalette();
 	}
 
 	function redoColorPalette(): void {
 		colorPaletteIndex = colorPaletteIndex > 0 ? colorPaletteIndex - 1 : colorPaletteIndex;
 		resetLockedColors();
-
-		goto(`/generate/${colorPaletteToSlug(colorPalette)}`);
+		gotoColorPalette();
 	}
 
 	function toggleLockedColor(index: number): void {
-		lockedColors[index] = lockedColors[index] ? null : colorPalette[index];
+		lockedColors[index] = lockedColors[index] ? null : colorPalettes[colorPaletteIndex][index];
 	}
 
 	function resetLockedColors(): void {
@@ -71,18 +78,20 @@
 	}
 
 	function onChangeColorPaletteSize(): void {
-		if (colorPaletteSize < colorPalette.length) {
-			colorPalettes = [colorPalette.slice(0, colorPaletteSize)];
+		if (colorPaletteSize < colorPalettes[colorPaletteIndex].length) {
+			colorPalettes = [colorPalettes[colorPaletteIndex].slice(0, colorPaletteSize)];
 		} else {
-			const newColorsCount = colorPaletteSize - colorPalette.length;
-			colorPalettes = [[...colorPalette, ...generateColorPalette(newColorsCount)]];
+			const newColorsCount = colorPaletteSize - colorPalettes[colorPaletteIndex].length;
+			colorPalettes = [
+				[...colorPalettes[colorPaletteIndex], ...generateColorPalette(newColorsCount)]
+			];
 		}
 
 		colorPaletteIndex = 0;
 		resetLockedColors();
-	}
 
-	$: colorPalette = colorPalettes[colorPaletteIndex];
+		goto(`/generate/${colorPaletteToSlug(colorPalettes[colorPaletteIndex])}`);
+	}
 </script>
 
 <menu class="fixed bottom-4 left-4 right-4 p-4 flex gap-4 rounded-lg bg-white">
@@ -90,14 +99,14 @@
 	<button class="button" on:click={undoColorPalette}>Undo</button>
 	<button class="button" on:click={redoColorPalette}>Redo</button>
 	<div class="w-8 h-8 bg-[var(--primary)]" />
-	{#if colorPalette[2]}
+	<div class="w-8 h-8 bg-[var(--primary-background)]" />
+	{#if colorPalettes[colorPaletteIndex][2]}
 		<div class="w-8 h-8 bg-[var(--secondary)]" />
 	{/if}
-	{#if colorPalette[3]}
+	{#if colorPalettes[colorPaletteIndex][3]}
 		<div class="w-8 h-8 bg-[var(--tertiary)]" />
 	{/if}
-	<div class="w-8 h-8 bg-[var(--primary-background)]" />
-	{#if colorPalette[4]}
+	{#if colorPalettes[colorPaletteIndex][4]}
 		<div class="w-8 h-8 bg-[var(--secondary-background)]" />
 	{/if}
 	<button
@@ -119,7 +128,7 @@
 	<button
 		class="button"
 		on:click={() => {
-			toggleLockedColor(2);
+			toggleLockedColor(3);
 		}}
 	>
 		Lock Tertiary
