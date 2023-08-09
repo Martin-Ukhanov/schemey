@@ -16,20 +16,20 @@ export function contrastingColor(hex: string): '#000000' | '#ffffff' {
 	return rgbLuminance(hexToRgb(hex)) <= 0.5 ? '#ffffff' : '#000000';
 }
 
-export function generateColorPalette(size: number): string[] {
+export function generateColorScheme(size: number): string[] {
 	return iwanthue(size, {
 		clustering: 'force-vector',
 		colorSpace: [0, 360, 0, 100, 0, 100]
 	});
 }
 
-export function colorPaletteToSlug(colorPalette: string[]): string {
+export function colorSchemeToSlug(colorScheme: string[]): string {
 	let slug = '';
 
-	for (let i = 0; i < colorPalette.length; i++) {
-		slug += colorPalette[i].slice(1);
+	for (let i = 0; i < colorScheme.length; i++) {
+		slug += colorScheme[i].slice(1);
 
-		if (i !== colorPalette.length - 1) {
+		if (i !== colorScheme.length - 1) {
 			slug += '-';
 		}
 	}
@@ -37,10 +37,10 @@ export function colorPaletteToSlug(colorPalette: string[]): string {
 	return slug;
 }
 
-export function slugToColorPalette(slug: string): string[] {
+export function slugToColorScheme(slug: string): string[] {
 	return slug.split('-').map((color) => '#' + color);
 }
 
-export function validColorPaletteSlug(slug: string) {
+export function validColorSchemeSlug(slug: string) {
 	return /^(?:[0-9a-fA-F]{6})(?:-[0-9a-fA-F]{6}){1,4}$/.test(slug);
 }

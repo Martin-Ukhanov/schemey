@@ -6,16 +6,16 @@
 
 	export let data: PageData;
 
-	let colorPalette: string[];
+	let colorScheme: string[];
 
 	$: {
-		colorPalette = data.colorPalette;
+		colorScheme = data.colorScheme;
 
-		const primaryColor = colorPalette[0];
-		const primaryBackgroundColor = colorPalette[1];
-		const secondaryColor = colorPalette[2];
-		const tertiaryColor = colorPalette[3];
-		const secondaryBackgroundColor = colorPalette[4];
+		const primaryColor = colorScheme[0];
+		const primaryBackgroundColor = colorScheme[1];
+		const secondaryColor = colorScheme[2];
+		const tertiaryColor = colorScheme[3];
+		const secondaryBackgroundColor = colorScheme[4];
 
 		if (browser) {
 			const root = <HTMLElement>document.querySelector(':root');
@@ -50,11 +50,11 @@
 <h1 class="text-5xl mb-4">Hello World</h1>
 <div class="flex gap-4">
 	<button class="button-primary">Click Me</button>
-	{#if colorPalette[2]}
+	{#if colorScheme[2]}
 		<button class="button-secondary">Click Me</button>
 	{/if}
-	{#if colorPalette[3]}
+	{#if colorScheme[3]}
 		<button class="button-tertiary">Click Me</button>
 	{/if}
 </div>
-<GenerateMenu initialColorPalette={colorPalette} />
+<GenerateMenu initialColorScheme={colorScheme} />

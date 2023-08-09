@@ -1,4 +1,4 @@
-import { validColorPaletteSlug, slugToColorPalette } from '$lib/utils';
+import { validColorSchemeSlug, slugToColorScheme } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import { goto } from '$app/navigation';
 import type { PageLoad } from './$types';
@@ -6,7 +6,7 @@ import type { PageLoad } from './$types';
 export const load = (({ params }) => {
 	const { slug } = params;
 
-	if (!validColorPaletteSlug(slug)) {
+	if (!validColorSchemeSlug(slug)) {
 		throw error(404, { message: 'Page Not Found' });
 	}
 
@@ -14,5 +14,5 @@ export const load = (({ params }) => {
 		goto(`/generate/${slug.toLowerCase()}`);
 	}
 
-	return { colorPalette: slugToColorPalette(params.slug) };
+	return { colorScheme: slugToColorScheme(slug) };
 }) satisfies PageLoad;

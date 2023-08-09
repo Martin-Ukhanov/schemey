@@ -1,87 +1,85 @@
 <script lang="ts">
-	import { generateColorPalette, colorPaletteToSlug } from '$lib/utils';
 	import { goto } from '$app/navigation';
+	import { generateColorScheme, colorSchemeToSlug } from '$lib/utils';
 
-	export let initialColorPalette: string[];
+	export let initialColorScheme: string[];
 
-	let colorPalettes: string[][] = [initialColorPalette];
-	let colorPaletteSize: number = colorPalettes[0].length;
-	let colorPaletteIndex = 0;
-	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
+	let colorSchemes: string[][] = [initialColorScheme];
+	let colorSchemeSize: number = colorSchemes[0].length;
+	let colorSchemeIndex = 0;
+	let lockedColors: (string | null)[] = new Array(colorSchemeSize).fill(null);
 
-	function gotoColorPalette(): void {
-		goto(`/generate/${colorPaletteToSlug(colorPalettes[colorPaletteIndex])}`);
+	function gotoColorScheme(): void {
+		goto(`/generate/${colorSchemeToSlug(colorSchemes[colorSchemeIndex])}`);
 	}
 
-	function pushColorPalette(): void {
+	function pushColorScheme(): void {
 		const lockedColorsCount = lockedColors.filter((color) => color).length;
-		const newColorPalette = [...lockedColors];
-		const newColors = generateColorPalette(colorPaletteSize - lockedColorsCount);
+		const newColorScheme = [...lockedColors];
+		const newColors = generateColorScheme(colorSchemeSize - lockedColorsCount);
 
-		for (let i = 0; i < newColorPalette.length; i++) {
-			if (!newColorPalette[i]) {
-				newColorPalette[i] = <string>newColors.shift();
+		for (let i = 0; i < newColorScheme.length; i++) {
+			if (!newColorScheme[i]) {
+				newColorScheme[i] = <string>newColors.shift();
 			}
 		}
 
-		colorPalettes = colorPalettes.slice(colorPaletteIndex);
-		colorPalettes = [<string[]>newColorPalette, ...colorPalettes];
-		colorPaletteIndex = 0;
+		colorSchemes = colorSchemes.slice(colorSchemeIndex);
+		colorSchemes = [<string[]>newColorScheme, ...colorSchemes];
+		colorSchemeIndex = 0;
 
-		gotoColorPalette();
+		gotoColorScheme();
 	}
 
-	function undoColorPalette(): void {
-		colorPaletteIndex =
-			colorPaletteIndex < colorPalettes.length - 1 ? colorPaletteIndex + 1 : colorPaletteIndex;
+	function undoColorScheme(): void {
+		colorSchemeIndex =
+			colorSchemeIndex < colorSchemes.length - 1 ? colorSchemeIndex + 1 : colorSchemeIndex;
 		resetLockedColors();
-		gotoColorPalette();
+		gotoColorScheme();
 	}
 
-	function redoColorPalette(): void {
-		colorPaletteIndex = colorPaletteIndex > 0 ? colorPaletteIndex - 1 : colorPaletteIndex;
+	function redoColorScheme(): void {
+		colorSchemeIndex = colorSchemeIndex > 0 ? colorSchemeIndex - 1 : colorSchemeIndex;
 		resetLockedColors();
-		gotoColorPalette();
+		gotoColorScheme();
 	}
 
 	function toggleLockedColor(index: number): void {
-		lockedColors[index] = lockedColors[index] ? null : colorPalettes[colorPaletteIndex][index];
+		lockedColors[index] = lockedColors[index] ? null : colorSchemes[colorSchemeIndex][index];
 	}
 
 	function resetLockedColors(): void {
-		lockedColors = new Array(colorPaletteSize).fill(null);
+		lockedColors = new Array(colorSchemeSize).fill(null);
 	}
 
-	function onChangeColorPaletteSize(): void {
-		if (colorPaletteSize < colorPalettes[colorPaletteIndex].length) {
-			colorPalettes = [colorPalettes[colorPaletteIndex].slice(0, colorPaletteSize)];
+	function onChangeColorSchemeSize(): void {
+		if (colorSchemeSize < colorSchemes[colorSchemeIndex].length) {
+			colorSchemes = [colorSchemes[colorSchemeIndex].slice(0, colorSchemeSize)];
 		} else {
-			const newColorsCount = colorPaletteSize - colorPalettes[colorPaletteIndex].length;
-			colorPalettes = [
-				[...colorPalettes[colorPaletteIndex], ...generateColorPalette(newColorsCount)]
-			];
+			const newColorsCount = colorSchemeSize - colorSchemes[colorSchemeIndex].length;
+			colorSchemes = [[...colorSchemes[colorSchemeIndex], ...generateColorScheme(newColorsCount)]];
 		}
 
-		colorPaletteIndex = 0;
+		colorSchemeIndex = 0;
 		resetLockedColors();
 
-		goto(`/generate/${colorPaletteToSlug(colorPalettes[colorPaletteIndex])}`);
+		goto(`/generate/${colorSchemeToSlug(colorSchemes[colorSchemeIndex])}`);
 	}
 </script>
 
 <menu class="fixed bottom-4 left-4 right-4 p-4 flex gap-4 rounded-lg bg-white">
-	<button class="button" on:click={pushColorPalette}>Generate</button>
-	<button class="button" on:click={undoColorPalette}>Undo</button>
-	<button class="button" on:click={redoColorPalette}>Redo</button>
+	<button class="button" on:click={pushColorScheme}>Generate</button>
+	<button class="button" on:click={undoColorScheme}>Undo</button>
+	<button class="button" on:click={redoColorScheme}>Redo</button>
 	<div class="w-8 h-8 bg-[var(--primary)]" />
 	<div class="w-8 h-8 bg-[var(--primary-background)]" />
-	{#if colorPalettes[colorPaletteIndex][2]}
+	{#if colorSchemes[colorSchemeIndex][2]}
 		<div class="w-8 h-8 bg-[var(--secondary)]" />
 	{/if}
-	{#if colorPalettes[colorPaletteIndex][3]}
+	{#if colorSchemes[colorSchemeIndex][3]}
 		<div class="w-8 h-8 bg-[var(--tertiary)]" />
 	{/if}
-	{#if colorPalettes[colorPaletteIndex][4]}
+	{#if colorSchemes[colorSchemeIndex][4]}
 		<div class="w-8 h-8 bg-[var(--secondary-background)]" />
 	{/if}
 	<button
@@ -116,7 +114,7 @@
 	>
 		Lock Background
 	</button>
-	<select class="text-black" bind:value={colorPaletteSize} on:change={onChangeColorPaletteSize}>
+	<select class="text-black" bind:value={colorSchemeSize} on:change={onChangeColorSchemeSize}>
 		<option value={2}>2</option>
 		<option value={3}>3</option>
 		<option value={4}>4</option>
