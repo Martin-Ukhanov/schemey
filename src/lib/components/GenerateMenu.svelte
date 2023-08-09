@@ -2,68 +2,103 @@
 	import { goto } from '$app/navigation';
 	import { generateColorScheme, colorSchemeToSlug } from '$lib/utils';
 
+	type Color = {
+		hex: string;
+		locked: boolean;
+	};
+
 	export let initialColorScheme: string[];
 
-	let colorSchemes: string[][] = [initialColorScheme];
-	let colorSchemeSize: number = colorSchemes[0].length;
+	const MIN_COLOR_SCHEME_SIZE = 2;
+	const MAX_COLOR_SCHEME_SIZE = 5;
+
+	let colorSchemes: Color[][] = [
+		initialColorScheme.map((color) => {
+			return { hex: color, locked: false };
+		})
+	];
 	let colorSchemeIndex = 0;
-	let lockedColors: (string | null)[] = new Array(colorSchemeSize).fill(null);
 
 	function gotoColorScheme(): void {
-		goto(`/generate/${colorSchemeToSlug(colorSchemes[colorSchemeIndex])}`);
+		goto(
+			`/generate/${colorSchemeToSlug(colorSchemes[colorSchemeIndex].map((color) => color.hex))}`
+		);
 	}
 
 	function pushColorScheme(): void {
-		const lockedColorsCount = lockedColors.filter((color) => color).length;
-		const newColorScheme = [...lockedColors];
-		const newColors = generateColorScheme(colorSchemeSize - lockedColorsCount);
+		const currentColorScheme = colorSchemes[colorSchemeIndex];
+		const lockedColorsCount = currentColorScheme.filter((color) => color.locked).length;
+		const newColorsCount = currentColorScheme.length - lockedColorsCount;
 
-		for (let i = 0; i < newColorScheme.length; i++) {
-			if (!newColorScheme[i]) {
-				newColorScheme[i] = <string>newColors.shift();
+		if (newColorsCount > 0) {
+			const newColorScheme = structuredClone(currentColorScheme);
+			const newColors = generateColorScheme(newColorsCount);
+
+			for (let i = 0; i < newColorScheme.length; i++) {
+				if (!newColorScheme[i].locked) {
+					newColorScheme[i].hex = <string>newColors.shift();
+				}
 			}
+
+			colorSchemes.splice(0, colorSchemeIndex);
+			colorSchemes = [newColorScheme, ...colorSchemes];
+
+			colorSchemeIndex = 0;
+
+			gotoColorScheme();
 		}
-
-		colorSchemes = colorSchemes.slice(colorSchemeIndex);
-		colorSchemes = [<string[]>newColorScheme, ...colorSchemes];
-		colorSchemeIndex = 0;
-
-		gotoColorScheme();
 	}
 
 	function undoColorScheme(): void {
-		colorSchemeIndex =
-			colorSchemeIndex < colorSchemes.length - 1 ? colorSchemeIndex + 1 : colorSchemeIndex;
-		resetLockedColors();
-		gotoColorScheme();
+		if (colorSchemeIndex < colorSchemes.length - 1) {
+			colorSchemeIndex++;
+			gotoColorScheme();
+		}
 	}
 
 	function redoColorScheme(): void {
-		colorSchemeIndex = colorSchemeIndex > 0 ? colorSchemeIndex - 1 : colorSchemeIndex;
-		resetLockedColors();
-		gotoColorScheme();
+		if (colorSchemeIndex > 0) {
+			colorSchemeIndex--;
+			gotoColorScheme();
+		}
+	}
+
+	function addColor(): void {
+		const currentColorScheme = colorSchemes[colorSchemeIndex];
+
+		if (currentColorScheme.length < MAX_COLOR_SCHEME_SIZE) {
+			const newColorScheme = structuredClone(currentColorScheme);
+
+			newColorScheme.push(
+				...generateColorScheme(1).map((color) => {
+					return { hex: color, locked: false };
+				})
+			);
+			colorSchemes = [newColorScheme, ...colorSchemes];
+
+			colorSchemeIndex = 0;
+
+			gotoColorScheme();
+		}
+	}
+
+	function removeColor(index: number): void {
+		const currentColorScheme = colorSchemes[colorSchemeIndex];
+
+		if (currentColorScheme.length > MIN_COLOR_SCHEME_SIZE) {
+			const newColorScheme = structuredClone(currentColorScheme);
+
+			newColorScheme.splice(index, 1);
+			colorSchemes = [newColorScheme, ...colorSchemes];
+
+			colorSchemeIndex = 0;
+
+			gotoColorScheme();
+		}
 	}
 
 	function toggleLockedColor(index: number): void {
-		lockedColors[index] = lockedColors[index] ? null : colorSchemes[colorSchemeIndex][index];
-	}
-
-	function resetLockedColors(): void {
-		lockedColors = new Array(colorSchemeSize).fill(null);
-	}
-
-	function onChangeColorSchemeSize(): void {
-		if (colorSchemeSize < colorSchemes[colorSchemeIndex].length) {
-			colorSchemes = [colorSchemes[colorSchemeIndex].slice(0, colorSchemeSize)];
-		} else {
-			const newColorsCount = colorSchemeSize - colorSchemes[colorSchemeIndex].length;
-			colorSchemes = [[...colorSchemes[colorSchemeIndex], ...generateColorScheme(newColorsCount)]];
-		}
-
-		colorSchemeIndex = 0;
-		resetLockedColors();
-
-		goto(`/generate/${colorSchemeToSlug(colorSchemes[colorSchemeIndex])}`);
+		colorSchemes[colorSchemeIndex][index].locked = !colorSchemes[colorSchemeIndex][index].locked;
 	}
 </script>
 
@@ -71,53 +106,29 @@
 	<button class="button" on:click={pushColorScheme}>Generate</button>
 	<button class="button" on:click={undoColorScheme}>Undo</button>
 	<button class="button" on:click={redoColorScheme}>Redo</button>
-	<div class="w-8 h-8 bg-[var(--primary)]" />
-	<div class="w-8 h-8 bg-[var(--primary-background)]" />
-	{#if colorSchemes[colorSchemeIndex][2]}
-		<div class="w-8 h-8 bg-[var(--secondary)]" />
+	{#each colorSchemes[colorSchemeIndex] as color, index}
+		<div class="p-8 rounded-lg" style={`background-color: ${color.hex};`}>
+			{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
+				<button
+					class="button"
+					on:click={() => {
+						removeColor(index);
+					}}
+				>
+					X
+				</button>
+			{/if}
+			<button
+				class="button"
+				on:click={() => {
+					toggleLockedColor(index);
+				}}
+			>
+				{colorSchemes[colorSchemeIndex][index].locked ? 'Unlock' : 'Lock'}
+			</button>
+		</div>
+	{/each}
+	{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
+		<button class="button" on:click={addColor}>+</button>
 	{/if}
-	{#if colorSchemes[colorSchemeIndex][3]}
-		<div class="w-8 h-8 bg-[var(--tertiary)]" />
-	{/if}
-	{#if colorSchemes[colorSchemeIndex][4]}
-		<div class="w-8 h-8 bg-[var(--secondary-background)]" />
-	{/if}
-	<button
-		class="button"
-		on:click={() => {
-			toggleLockedColor(0);
-		}}
-	>
-		Lock Primary
-	</button>
-	<button
-		class="button"
-		on:click={() => {
-			toggleLockedColor(2);
-		}}
-	>
-		Lock Secondary
-	</button>
-	<button
-		class="button"
-		on:click={() => {
-			toggleLockedColor(3);
-		}}
-	>
-		Lock Tertiary
-	</button>
-	<button
-		class="button"
-		on:click={() => {
-			toggleLockedColor(1);
-		}}
-	>
-		Lock Background
-	</button>
-	<select class="text-black" bind:value={colorSchemeSize} on:change={onChangeColorSchemeSize}>
-		<option value={2}>2</option>
-		<option value={3}>3</option>
-		<option value={4}>4</option>
-		<option value={5}>5</option>
-	</select>
 </menu>
