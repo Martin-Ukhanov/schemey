@@ -57,4 +57,4 @@
 		<button class="button-tertiary">Click Me</button>
 	{/if}
 </div>
-<GenerateMenu />
+<GenerateMenu initialColorPalette={colorPalette} />

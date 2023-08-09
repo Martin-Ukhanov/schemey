@@ -1,14 +1,10 @@
 <script lang="ts">
 	import { generateColorPalette, colorPaletteToSlug } from '$lib/utils';
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	let colorPalettes: string[][] = [
-		$page.url.pathname
-			.slice(10)
-			.split('-')
-			.map((color) => '#' + color)
-	];
+	export let initialColorPalette: string[];
+
+	let colorPalettes: string[][] = [initialColorPalette];
 	let colorPaletteSize: number = colorPalettes[0].length;
 	let colorPaletteIndex = 0;
 	let lockedColors: (string | null)[] = new Array(colorPaletteSize).fill(null);
