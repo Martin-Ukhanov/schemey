@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import uniqid from 'uniqid';
 	import { generateColorScheme, colorSchemeToSlug } from '$lib/utils';
 
 	type Color = {
+		id: string;
 		hex: string;
 		locked: boolean;
 	};
@@ -14,7 +16,7 @@
 
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
-			return { hex: color, locked: false };
+			return { id: uniqid(), hex: color, locked: false };
 		})
 	];
 	let colorSchemeIndex = 0;
@@ -71,7 +73,7 @@
 
 			newColorScheme.push(
 				...generateColorScheme(1).map((color) => {
-					return { hex: color, locked: false };
+					return { id: uniqid(), hex: color, locked: false };
 				})
 			);
 			colorSchemes = [newColorScheme, ...colorSchemes];
