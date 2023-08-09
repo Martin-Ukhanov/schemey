@@ -8,14 +8,20 @@
 
 	let colorScheme: string[];
 
+	let primaryColor: string | null = null;
+	let primaryBackgroundColor: string | null = null;
+	let secondaryColor: string | null = null;
+	let tertiaryColor: string | null = null;
+	let secondaryBackgroundColor: string | null = null;
+
 	$: {
 		colorScheme = data.colorScheme;
 
-		const primaryColor = colorScheme[0];
-		const primaryBackgroundColor = colorScheme[1];
-		const secondaryColor = colorScheme[2];
-		const tertiaryColor = colorScheme[3];
-		const secondaryBackgroundColor = colorScheme[4];
+		primaryColor = colorScheme[0];
+		primaryBackgroundColor = colorScheme[1];
+		secondaryColor = colorScheme[2];
+		tertiaryColor = colorScheme[3];
+		secondaryBackgroundColor = colorScheme[4];
 
 		if (browser) {
 			const root = <HTMLElement>document.querySelector(':root');
@@ -50,10 +56,10 @@
 <h1 class="text-5xl mb-4">Hello World</h1>
 <div class="flex gap-4">
 	<button class="button-primary">Click Me</button>
-	{#if colorScheme[2]}
+	{#if secondaryColor}
 		<button class="button-secondary">Click Me</button>
 	{/if}
-	{#if colorScheme[3]}
+	{#if tertiaryColor}
 		<button class="button-tertiary">Click Me</button>
 	{/if}
 </div>
