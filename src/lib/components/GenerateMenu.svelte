@@ -25,7 +25,7 @@
 		);
 	}
 
-	function pushColorScheme(): void {
+	function addColorScheme(): void {
 		const currentColorScheme = colorSchemes[colorSchemeIndex];
 		const lockedColorsCount = currentColorScheme.filter((color) => color.locked).length;
 		const newColorsCount = currentColorScheme.length - lockedColorsCount;
@@ -103,7 +103,7 @@
 </script>
 
 <menu class="fixed bottom-4 left-4 right-4 p-4 flex gap-4 rounded-lg bg-white">
-	<button class="button" on:click={pushColorScheme}>Generate</button>
+	<button class="button" on:click={addColorScheme}>Generate</button>
 	<button class="button" on:click={undoColorScheme}>Undo</button>
 	<button class="button" on:click={redoColorScheme}>Redo</button>
 	{#each colorSchemes[colorSchemeIndex] as color, index}
