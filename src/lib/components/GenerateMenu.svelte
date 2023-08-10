@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import uniqid from 'uniqid';
 	import { generateColorScheme, colorSchemeToSlug } from '$lib/utils';
+	import { slide } from 'svelte/transition';
 
 	type Color = {
 		id: string;
@@ -108,28 +109,34 @@
 	<button class="button" on:click={addColorScheme}>Generate</button>
 	<button class="button" on:click={undoColorScheme}>Undo</button>
 	<button class="button" on:click={redoColorScheme}>Redo</button>
-	{#each colorSchemes[colorSchemeIndex] as color, index}
-		<div class="p-8 rounded-lg" style={`background-color: ${color.hex};`}>
-			{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
+	<div class="flex">
+		{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
+			<div
+				class="p-8 mx-2 rounded-lg"
+				style={`background-color: ${color.hex};`}
+				transition:slide={{ duration: 300, axis: 'x' }}
+			>
+				{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
+					<button
+						class="button"
+						on:click={() => {
+							removeColor(index);
+						}}
+					>
+						X
+					</button>
+				{/if}
 				<button
 					class="button"
 					on:click={() => {
-						removeColor(index);
+						toggleLockedColor(index);
 					}}
 				>
-					X
+					{colorSchemes[colorSchemeIndex][index].locked ? 'Unlock' : 'Lock'}
 				</button>
-			{/if}
-			<button
-				class="button"
-				on:click={() => {
-					toggleLockedColor(index);
-				}}
-			>
-				{colorSchemes[colorSchemeIndex][index].locked ? 'Unlock' : 'Lock'}
-			</button>
-		</div>
-	{/each}
+			</div>
+		{/each}
+	</div>
 	{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 		<button class="button" on:click={addColor}>+</button>
 	{/if}
