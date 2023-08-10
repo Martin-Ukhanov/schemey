@@ -23,18 +23,26 @@
 
 @layer components {
 	.button {
-		@apply block p-4 active:scale-95 rounded-lg uppercase bg-gray-500 hover:brightness-75 active:brightness-75 text-black cursor-pointer transition-[transform,background-color,color,filter] duration-150;
+		@apply p-4 flex justify-center items-center active:scale-95 border-3 outline-[3px] focus-visible:outline rounded-lg uppercase bg-white text-black border-black outline-black hover:brightness-75 active:brightness-75 cursor-pointer transition-[transform,background-color,color,filter] duration-150;
+	}
+
+	.button-transparent-black {
+		@apply button p-2 border-none bg-transparent hover:bg-black/20 !brightness-100;
+	}
+
+	.button-transparent-white {
+		@apply button-transparent-black hover:bg-white/20 outline-white;
 	}
 
 	.button-primary {
-		@apply button bg-[var(--primary)] text-[var(--primary-text)];
+		@apply button border-none bg-[var(--primary)] text-[var(--primary-text)];
 	}
 
 	.button-secondary {
-		@apply button bg-[var(--secondary)] text-[var(--secondary-text)];
+		@apply button border-none bg-[var(--secondary)] text-[var(--secondary-text)];
 	}
 
 	.button-tertiary {
-		@apply button bg-[var(--tertiary)] text-[var(--tertiary-text)];
+		@apply button border-none bg-[var(--tertiary)] text-[var(--tertiary-text)];
 	}
 }
