@@ -138,6 +138,8 @@
 		{/each}
 	</div>
 	{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
-		<button class="button" on:click={addColor}>+</button>
+		<button class="button" on:click={addColor} transition:slide={{ duration: 300, axis: 'x' }}>
+			+
+		</button>
 	{/if}
 </menu>
