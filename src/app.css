@@ -27,11 +27,11 @@
 	}
 
 	.button-transparent-black {
-		@apply button p-2 border-none bg-transparent hover:bg-black/20 !brightness-100;
+		@apply button p-2 border-none bg-transparent hover:bg-black/20 active:bg-black/20 !brightness-100;
 	}
 
 	.button-transparent-white {
-		@apply button-transparent-black hover:bg-white/20 outline-white;
+		@apply button-transparent-black hover:bg-white/20 active:bg-white/20 outline-white;
 	}
 
 	.button-primary {
