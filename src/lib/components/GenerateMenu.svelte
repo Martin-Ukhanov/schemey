@@ -32,7 +32,9 @@
 	let colorSchemeIndex = 0;
 
 	function uniqueId(): number {
-		return currentId++;
+		const id = currentId;
+		currentId++;
+		return id;
 	}
 
 	function gotoColorScheme(): void {
