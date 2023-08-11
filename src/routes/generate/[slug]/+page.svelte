@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { browser } from '$app/environment';
 	import { contrastingColor } from '$lib/utils';
 	import GenerateMenu from '$lib/components/GenerateMenu.svelte';
 
