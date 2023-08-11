@@ -14,6 +14,12 @@
 	let tertiaryColor: string | null = null;
 	let secondaryBackgroundColor: string | null = null;
 
+	let primaryContrastColor: string | null = null;
+	let primaryBackgroundContrastColor: string | null = null;
+	let secondaryContrastColor: string | null = null;
+	let tertiaryContrastColor: string | null = null;
+	let secondaryBackgroundContrastColor: string | null = null;
+
 	$: {
 		colorScheme = data.colorScheme;
 
@@ -23,44 +29,44 @@
 		tertiaryColor = colorScheme[3];
 		secondaryBackgroundColor = colorScheme[4];
 
-		if (browser) {
-			const root = <HTMLElement>document.querySelector(':root');
-
-			root.style.setProperty('--primary', primaryColor);
-			root.style.setProperty('--primary-text', contrastingColor(primaryColor));
-
-			root.style.setProperty('--primary-background', primaryBackgroundColor);
-			root.style.setProperty('--primary-background-text', contrastingColor(primaryBackgroundColor));
-
-			if (secondaryColor) {
-				root.style.setProperty('--secondary', secondaryColor);
-				root.style.setProperty('--secondary-text', contrastingColor(secondaryColor));
-			}
-
-			if (tertiaryColor) {
-				root.style.setProperty('--tertiary', tertiaryColor);
-				root.style.setProperty('--tertiary-text', contrastingColor(tertiaryColor));
-			}
-
-			if (secondaryBackgroundColor) {
-				root.style.setProperty('--secondary-background', secondaryBackgroundColor);
-				root.style.setProperty(
-					'--secondary-background-text',
-					contrastingColor(secondaryBackgroundColor)
-				);
-			}
-		}
+		primaryContrastColor = contrastingColor(primaryColor);
+		primaryBackgroundContrastColor = contrastingColor(primaryBackgroundColor);
+		secondaryContrastColor = secondaryColor ? contrastingColor(secondaryColor) : null;
+		tertiaryContrastColor = tertiaryColor ? contrastingColor(tertiaryColor) : null;
+		secondaryBackgroundContrastColor = secondaryBackgroundColor
+			? contrastingColor(secondaryBackgroundColor)
+			: null;
 	}
 </script>
 
-<h1 class="text-5xl mb-4">Hello World</h1>
-<div class="flex gap-4">
-	<button class="button-primary">Click Me</button>
-	{#if secondaryColor}
-		<button class="button-secondary">Click Me</button>
-	{/if}
-	{#if tertiaryColor}
-		<button class="button-tertiary">Click Me</button>
-	{/if}
+<div
+	class="h-screen transition-colors duration-150"
+	style={`background-color: ${primaryBackgroundColor}; color: ${primaryBackgroundContrastColor}`}
+>
+	<h1 class="text-5xl mb-4">Hello World</h1>
+	<div class="flex gap-4">
+		<button
+			class="button border-none"
+			style={`background-color: ${primaryColor}; color: ${primaryContrastColor}`}
+		>
+			Click Me
+		</button>
+		{#if secondaryColor}
+			<button
+				class="button border-none"
+				style={`background-color: ${secondaryColor}; color: ${secondaryContrastColor}`}
+			>
+				Click Me
+			</button>
+		{/if}
+		{#if tertiaryColor}
+			<button
+				class="button border-none"
+				style={`background-color: ${tertiaryColor}; color: ${tertiaryContrastColor}`}
+			>
+				Click Me
+			</button>
+		{/if}
+	</div>
 </div>
 <GenerateMenu initialColorScheme={colorScheme} />

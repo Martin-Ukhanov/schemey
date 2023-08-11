@@ -8,21 +8,8 @@
 		src: url('/fonts/Montserrat.ttf');
 	}
 
-	:root {
-		--primary: #ffffff;
-		--secondary: #ffffff;
-		--tertiary: #ffffff;
-		--primary-background: #ffffff;
-		--secondary-background: #ffffff;
-		--primary-text: #ffffff;
-		--secondary-text: #ffffff;
-		--tertiary-text: #ffffff;
-		--primary-background-text: #ffffff;
-		--secondary-background-text: #ffffff;
-	}
-
 	body {
-		@apply font-montserrat bg-[var(--primary-background)] text-[var(--primary-background-text)] transition-colors duration-150;
+		@apply font-montserrat bg-white text-black;
 	}
 }
 
@@ -37,17 +24,5 @@
 
 	.button-transparent-white {
 		@apply button-transparent-black hover:bg-white/20 active:bg-white/30;
-	}
-
-	.button-primary {
-		@apply button border-none bg-[var(--primary)] text-[var(--primary-text)];
-	}
-
-	.button-secondary {
-		@apply button border-none bg-[var(--secondary)] text-[var(--secondary-text)];
-	}
-
-	.button-tertiary {
-		@apply button border-none bg-[var(--tertiary)] text-[var(--tertiary-text)];
 	}
 }
