@@ -137,7 +137,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-4 right-4 h-72 p-4 flex justify-center border-3 border-b-0 rounded-t-md bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-0 right-0 h-72 p-4 flex justify-center border-t-3 bg-white border-black transition-transform duration-150"
 	class:translate-y-full={!open}
 >
 	<button
