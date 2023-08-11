@@ -176,6 +176,7 @@
 	</div>
 	<div class="flex-1 flex gap-4">
 		{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
+			{@const contrast = contrastingColor(color.hex)}
 			<div
 				class="flex-1 p-4 flex flex-col justify-between items-center border-3 rounded-lg border-black transition-colors duration-150"
 				style={`background-color: ${color.hex};`}
@@ -186,10 +187,10 @@
 				<div>
 					{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
 						<button
-							class={contrastingColor(color.hex) === '#000000'
+							class={contrast === '#000000'
 								? 'button-transparent-black'
 								: 'button-transparent-white'}
-							style={`color: ${contrastingColor(color.hex)}`}
+							style={`color: ${contrast}`}
 							on:click={() => {
 								removeColor(index);
 							}}
@@ -198,7 +199,7 @@
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								class="w-8"
-								style={`fill: ${contrastingColor(color.hex)}`}
+								style={`fill: ${contrast}`}
 							>
 								<path
 									d="M21 5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5zm-4.793 9.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"
@@ -207,9 +208,7 @@
 						</button>
 					{/if}
 					<button
-						class={contrastingColor(color.hex) === '#000000'
-							? 'button-transparent-black'
-							: 'button-transparent-white'}
+						class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
 						on:click={() => {
 							copyToClipboard(color.hex.toUpperCase());
 						}}
@@ -218,7 +217,7 @@
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							class="w-8"
-							style={`fill: ${contrastingColor(color.hex)}`}
+							style={`fill: ${contrast}`}
 						>
 							<path
 								d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"
@@ -229,9 +228,7 @@
 						</svg>
 					</button>
 					<button
-						class={contrastingColor(color.hex) === '#000000'
-							? 'button-transparent-black'
-							: 'button-transparent-white'}
+						class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
 						on:click={() => {
 							toggleLockedColor(index);
 						}}
@@ -240,9 +237,9 @@
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							class="w-8"
-							style={`fill: ${contrastingColor(color.hex)}`}
+							style={`fill: ${contrast}`}
 						>
-							{#if colorSchemes[colorSchemeIndex][index].locked}
+							{#if color.locked}
 								<path
 									d="M20 12c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"
 								/>
@@ -255,10 +252,8 @@
 					</button>
 				</div>
 				<button
-					class={contrastingColor(color.hex) === '#000000'
-						? 'button-transparent-black'
-						: 'button-transparent-white'}
-					style={`color: ${contrastingColor(color.hex)}`}
+					class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
+					style={`color: ${contrast}`}
 				>
 					<span class="text-lg font-bold">{color.hex}</span>
 				</button>
