@@ -172,7 +172,7 @@
 	<div class="flex-1 flex gap-4">
 		{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 			<div
-				class="flex-1 p-8 flex flex-col justify-between items-center border-3 rounded-lg border-black transition-colors duration-150"
+				class="flex-1 p-4 flex flex-col justify-between items-center border-3 rounded-lg border-black transition-colors duration-150"
 				style={`background-color: ${color.hex};`}
 				in:receive={{ key: color.id }}
 				out:send={{ key: color.id }}
