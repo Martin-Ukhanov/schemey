@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import uniqid from 'uniqid';
-	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
+	import {
+		generateColorScheme,
+		colorSchemeToSlug,
+		contrastingColor,
+		copyToClipboard
+	} from '$lib/utils';
 	import { slide, crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { cubicOut } from 'svelte/easing';
@@ -126,7 +131,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-4 right-4 h-64 p-4 flex justify-center border-3 border-b-0 rounded-t-lg bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-4 right-4 h-72 p-4 flex justify-center border-3 border-b-0 rounded-t-lg bg-white border-black transition-transform duration-150"
 	class:translate-y-full={!open}
 >
 	<button
@@ -201,6 +206,28 @@
 							</svg>
 						</button>
 					{/if}
+					<button
+						class={contrastingColor(color.hex) === '#000000'
+							? 'button-transparent-black'
+							: 'button-transparent-white'}
+						on:click={() => {
+							copyToClipboard(color.hex.toUpperCase());
+						}}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							class="w-8"
+							style={`fill: ${contrastingColor(color.hex)}`}
+						>
+							<path
+								d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"
+							/>
+							<path
+								d="M20 2H10a2 2 0 0 0-2 2v2h8a2 2 0 0 1 2 2v8h2a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"
+							/>
+						</svg>
+					</button>
 					<button
 						class={contrastingColor(color.hex) === '#000000'
 							? 'button-transparent-black'
