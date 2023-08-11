@@ -8,14 +8,14 @@
 
 	let colorScheme: string[];
 
-	let primaryColor: string | null = null;
 	let primaryBackgroundColor: string | null = null;
+	let primaryColor: string | null = null;
 	let secondaryColor: string | null = null;
 	let tertiaryColor: string | null = null;
 	let secondaryBackgroundColor: string | null = null;
 
-	let primaryContrastColor: string | null = null;
 	let primaryBackgroundContrastColor: string | null = null;
+	let primaryContrastColor: string | null = null;
 	let secondaryContrastColor: string | null = null;
 	let tertiaryContrastColor: string | null = null;
 	let secondaryBackgroundContrastColor: string | null = null;
@@ -23,14 +23,14 @@
 	$: {
 		colorScheme = data.colorScheme;
 
-		primaryColor = colorScheme[0];
-		primaryBackgroundColor = colorScheme[1];
+		primaryBackgroundColor = colorScheme[0];
+		primaryColor = colorScheme[1];
 		secondaryColor = colorScheme[2];
 		tertiaryColor = colorScheme[3];
 		secondaryBackgroundColor = colorScheme[4];
 
-		primaryContrastColor = contrastingColor(primaryColor);
 		primaryBackgroundContrastColor = contrastingColor(primaryBackgroundColor);
+		primaryContrastColor = contrastingColor(primaryColor);
 		secondaryContrastColor = secondaryColor ? contrastingColor(secondaryColor) : null;
 		tertiaryContrastColor = tertiaryColor ? contrastingColor(tertiaryColor) : null;
 		secondaryBackgroundContrastColor = secondaryBackgroundColor
