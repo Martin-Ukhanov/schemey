@@ -135,7 +135,7 @@
 	class:translate-y-full={!open}
 >
 	<button
-		class="button absolute bottom-full border-b-0 rounded-b-none !brightness-100"
+		class="button p-2 absolute bottom-full border-b-0 rounded-b-none !brightness-100"
 		on:click={() => {
 			open = !open;
 		}}
