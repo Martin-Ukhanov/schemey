@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import uniqid from 'uniqid';
 	import {
 		generateColorScheme,
 		colorSchemeToSlug,
@@ -12,7 +11,7 @@
 	import { cubicOut } from 'svelte/easing';
 
 	type Color = {
-		id: string;
+		id: number;
 		hex: string;
 		locked: boolean;
 	};
@@ -23,13 +22,18 @@
 	const MAX_COLOR_SCHEME_SIZE = 5;
 
 	let open = true;
+	let currentId = 0;
 
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
-			return { id: uniqid(), hex: color, locked: false };
+			return { id: uniqueId(), hex: color, locked: false };
 		})
 	];
 	let colorSchemeIndex = 0;
+
+	function uniqueId(): number {
+		return currentId++;
+	}
 
 	function gotoColorScheme(): void {
 		goto(
@@ -83,7 +87,7 @@
 
 			newColorScheme.push(
 				...generateColorScheme(1).map((color) => {
-					return { id: uniqid(), hex: color, locked: false };
+					return { id: uniqueId(), hex: color, locked: false };
 				})
 			);
 			colorSchemes = [newColorScheme, ...colorSchemes];
