@@ -217,7 +217,7 @@
 		{/each}
 	</div>
 	{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
-		<button class="button ml-4" on:click={addColor} transition:slide={{ duration: 150, axis: 'x' }}>
+		<button class="button ml-4" transition:slide={{ duration: 150, axis: 'x' }} on:click={addColor}>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
 				<path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z" />
 			</svg>
