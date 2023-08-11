@@ -131,7 +131,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-4 right-4 h-72 p-4 flex justify-center border-3 border-b-0 rounded-t-lg bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-4 right-4 h-72 p-4 flex justify-center border-3 border-b-0 rounded-t-md bg-white border-black transition-transform duration-150"
 	class:translate-y-full={!open}
 >
 	<button
@@ -178,7 +178,7 @@
 		{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 			{@const contrast = contrastingColor(color.hex)}
 			<div
-				class="flex-1 p-4 flex flex-col justify-between items-center border-3 rounded-lg border-black transition-colors duration-150"
+				class="flex-1 p-4 flex flex-col justify-between items-center border-3 rounded-md border-black transition-colors duration-150"
 				style={`background-color: ${color.hex};`}
 				in:receive={{ key: color.id }}
 				out:send={{ key: color.id }}
