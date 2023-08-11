@@ -128,9 +128,9 @@
 				duration: 150,
 				easing: cubicOut,
 				css: (t) => `
-				transform: ${transform} scale(${t});
-				opacity: ${t}
-			`
+					transform: ${transform} scale(${t});
+					opacity: ${t}
+				`
 			};
 		}
 	});
