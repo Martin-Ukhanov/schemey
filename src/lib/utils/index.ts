@@ -44,3 +44,7 @@ export function slugToColorScheme(slug: string): string[] {
 export function validColorSchemeSlug(slug: string): boolean {
 	return /^(?:[0-9a-fA-F]{6})(?:-[0-9a-fA-F]{6}){1,4}$/.test(slug);
 }
+
+export function copyToClipboard(s: string): void {
+	navigator.clipboard.writeText(s);
+}
