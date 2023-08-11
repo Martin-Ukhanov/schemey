@@ -17,6 +17,8 @@
 	const MIN_COLOR_SCHEME_SIZE = 2;
 	const MAX_COLOR_SCHEME_SIZE = 5;
 
+	let open = true;
+
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
 			return { id: uniqid(), hex: color, locked: false };
@@ -123,7 +125,27 @@
 	});
 </script>
 
-<menu class="fixed bottom-4 left-4 right-4 h-64 p-4 flex border-3 rounded-lg bg-white border-black">
+<menu
+	class="fixed bottom-0 left-4 right-4 h-64 p-4 flex justify-center border-3 border-b-0 rounded-t-lg bg-white border-black transition-transform duration-150"
+	class:translate-y-full={!open}
+>
+	<button
+		class="button absolute bottom-full !scale-100 border-b-0 rounded-b-none !brightness-100"
+		on:click={() => {
+			open = !open;
+		}}
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			class="w-8 fill-black"
+			class:rotate-180={open}
+		>
+			<path
+				d="M3 19h18a1.002 1.002 0 0 0 .823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 0 0 3 19z"
+			/>
+		</svg>
+	</button>
 	<div class=" mr-4 flex gap-x-4">
 		<button class="button" on:click={addColorScheme}>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
