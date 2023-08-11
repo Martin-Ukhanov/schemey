@@ -113,7 +113,7 @@
 		colorSchemes[colorSchemeIndex][index].locked = !colorSchemes[colorSchemeIndex][index].locked;
 	}
 
-	export const [send, receive] = crossfade({
+	const [send, receive] = crossfade({
 		fallback(node) {
 			const style = getComputedStyle(node);
 			const transform = style.transform === 'none' ? '' : style.transform;
