@@ -14,7 +14,6 @@
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "^2.0.8",
 		"@sveltejs/kit": "^1.20.4",
-		"@types/uniqid": "^5.3.2",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
@@ -33,7 +32,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"iwanthue": "^2.0.0",
-		"uniqid": "^5.4.0"
+		"iwanthue": "^2.0.0"
 	}
 }
