@@ -23,7 +23,7 @@
 
 @layer components {
 	.button {
-		@apply p-4 flex justify-center items-center border-3 outline-none rounded-md uppercase bg-white text-black border-black hover:brightness-[0.8] active:brightness-[0.7] cursor-pointer transition-[background-color,color,filter] duration-150;
+		@apply p-4 flex justify-center items-center border-3 outline-none rounded-md uppercase bg-white text-black border-black hover:brightness-80 active:brightness-70 cursor-pointer transition-[background-color,color,filter] duration-150;
 	}
 
 	.button-transparent-black {
