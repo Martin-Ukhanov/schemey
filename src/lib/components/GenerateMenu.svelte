@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import {
+		COLOR_SPACE_PRESETS,
 		generateColorScheme,
 		colorSchemeToSlug,
 		contrastingColor,
 		copyToClipboard
 	} from '$lib/utils';
-	import { slide, crossfade } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
+	import { crossfade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { flip } from 'svelte/animate';
 
 	type Color = {
 		id: number;
@@ -22,19 +23,19 @@
 	const MAX_COLOR_SCHEME_SIZE = 5;
 
 	let open = true;
-	let currentId = 0;
-
+	let colorSpace = 'all';
+	let currentColorId = 0;
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
-			return { id: uniqueId(), hex: color, locked: false };
+			return { id: uniqueColorId(), hex: color, locked: false };
 		})
 	];
 	let colorSchemeIndex = 0;
 
-	function uniqueId(): number {
-		const id = currentId;
-		currentId++;
-		return id;
+	function uniqueColorId(): number {
+		const colorId = currentColorId;
+		currentColorId++;
+		return colorId;
 	}
 
 	function gotoColorScheme(): void {
@@ -50,7 +51,7 @@
 
 		if (newColorsCount > 0) {
 			const newColorScheme = structuredClone(currentColorScheme);
-			const newColors = generateColorScheme(newColorsCount);
+			const newColors = generateColorScheme(newColorsCount, COLOR_SPACE_PRESETS[colorSpace]);
 
 			for (let i = 0; i < newColorScheme.length; i++) {
 				if (!newColorScheme[i].locked) {
@@ -88,8 +89,8 @@
 			const newColorScheme = structuredClone(currentColorScheme);
 
 			newColorScheme.push(
-				...generateColorScheme(1).map((color) => {
-					return { id: uniqueId(), hex: color, locked: false };
+				...generateColorScheme(1, COLOR_SPACE_PRESETS[colorSpace]).map((color) => {
+					return { id: uniqueColorId(), hex: color, locked: false };
 				})
 			);
 			colorSchemes = [newColorScheme, ...colorSchemes];
