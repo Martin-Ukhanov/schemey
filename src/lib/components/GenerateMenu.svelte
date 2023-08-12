@@ -217,13 +217,6 @@
 	</div>
 	<div class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
 		<div class="sm:w-36 h-full flex flex-col gap-y-4">
-			<button class="button">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-					<path
-						d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
-					/>
-				</svg>
-			</button>
 			<button
 				class="button font-bold"
 				on:click={() => {
@@ -259,6 +252,13 @@
 					</svg>
 				</button>
 			</div>
+			<button class="button">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
+					<path
+						d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
+					/>
+				</svg>
+			</button>
 		</div>
 		<div class="flex-1 flex flex-col lg:flex-row">
 			<div
