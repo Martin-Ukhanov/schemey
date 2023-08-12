@@ -36,3 +36,9 @@
 		@apply button-transparent-black hover:bg-white/20 active:bg-white/30;
 	}
 }
+
+@layer utilities {
+	.no-scroll {
+		@apply fixed w-full h-full overflow-hidden;
+	}
+}
