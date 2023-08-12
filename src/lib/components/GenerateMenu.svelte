@@ -157,7 +157,7 @@
 >
 	<div class="absolute bottom-full left-4 flex gap-x-2">
 		<button
-			class="button border-b-0 rounded-b-none !brightness-100"
+			class="button rounded-b-none !brightness-100"
 			on:click={() => {
 				menuOpen = !menuOpen;
 			}}
@@ -175,7 +175,7 @@
 		</button>
 		{#if menuOpen}
 			<button
-				class="button border-b-0 rounded-b-none !brightness-100"
+				class="button rounded-b-none !brightness-100"
 				on:mousedown={(e) => {
 					let mouseY = e.y;
 
