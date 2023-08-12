@@ -141,6 +141,10 @@
 			};
 		}
 	});
+
+	$: if (browser) {
+		document.body.classList.toggle('no-scroll', menuOpen);
+	}
 </script>
 
 <menu
