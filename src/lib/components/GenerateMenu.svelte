@@ -178,15 +178,33 @@
 				class="button border-b-0 rounded-b-none !brightness-100"
 				on:mousedown={(e) => {
 					let mouseY = e.y;
+
 					if (browser) {
 						document.onmousemove = (e) => {
 							const dy = mouseY - e.y;
 							mouseY = e.y;
 							menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
 						};
+
 						document.onmouseup = () => {
 							document.onmousemove = null;
 							document.onmouseup = null;
+						};
+					}
+				}}
+				on:touchstart={(e) => {
+					let touchY = e.touches[0].clientY;
+
+					if (browser) {
+						document.ontouchmove = (e) => {
+							const dy = touchY - e.touches[0].clientY;
+							touchY = e.touches[0].clientY;
+							menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
+						};
+
+						document.ontouchend = () => {
+							document.ontouchmove = null;
+							document.ontouchend = null;
 						};
 					}
 				}}
