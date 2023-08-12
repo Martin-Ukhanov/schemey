@@ -23,11 +23,11 @@
 	}
 
 	.button:disabled {
-		@apply border-gray-500 text-gray-500;
+		@apply border-gray-400 text-gray-400;
 	}
 
 	.button:disabled svg {
-		@apply fill-gray-500;
+		@apply fill-gray-400;
 	}
 }
 
