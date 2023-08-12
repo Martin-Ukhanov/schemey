@@ -260,7 +260,7 @@
 				</svg>
 			</button>
 		</div>
-		<div class="flex-1 flex flex-col lg:flex-row">
+		<div class="flex-1 flex flex-col sm:flex-row">
 			<div
 				class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-scroll"
 			>
@@ -370,11 +370,11 @@
 					</div>
 				{/each}
 			</div>
-			{#key menuWidth < 1024}
+			{#key menuWidth < 640}
 				{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 					<button
-						class="button lg:ml-4 max-lg:mt-4"
-						transition:slide={{ duration: 200, axis: menuWidth < 1024 ? 'y' : 'x' }}
+						class="button max-sm:mt-4 sm:ml-4"
+						transition:slide={{ duration: 200, axis: menuWidth < 640 ? 'y' : 'x' }}
 						on:click={addColor}
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
