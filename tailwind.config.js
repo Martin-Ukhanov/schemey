@@ -9,6 +9,9 @@ export default {
 			fontFamily: {
 				montserrat: ['Montserrat', 'sans-serif']
 			},
+			maxWidth: (theme) => ({
+				...theme('spacing')
+			}),
 			minHeight: (theme) => ({
 				...theme('spacing')
 			}),
