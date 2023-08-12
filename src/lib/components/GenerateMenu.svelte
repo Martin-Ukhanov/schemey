@@ -93,12 +93,13 @@
 
 		if (currentColorScheme.length < MAX_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
-
 			newColorScheme.push(
 				...generateColorScheme(1, COLOR_SPACE_PRESETS[colorSpace]).map((color) => {
 					return { id: uniqueColorId(), hex: color, locked: false };
 				})
 			);
+
+			colorSchemes.splice(0, colorSchemeIndex);
 			colorSchemes = [newColorScheme, ...colorSchemes];
 
 			colorSchemeIndex = 0;
@@ -112,8 +113,9 @@
 
 		if (currentColorScheme.length > MIN_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
-
 			newColorScheme.splice(index, 1);
+
+			colorSchemes.splice(0, colorSchemeIndex);
 			colorSchemes = [newColorScheme, ...colorSchemes];
 
 			colorSchemeIndex = 0;
