@@ -141,11 +141,11 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 h-96 p-4 flex justify-center border-t-3 bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-0 right-0 h-96 p-4 flex border-t-3 bg-white border-black transition-transform duration-150"
 	class:translate-y-full={!menuOpen}
 >
 	<button
-		class="button absolute p-2 bottom-full border-b-0 rounded-b-none !brightness-100"
+		class="button absolute p-2 bottom-full left-4 border-b-0 rounded-b-none !brightness-100"
 		on:click={() => {
 			menuOpen = !menuOpen;
 		}}
