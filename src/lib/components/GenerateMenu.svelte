@@ -24,6 +24,7 @@
 	const MIN_COLOR_SCHEME_SIZE = 2;
 	const MAX_COLOR_SCHEME_SIZE = 5;
 
+	let menuWidth: number;
 	let menuOpen = true;
 	let colorSpace = 'all';
 	let colorSpaceModalOpen = false;
@@ -140,19 +141,10 @@
 	});
 </script>
 
-<!-- <menu class="fixed top-0 left-0 right-0 p-4 border-b-3 bg-white border-black">
-	<button class="button flex-1" on:click={addColorScheme}>
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-			<path
-				d="M10 11H7.101l.001-.009a4.956 4.956 0 0 1 .752-1.787 5.054 5.054 0 0 1 2.2-1.811c.302-.128.617-.226.938-.291a5.078 5.078 0 0 1 2.018 0 4.978 4.978 0 0 1 2.525 1.361l1.416-1.412a7.036 7.036 0 0 0-2.224-1.501 6.921 6.921 0 0 0-1.315-.408 7.079 7.079 0 0 0-2.819 0 6.94 6.94 0 0 0-1.316.409 7.04 7.04 0 0 0-3.08 2.534 6.978 6.978 0 0 0-1.054 2.505c-.028.135-.043.273-.063.41H2l4 4 4-4zm4 2h2.899l-.001.008a4.976 4.976 0 0 1-2.103 3.138 4.943 4.943 0 0 1-1.787.752 5.073 5.073 0 0 1-2.017 0 4.956 4.956 0 0 1-1.787-.752 5.072 5.072 0 0 1-.74-.61L7.05 16.95a7.032 7.032 0 0 0 2.225 1.5c.424.18.867.317 1.315.408a7.07 7.07 0 0 0 2.818 0 7.031 7.031 0 0 0 4.395-2.945 6.974 6.974 0 0 0 1.053-2.503c.027-.135.043-.273.063-.41H22l-4-4-4 4z"
-			/>
-		</svg>
-	</button>
-</menu> -->
-
 <menu
-	class="fixed bottom-0 left-0 right-0 h-96 p-4 flex border-t-3 bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-0 right-0 h-96 p-4 flex flex-col sm:flex-row gap-4 border-t-3 overflow-y-auto bg-white border-black transition-transform duration-150"
 	class:translate-y-full={!menuOpen}
+	bind:clientWidth={menuWidth}
 >
 	<button
 		class="button absolute p-2 bottom-full left-4 border-b-0 rounded-b-none !brightness-100"
@@ -171,7 +163,7 @@
 			/>
 		</svg>
 	</button>
-	<div class="w-36 mr-4 flex flex-col gap-y-4">
+	<div class="sm:w-36 h-full flex flex-col gap-y-4">
 		<button class="button">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
 				<path
@@ -211,24 +203,61 @@
 			</button>
 		</div>
 	</div>
-	<div class="flex-1 flex gap-4">
-		{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
-			{@const contrast = contrastingColor(color.hex)}
-			<div
-				class="flex-1 p-4 flex flex-col justify-between items-center border-3 rounded-md border-black transition-colors duration-150"
-				style={`background-color: ${color.hex};`}
-				in:receive={{ key: color.id }}
-				out:send={{ key: color.id }}
-				animate:flip={{ duration: 150 }}
-			>
-				<div>
-					{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
+	<div class="flex-1 flex flex-col lg:flex-row">
+		<div class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-auto">
+			{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
+				{@const contrast = contrastingColor(color.hex)}
+				<div
+					class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 rounded-md overflow-x-auto border-black transition-colors duration-150"
+					style={`background-color: ${color.hex};`}
+					in:receive={{ key: color.id }}
+					out:send={{ key: color.id }}
+					animate:flip={{ duration: 150 }}
+				>
+					<div class="flex flex-row lg:flex-col">
+						{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
+							<button
+								class={contrast === '#000000'
+									? 'button-transparent-black'
+									: 'button-transparent-white'}
+								on:click={() => {
+									removeColor(index);
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									class="w-8"
+									style={`fill: ${contrast}`}
+								>
+									<path
+										d="M21 5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5zm-4.793 9.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"
+									/>
+								</svg>
+							</button>
+						{/if}
+						<button
+							class={contrast === '#000000'
+								? 'button-transparent-black'
+								: 'button-transparent-white'}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="w-8"
+								style={`fill: ${contrast}`}
+							>
+								<path
+									d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
+								/>
+							</svg>
+						</button>
 						<button
 							class={contrast === '#000000'
 								? 'button-transparent-black'
 								: 'button-transparent-white'}
 							on:click={() => {
-								removeColor(index);
+								copyToClipboard(color.hex.toUpperCase());
 							}}
 						>
 							<svg
@@ -238,85 +267,62 @@
 								style={`fill: ${contrast}`}
 							>
 								<path
-									d="M21 5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5zm-4.793 9.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"
+									d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"
+								/>
+								<path
+									d="M20 2H10a2 2 0 0 0-2 2v2h8a2 2 0 0 1 2 2v8h2a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"
 								/>
 							</svg>
 						</button>
-					{/if}
+						<button
+							class={contrast === '#000000'
+								? 'button-transparent-black'
+								: 'button-transparent-white'}
+							on:click={() => {
+								toggleLockedColor(index);
+							}}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="w-8"
+								style={`fill: ${contrast}`}
+							>
+								{#if color.locked}
+									<path
+										d="M20 12c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"
+									/>
+								{:else}
+									<path
+										d="M17 8V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2H9V7c0-1.654 1.346-3 3-3s3 1.346 3 3v1h2z"
+									/>
+								{/if}
+							</svg>
+						</button>
+					</div>
 					<button
 						class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
+						style={`color: ${contrast}`}
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							class="w-8"
-							style={`fill: ${contrast}`}
-						>
-							<path
-								d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
-							/>
-						</svg>
-					</button>
-					<button
-						class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
-						on:click={() => {
-							copyToClipboard(color.hex.toUpperCase());
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							class="w-8"
-							style={`fill: ${contrast}`}
-						>
-							<path
-								d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"
-							/>
-							<path
-								d="M20 2H10a2 2 0 0 0-2 2v2h8a2 2 0 0 1 2 2v8h2a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"
-							/>
-						</svg>
-					</button>
-					<button
-						class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
-						on:click={() => {
-							toggleLockedColor(index);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							class="w-8"
-							style={`fill: ${contrast}`}
-						>
-							{#if color.locked}
-								<path
-									d="M20 12c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"
-								/>
-							{:else}
-								<path
-									d="M17 8V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2H9V7c0-1.654 1.346-3 3-3s3 1.346 3 3v1h2z"
-								/>
-							{/if}
-						</svg>
+						<span class="text-lg font-bold">{color.hex}</span>
 					</button>
 				</div>
+			{/each}
+		</div>
+		{#key menuWidth < 1024}
+			{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 				<button
-					class={contrast === '#000000' ? 'button-transparent-black' : 'button-transparent-white'}
-					style={`color: ${contrast}`}
+					class="button lg:ml-4 max-lg:mt-4"
+					transition:slide={{ duration: 150, axis: menuWidth < 1024 ? 'y' : 'x' }}
+					on:click={addColor}
 				>
-					<span class="text-lg font-bold">{color.hex}</span>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
+						<path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z" />
+					</svg>
 				</button>
-			</div>
-		{/each}
+			{/if}
+		{/key}
 	</div>
-	{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
-		<button class="button ml-4" transition:slide={{ duration: 150, axis: 'x' }} on:click={addColor}>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-				<path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z" />
-			</svg>
-		</button>
-	{/if}
 </menu>
 <Modal title="Color Space" bind:open={colorSpaceModalOpen}>
 	<List items={Object.keys(COLOR_SPACE_PRESETS)} bind:selectedItem={colorSpace} />
