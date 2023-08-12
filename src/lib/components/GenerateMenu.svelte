@@ -7,6 +7,7 @@
 		contrastingColor,
 		copyToClipboard
 	} from '$lib/utils';
+	import { browser } from '$app/environment';
 	import { crossfade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { flip } from 'svelte/animate';
@@ -24,6 +25,7 @@
 	const MIN_COLOR_SCHEME_SIZE = 2;
 	const MAX_COLOR_SCHEME_SIZE = 5;
 
+	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
 	let menuOpen = true;
 	let colorSpace = 'all';
@@ -142,27 +144,53 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 h-96 border-t-3 bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-0 right-0 min-h-80 h-80 max-h-[calc(100%-theme(spacing.16))] border-t-3 bg-white border-black transition-transform duration-150"
 	class:translate-y-full={!menuOpen}
+	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
 >
-	<button
-		class="button absolute p-2 bottom-full left-4 border-b-0 rounded-b-none !brightness-100"
-		on:click={() => {
-			menuOpen = !menuOpen;
-		}}
-	>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 24 24"
-			class="w-8 fill-black"
-			class:rotate-180={menuOpen}
+	<div class="absolute bottom-full left-4 flex gap-x-2">
+		<button
+			class="button border-b-0 rounded-b-none !brightness-100"
+			on:click={() => {
+				menuOpen = !menuOpen;
+			}}
 		>
-			<path
-				d="M3 19h18a1.002 1.002 0 0 0 .823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 0 0 3 19z"
-			/>
-		</svg>
-	</button>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				class="w-8 fill-black"
+				class:rotate-180={menuOpen}
+			>
+				<path
+					d="M3 19h18a1.002 1.002 0 0 0 .823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 0 0 3 19z"
+				/>
+			</svg>
+		</button>
+		{#if menuOpen}
+			<button
+				class="button border-b-0 rounded-b-none !brightness-100"
+				on:mousedown={(e) => {
+					let mouseY = e.y;
+					if (browser) {
+						document.onmousemove = (e) => {
+							const dy = mouseY - e.y;
+							mouseY = e.y;
+							menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
+						};
+						document.onmouseup = () => {
+							document.onmousemove = null;
+							document.onmouseup = null;
+						};
+					}
+				}}
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
+					<path d="m7 17 5 5 5-5h-4V7h4l-5-5-5 5h4v10z" />
+				</svg>
+			</button>
+		{/if}
+	</div>
 	<div class="w-full h-full p-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
 		<div class="sm:w-36 h-full flex flex-col gap-y-4">
 			<button class="button">
