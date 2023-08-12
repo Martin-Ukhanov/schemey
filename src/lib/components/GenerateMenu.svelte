@@ -233,7 +233,9 @@
 			</div>
 		</div>
 		<div class="flex-1 flex flex-col lg:flex-row">
-			<div class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-auto">
+			<div
+				class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-scroll"
+			>
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 					{@const contrast = contrastingColor(color.hex)}
 					<div
@@ -243,7 +245,7 @@
 						out:send={{ key: color.id }}
 						animate:flip={{ duration: 150 }}
 					>
-						<div class="flex flex-row lg:flex-col">
+						<div class="flex flex-row-reverse lg:flex-col">
 							{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
 								<button
 									class={contrast === '#000000'
