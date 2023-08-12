@@ -144,7 +144,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 min-h-80 h-80 max-h-[calc(100%-theme(spacing.16))] border-t-3 bg-white border-black transition-transform duration-200"
+	class="fixed bottom-0 left-0 right-0 min-h-80 h-80 max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-200"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -191,7 +191,7 @@
 			</button>
 		{/if}
 	</div>
-	<div class="w-full h-full p-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
+	<div class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
 		<div class="sm:w-36 h-full flex flex-col gap-y-4">
 			<button class="button">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
