@@ -6,6 +6,9 @@ export default {
 			fontFamily: {
 				montserrat: ['Montserrat', 'sans-serif']
 			},
+			minHeight: (theme) => ({
+				...theme('spacing')
+			}),
 			borderWidth: {
 				3: '3px'
 			},
