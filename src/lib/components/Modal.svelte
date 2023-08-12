@@ -8,11 +8,11 @@
 {#if open}
 	<div
 		class="absolute top-0 left-0 w-full h-full bg-black/50"
-		transition:fade={{ duration: 150 }}
+		transition:fade={{ duration: 200 }}
 	/>
 	<div
 		class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-96"
-		transition:scale={{ duration: 150 }}
+		transition:scale={{ duration: 200 }}
 	>
 		<div class="h-80 p-4 mx-4 flex flex-col gap-y-4 border-3 rounded-md bg-white border-black">
 			<div class="relative flex justify-center items-center">

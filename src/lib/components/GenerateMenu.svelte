@@ -132,7 +132,7 @@
 			const transform = style.transform === 'none' ? '' : style.transform;
 
 			return {
-				duration: 150,
+				duration: 200,
 				easing: cubicOut,
 				css: (t) => `
 					transform: ${transform} scale(${t});
@@ -144,7 +144,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 min-h-80 h-80 max-h-[calc(100%-theme(spacing.16))] border-t-3 bg-white border-black transition-transform duration-150"
+	class="fixed bottom-0 left-0 right-0 min-h-80 h-80 max-h-[calc(100%-theme(spacing.16))] border-t-3 bg-white border-black transition-transform duration-200"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -239,11 +239,11 @@
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 					{@const contrast = contrastingColor(color.hex)}
 					<div
-						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black transition-colors duration-150"
+						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black transition-colors duration-200"
 						style={`background-color: ${color.hex};`}
 						in:receive={{ key: color.id }}
 						out:send={{ key: color.id }}
-						animate:flip={{ duration: 150 }}
+						animate:flip={{ duration: 200 }}
 					>
 						<div class="flex flex-row-reverse lg:flex-col">
 							{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
@@ -346,7 +346,7 @@
 				{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 					<button
 						class="button lg:ml-4 max-lg:mt-4"
-						transition:slide={{ duration: 150, axis: menuWidth < 1024 ? 'y' : 'x' }}
+						transition:slide={{ duration: 200, axis: menuWidth < 1024 ? 'y' : 'x' }}
 						on:click={addColor}
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
