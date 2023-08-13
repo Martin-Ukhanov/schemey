@@ -25,6 +25,8 @@
 	import PlusIcon from './icons/PlusIcon.svelte';
 	import Modal from './Modal.svelte';
 	import List from './List.svelte';
+	import Notifications from './Notifications.svelte';
+	import { addNotification } from '$lib/stores/notifications';
 
 	type Color = {
 		id: number;
@@ -305,6 +307,7 @@
 										: 'button-transparent-white'}
 									on:click={() => {
 										copyToClipboard(color.hex.toUpperCase());
+										addNotification('Color Copied', color.hex);
 									}}
 								>
 									<CopyIcon />
@@ -355,3 +358,5 @@
 <Modal title="Color Space" bind:open={colorSpaceModalOpen}>
 	<List items={Object.keys(COLOR_SPACE_PRESETS)} bind:selectedItem={colorSpace} />
 </Modal>
+
+<Notifications />
