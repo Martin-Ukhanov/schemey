@@ -39,7 +39,7 @@
 </script>
 
 <div
-	class="h-screen transition-colors duration-200"
+	class="h-screen"
 	style={`background-color: ${primaryBackgroundColor}; color: ${primaryBackgroundContrastColor}`}
 >
 	<h1 class="text-5xl mb-4">Hello World</h1>

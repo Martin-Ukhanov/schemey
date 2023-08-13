@@ -11,6 +11,18 @@
 	import { crossfade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { flip } from 'svelte/animate';
+	import ArrowUpIcon from './icons/ArrowUpIcon.svelte';
+	import ArrowDownIcon from './icons/ArrowDownIcon.svelte';
+	import ResizeIcon from './icons/ResizeIcon.svelte';
+	import GenerateIcon from './icons/GenerateIcon.svelte';
+	import UndoIcon from './icons/UndoIcon.svelte';
+	import RedoIcon from './icons/RedoIcon.svelte';
+	import BookmarkIcon from './icons/BookmarkIcon.svelte';
+	import XSquareIcon from './icons/XSquareIcon.svelte';
+	import CopyIcon from './icons/CopyIcon.svelte';
+	import LockedIcon from './icons/LockedIcon.svelte';
+	import UnlockedIcon from './icons/UnlockedIcon.svelte';
+	import PlusIcon from './icons/PlusIcon.svelte';
 	import Modal from './Modal.svelte';
 	import List from './List.svelte';
 
@@ -162,16 +174,11 @@
 				menuOpen = !menuOpen;
 			}}
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				class="w-8 fill-black"
-				class:rotate-180={menuOpen}
-			>
-				<path
-					d="M3 19h18a1.002 1.002 0 0 0 .823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 0 0 3 19z"
-				/>
-			</svg>
+			{#if menuOpen}
+				<ArrowDownIcon />
+			{:else}
+				<ArrowUpIcon />
+			{/if}
 		</button>
 		{#if menuOpen}
 			<button
@@ -209,9 +216,7 @@
 					}
 				}}
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-					<path d="m7 17 5 5 5-5h-4V7h4l-5-5-5 5h4v10z" />
-				</svg>
+				<ResizeIcon />
 			</button>
 		{/if}
 	</div>
@@ -226,11 +231,7 @@
 				{colorSpace}
 			</button>
 			<button class="button flex-1" on:click={addColorScheme}>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-					<path
-						d="M7.08 11.25A4.84 4.84 0 0 1 8 9.05L4.43 5.49A9.88 9.88 0 0 0 2 11.25zM9.05 8a4.84 4.84 0 0 1 2.2-.91V2a9.88 9.88 0 0 0-5.76 2.43zm3.7-6v5A4.84 4.84 0 0 1 15 8l3.56-3.56A9.88 9.88 0 0 0 12.75 2zM8 15a4.84 4.84 0 0 1-.91-2.2H2a9.88 9.88 0 0 0 2.39 5.76zm3.25 1.92a4.84 4.84 0 0 1-2.2-.92l-3.56 3.57A9.88 9.88 0 0 0 11.25 22zM16 9.05a4.84 4.84 0 0 1 .91 2.2h5a9.88 9.88 0 0 0-2.39-5.76zM15 16a4.84 4.84 0 0 1-2.2.91v5a9.88 9.88 0 0 0 5.76-2.39zm1.92-3.25A4.84 4.84 0 0 1 16 15l3.56 3.56A9.88 9.88 0 0 0 22 12.75z"
-					/>
-				</svg>
+				<GenerateIcon />
 			</button>
 			<div class="flex gap-x-4">
 				<button
@@ -238,26 +239,14 @@
 					on:click={undoColorScheme}
 					disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-						<path
-							d="M9 10h6c1.654 0 3 1.346 3 3s-1.346 3-3 3h-3v2h3c2.757 0 5-2.243 5-5s-2.243-5-5-5H9V5L4 9l5 4v-3z"
-						/>
-					</svg>
+					<UndoIcon />
 				</button>
 				<button class="button flex-1" on:click={redoColorScheme} disabled={colorSchemeIndex === 0}>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-						<path
-							d="M9 18h3v-2H9c-1.654 0-3-1.346-3-3s1.346-3 3-3h6v3l5-4-5-4v3H9c-2.757 0-5 2.243-5 5s2.243 5 5 5z"
-						/>
-					</svg>
+					<RedoIcon />
 				</button>
 			</div>
 			<button class="button">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-					<path
-						d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
-					/>
-				</svg>
+				<BookmarkIcon />
 			</button>
 		</div>
 		<div class="flex-1 flex flex-col sm:flex-row">
@@ -267,7 +256,7 @@
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 					{@const contrastColor = contrastingColor(color.hex)}
 					<div
-						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black transition-colors duration-200"
+						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
 						in:receive={{ key: color.id }}
 						out:send={{ key: color.id }}
@@ -284,16 +273,7 @@
 											removeColor(index);
 										}}
 									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											class="w-8"
-											style={`fill: ${contrastColor}`}
-										>
-											<path
-												d="M21 5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5zm-4.793 9.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"
-											/>
-										</svg>
+										<XSquareIcon />
 									</button>
 								{/if}
 								<button
@@ -301,16 +281,7 @@
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										class="w-8"
-										style={`fill: ${contrastColor}`}
-									>
-										<path
-											d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
-										/>
-									</svg>
+									<BookmarkIcon />
 								</button>
 							</div>
 							<div class="flex">
@@ -322,19 +293,7 @@
 										copyToClipboard(color.hex.toUpperCase());
 									}}
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										class="w-8"
-										style={`fill: ${contrastColor}`}
-									>
-										<path
-											d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"
-										/>
-										<path
-											d="M20 2H10a2 2 0 0 0-2 2v2h8a2 2 0 0 1 2 2v8h2a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"
-										/>
-									</svg>
+									<CopyIcon />
 								</button>
 								<button
 									class={contrastColor === '#000000'
@@ -344,22 +303,11 @@
 										toggleLockedColor(index);
 									}}
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24"
-										class="w-8"
-										style={`fill: ${contrastColor}`}
-									>
-										{#if color.locked}
-											<path
-												d="M20 12c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z"
-											/>
-										{:else}
-											<path
-												d="M17 8V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2H9V7c0-1.654 1.346-3 3-3s3 1.346 3 3v1h2z"
-											/>
-										{/if}
-									</svg>
+									{#if color.locked}
+										<LockedIcon />
+									{:else}
+										<UnlockedIcon />
+									{/if}
 								</button>
 							</div>
 						</div>
@@ -367,7 +315,6 @@
 							class={contrastColor === '#000000'
 								? 'button-transparent-black'
 								: 'button-transparent-white'}
-							style={`color: ${contrastColor}`}
 						>
 							<span class="text-lg font-bold">{color.hex}</span>
 						</button>
@@ -381,9 +328,7 @@
 						transition:slide={{ duration: 200, axis: menuWidth < 640 ? 'y' : 'x' }}
 						on:click={addColor}
 					>
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 fill-black">
-							<path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z" />
-						</svg>
+						<PlusIcon />
 					</button>
 				{/if}
 			{/key}
