@@ -218,7 +218,7 @@
 	<div class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
 		<div class="sm:w-40 h-full flex flex-col gap-y-4">
 			<button
-				class="button font-bold"
+				class="button"
 				on:click={() => {
 					colorSpaceModalOpen = true;
 				}}
