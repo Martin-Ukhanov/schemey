@@ -7,7 +7,7 @@
 	{#each items as item}
 		<button
 			class="button mr-2 justify-start border-none text-left"
-			class:brightness-80={item === selectedItem}
+			class:brightness-70={item === selectedItem}
 			on:click={() => {
 				selectedItem = item;
 			}}
