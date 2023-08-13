@@ -182,7 +182,7 @@
 			const transform = style.transform === 'none' ? '' : style.transform;
 
 			return {
-				duration: 200,
+				duration: 300,
 				easing: cubicOut,
 				css: (t) => `
 					transform: ${transform} scale(${t});
@@ -198,7 +198,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 h-72 min-h-72 max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-200"
+	class="fixed bottom-0 left-0 right-0 h-72 min-h-72 max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -273,7 +273,7 @@
 						style={`background-color: ${color.hex};`}
 						in:receive={{ key: color.id }}
 						out:send={{ key: color.id }}
-						animate:flip={{ duration: 200 }}
+						animate:flip={{ duration: 300 }}
 					>
 						<div class="flex flex-col">
 							<div class="flex justify-center">
@@ -282,7 +282,7 @@
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
-										transition:slide={{ duration: 200, axis: 'x' }}
+										transition:slide={{ duration: 300, axis: 'x' }}
 										on:click={() => {
 											removeColor(index);
 										}}
@@ -344,7 +344,7 @@
 				{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 					<button
 						class="button max-sm:mt-4 sm:ml-4"
-						transition:slide={{ duration: 200, axis: menuWidth < 640 ? 'y' : 'x' }}
+						transition:slide={{ duration: 300, axis: menuWidth < 640 ? 'y' : 'x' }}
 						on:click={addColor}
 					>
 						<PlusIcon />
