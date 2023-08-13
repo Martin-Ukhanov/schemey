@@ -4,8 +4,8 @@
 
 @layer base {
 	@font-face {
-		font-family: 'Montserrat';
-		src: url('/fonts/Montserrat.ttf');
+		font-family: 'Poppins';
+		src: url('/fonts/Poppins.ttf');
 	}
 
 	* {
@@ -19,7 +19,7 @@
 	}
 
 	body {
-		@apply font-montserrat bg-white text-black;
+		@apply font-poppins bg-white text-black;
 	}
 
 	.button:disabled {
