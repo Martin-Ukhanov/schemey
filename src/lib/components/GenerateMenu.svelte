@@ -214,6 +214,7 @@
 				<ArrowUpIcon />
 			{/if}
 		</button>
+
 		{#if menuOpen}
 			<button
 				class="button rounded-b-none !brightness-100"
@@ -224,6 +225,7 @@
 			</button>
 		{/if}
 	</div>
+
 	<div class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
 		<div class="sm:w-40 flex flex-col gap-y-4">
 			<button
@@ -234,9 +236,11 @@
 			>
 				{colorSpace}
 			</button>
+
 			<button class="button flex-1" on:click={addColorScheme}>
 				<GenerateIcon />
 			</button>
+
 			<div class="flex gap-x-4">
 				<button
 					class="button flex-1"
@@ -245,14 +249,17 @@
 				>
 					<UndoIcon />
 				</button>
+
 				<button class="button flex-1" on:click={redoColorScheme} disabled={colorSchemeIndex === 0}>
 					<RedoIcon />
 				</button>
 			</div>
+
 			<button class="button">
 				<BookmarkIcon />
 			</button>
 		</div>
+
 		<div class="flex-1 flex flex-col sm:flex-row">
 			<div
 				class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-scroll"
@@ -281,6 +288,7 @@
 										<XSquareIcon />
 									</button>
 								{/if}
+
 								<button
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
@@ -289,6 +297,7 @@
 									<BookmarkIcon />
 								</button>
 							</div>
+
 							<div class="flex">
 								<button
 									class={contrastColor === '#000000'
@@ -300,6 +309,7 @@
 								>
 									<CopyIcon />
 								</button>
+
 								<button
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
@@ -316,6 +326,7 @@
 								</button>
 							</div>
 						</div>
+
 						<button
 							class={contrastColor === '#000000'
 								? 'button-transparent-black'
@@ -340,6 +351,7 @@
 		</div>
 	</div>
 </menu>
+
 <Modal title="Color Space" bind:open={colorSpaceModalOpen}>
 	<List items={Object.keys(COLOR_SPACE_PRESETS)} bind:selectedItem={colorSpace} />
 </Modal>

@@ -11,6 +11,7 @@
 		class="absolute top-0 left-0 w-full h-full bg-black/50"
 		transition:fade={{ duration: 200 }}
 	/>
+
 	<div
 		class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-80"
 		transition:scale={{ duration: 200 }}
@@ -25,8 +26,10 @@
 				>
 					<XIcon />
 				</button>
+
 				<div class="text-center text-xl font-bold text-black">{title}</div>
 			</div>
+
 			<slot />
 		</div>
 	</div>
