@@ -50,6 +50,40 @@
 	];
 	let colorSchemeIndex = 0;
 
+	function resizeMenuMouse(e: MouseEvent): void {
+		let mouseY = e.y;
+
+		if (browser) {
+			document.onmousemove = (e) => {
+				const dy = mouseY - e.y;
+				mouseY = e.y;
+				menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
+			};
+
+			document.onmouseup = () => {
+				document.onmousemove = null;
+				document.onmouseup = null;
+			};
+		}
+	}
+
+	function resizeMenuTouch(e: TouchEvent): void {
+		let touchY = e.touches[0].clientY;
+
+		if (browser) {
+			document.ontouchmove = (e) => {
+				const dy = touchY - e.touches[0].clientY;
+				touchY = e.touches[0].clientY;
+				menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
+			};
+
+			document.ontouchend = () => {
+				document.ontouchmove = null;
+				document.ontouchend = null;
+			};
+		}
+	}
+
 	function uniqueColorId(): number {
 		const colorId = currentColorId;
 		currentColorId++;
@@ -162,7 +196,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 min-h-72 h-72 max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-200"
+	class="fixed bottom-0 left-0 right-0 h-72 min-h-72 max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-200"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -183,45 +217,15 @@
 		{#if menuOpen}
 			<button
 				class="button rounded-b-none !brightness-100"
-				on:mousedown={(e) => {
-					let mouseY = e.y;
-
-					if (browser) {
-						document.onmousemove = (e) => {
-							const dy = mouseY - e.y;
-							mouseY = e.y;
-							menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
-						};
-
-						document.onmouseup = () => {
-							document.onmousemove = null;
-							document.onmouseup = null;
-						};
-					}
-				}}
-				on:touchstart={(e) => {
-					let touchY = e.touches[0].clientY;
-
-					if (browser) {
-						document.ontouchmove = (e) => {
-							const dy = touchY - e.touches[0].clientY;
-							touchY = e.touches[0].clientY;
-							menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
-						};
-
-						document.ontouchend = () => {
-							document.ontouchmove = null;
-							document.ontouchend = null;
-						};
-					}
-				}}
+				on:mousedown={resizeMenuMouse}
+				on:touchstart={resizeMenuTouch}
 			>
 				<ResizeIcon />
 			</button>
 		{/if}
 	</div>
 	<div class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
-		<div class="sm:w-40 h-full flex flex-col gap-y-4">
+		<div class="sm:w-40 flex flex-col gap-y-4">
 			<button
 				class="button"
 				on:click={() => {
@@ -269,6 +273,7 @@
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
+										transition:slide={{ duration: 200, axis: 'x' }}
 										on:click={() => {
 											removeColor(index);
 										}}
