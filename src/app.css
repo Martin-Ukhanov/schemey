@@ -4,8 +4,8 @@
 
 @layer base {
 	@font-face {
-		font-family: 'Poppins';
-		src: url('/fonts/Poppins.ttf');
+		font-family: 'Nunito';
+		src: url('/fonts/Nunito.ttf');
 	}
 
 	* {
@@ -19,7 +19,7 @@
 	}
 
 	body {
-		@apply font-poppins bg-white text-black;
+		@apply font-nunito bg-white text-black;
 	}
 
 	.button:disabled {
