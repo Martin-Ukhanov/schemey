@@ -265,7 +265,7 @@
 				class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-scroll"
 			>
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
-					{@const contrast = contrastingColor(color.hex)}
+					{@const contrastColor = contrastingColor(color.hex)}
 					<div
 						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black transition-colors duration-200"
 						style={`background-color: ${color.hex};`}
@@ -277,7 +277,7 @@
 							<div class="flex justify-center">
 								{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
 									<button
-										class={contrast === '#000000'
+										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
 										on:click={() => {
@@ -288,7 +288,7 @@
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 24 24"
 											class="w-8"
-											style={`fill: ${contrast}`}
+											style={`fill: ${contrastColor}`}
 										>
 											<path
 												d="M21 5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5zm-4.793 9.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"
@@ -297,7 +297,7 @@
 									</button>
 								{/if}
 								<button
-									class={contrast === '#000000'
+									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
 								>
@@ -305,7 +305,7 @@
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										class="w-8"
-										style={`fill: ${contrast}`}
+										style={`fill: ${contrastColor}`}
 									>
 										<path
 											d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"
@@ -315,7 +315,7 @@
 							</div>
 							<div class="flex">
 								<button
-									class={contrast === '#000000'
+									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
 									on:click={() => {
@@ -326,7 +326,7 @@
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										class="w-8"
-										style={`fill: ${contrast}`}
+										style={`fill: ${contrastColor}`}
 									>
 										<path
 											d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"
@@ -337,7 +337,7 @@
 									</svg>
 								</button>
 								<button
-									class={contrast === '#000000'
+									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
 									on:click={() => {
@@ -348,7 +348,7 @@
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										class="w-8"
-										style={`fill: ${contrast}`}
+										style={`fill: ${contrastColor}`}
 									>
 										{#if color.locked}
 											<path
@@ -364,10 +364,10 @@
 							</div>
 						</div>
 						<button
-							class={contrast === '#000000'
+							class={contrastColor === '#000000'
 								? 'button-transparent-black'
 								: 'button-transparent-white'}
-							style={`color: ${contrast}`}
+							style={`color: ${contrastColor}`}
 						>
 							<span class="text-lg font-bold">{color.hex}</span>
 						</button>
