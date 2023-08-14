@@ -204,7 +204,7 @@
 >
 	<div class="absolute bottom-full left-4 flex gap-x-2">
 		<button
-			class="button rounded-b-none !brightness-100"
+			class="button rounded-b-none"
 			on:click={() => {
 				menuOpen = !menuOpen;
 			}}
@@ -218,7 +218,7 @@
 
 		{#if menuOpen}
 			<button
-				class="button rounded-b-none !brightness-100"
+				class="button rounded-b-none"
 				on:mousedown={resizeMenuMouse}
 				on:touchstart={resizeMenuTouch}
 			>
