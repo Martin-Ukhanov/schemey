@@ -308,7 +308,7 @@
 										: 'button-transparent-white'}
 									on:click={() => {
 										copyToClipboard(color.hex.toUpperCase());
-										addNotification(`${color.hex} Copied to Clipboard`, 'copied', color.hex);
+										addNotification(`${color.hex} Copied`, 'copied', color.hex);
 									}}
 								>
 									<CopyIcon />
