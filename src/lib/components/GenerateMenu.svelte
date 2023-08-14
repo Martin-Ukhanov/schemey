@@ -388,6 +388,7 @@
 					</div>
 				{/each}
 			</div>
+
 			{#key menuWidth < 640}
 				{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 					<button
