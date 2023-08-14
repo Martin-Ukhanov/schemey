@@ -224,6 +224,7 @@
 		{#if menuOpen}
 			<button
 				class="button rounded-b-none"
+				transition:scale={{ duration: 300 }}
 				on:mousedown={resizeMenuMouse}
 				on:touchstart={resizeMenuTouch}
 			>
