@@ -232,7 +232,9 @@
 		{/if}
 	</div>
 
-	<div class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto">
+	<div
+		class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto sm:overflow-y-visible"
+	>
 		<div class="sm:w-40 flex flex-col gap-y-4">
 			<button
 				class="button"
