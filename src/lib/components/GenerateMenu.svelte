@@ -284,18 +284,21 @@
 					>
 						<div class="flex flex-row lg:flex-col">
 							<div class="flex flex-col lg:flex-row justify-center items-center">
-								{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
-									<button
-										class={contrastColor === '#000000'
-											? 'button-transparent-black'
-											: 'button-transparent-white'}
-										on:click={() => {
-											removeColor(index);
-										}}
-									>
-										<XSquareIcon />
-									</button>
-								{/if}
+								{#key menuWidth < 1024}
+									{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
+										<button
+											class={contrastColor === '#000000'
+												? 'button-transparent-black'
+												: 'button-transparent-white'}
+											transition:slide={{ duration: 300, axis: menuWidth < 1024 ? 'y' : 'x' }}
+											on:click={() => {
+												removeColor(index);
+											}}
+										>
+											<XSquareIcon />
+										</button>
+									{/if}
+								{/key}
 
 								<button
 									class={contrastColor === '#000000'
