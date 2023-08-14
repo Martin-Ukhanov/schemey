@@ -3,12 +3,13 @@ import { writable } from 'svelte/store';
 type Notification = {
 	id: number;
 	message: string;
+	icon: 'check' | 'copied' | 'unlocked' | 'locked';
 	color: string;
 };
 
 export const notifications = writable(<Notification[]>[]);
 
-export function addNotification(message: string, color = '#ffffff'): void {
+export function addNotification(message: string, icon = 'check', color = '#ffffff'): void {
 	let id: number;
 
 	notifications.update((values) => {
@@ -16,6 +17,7 @@ export function addNotification(message: string, color = '#ffffff'): void {
 		values.push({
 			id: id,
 			message: message,
+			icon: <'check' | 'copied' | 'unlocked' | 'locked'>icon,
 			color: color
 		});
 

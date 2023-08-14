@@ -4,9 +4,12 @@
 	import { fly, scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import CheckSquareIcon from './icons/CheckSquareIcon.svelte';
+	import CopyIcon from './icons/CopyIcon.svelte';
+	import UnlockedIcon from './icons/UnlockedIcon.svelte';
+	import LockedIcon from './icons/LockedIcon.svelte';
 </script>
 
-<div class="fixed top-4 left-1/2 -translate-x-1/2 flex flex-col-reverse gap-y-4">
+<div class="fixed top-4 left-1/2 -translate-x-1/2 flex flex-col-reverse items-center gap-y-4">
 	{#each $notifications as notification (notification.id)}
 		{@const contrastColor = contrastingColor(notification.color)}
 		<div
@@ -16,7 +19,15 @@
 			out:scale={{ duration: 300 }}
 			animate:flip={{ duration: 300 }}
 		>
-			<CheckSquareIcon />
+			{#if notification.icon === 'check'}
+				<CheckSquareIcon />
+			{:else if notification.icon === 'copied'}
+				<CopyIcon />
+			{:else if notification.icon === 'unlocked'}
+				<UnlockedIcon />
+			{:else if notification.icon === 'locked'}
+				<LockedIcon />
+			{/if}
 			{notification.message}
 		</div>
 	{/each}
