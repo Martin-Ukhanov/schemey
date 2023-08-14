@@ -24,7 +24,6 @@
 	import PlusIcon from './icons/PlusIcon.svelte';
 	import Modal from './Modal.svelte';
 	import List from './List.svelte';
-	import Notifications from './Notifications.svelte';
 	import { addNotification } from '$lib/stores/notifications';
 	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte';
 	import ArrowRightIcon from './icons/ArrowRightIcon.svelte';
@@ -397,5 +396,3 @@
 <Modal title="Color Space" bind:open={colorSpaceModalOpen}>
 	<List items={Object.keys(COLOR_SPACE_PRESETS)} bind:selectedItem={colorSpace} />
 </Modal>
-
-<Notifications />
