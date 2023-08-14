@@ -8,8 +8,7 @@
 		copyToClipboard
 	} from '$lib/utils';
 	import { browser } from '$app/environment';
-	import { crossfade, slide } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
+	import { scale, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import ArrowUpIcon from './icons/ArrowUpIcon.svelte';
 	import ArrowDownIcon from './icons/ArrowDownIcon.svelte';
@@ -193,22 +192,6 @@
 		colorSchemes[colorSchemeIndex][index].locked = !colorSchemes[colorSchemeIndex][index].locked;
 	}
 
-	const [send, receive] = crossfade({
-		fallback(node) {
-			const style = getComputedStyle(node);
-			const transform = style.transform === 'none' ? '' : style.transform;
-
-			return {
-				duration: 300,
-				easing: cubicOut,
-				css: (t) => `
-					transform: ${transform} scale(${t});
-					opacity: ${t}
-				`
-			};
-		}
-	});
-
 	$: if (browser) {
 		document.body.classList.toggle('no-scroll', menuOpen);
 	}
@@ -289,8 +272,8 @@
 					<div
 						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
-						in:receive={{ key: color.id }}
-						out:send={{ key: color.id }}
+						in:scale={{ duration: 300 }}
+						out:scale={{ duration: 300 }}
 						animate:flip={{ duration: 300 }}
 					>
 						<div class="flex flex-row lg:flex-col">
