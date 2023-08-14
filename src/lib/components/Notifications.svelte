@@ -9,11 +9,13 @@
 	import LockedIcon from './icons/LockedIcon.svelte';
 </script>
 
-<div class="fixed top-4 left-1/2 -translate-x-1/2 flex flex-col-reverse items-center gap-y-4">
+<div
+	class="fixed top-4 left-4 right-4 flex flex-col-reverse items-center gap-y-4 pointer-events-none"
+>
 	{#each $notifications as notification (notification.id)}
 		{@const contrastColor = contrastingColor(notification.color)}
 		<div
-			class="p-4 flex items-center gap-x-2 border-3 rounded-md border-black"
+			class="p-4 flex items-center gap-x-2 border-3 rounded-md border-black pointer-events-auto"
 			style={`background-color: ${notification.color}; color: ${contrastColor}; fill: ${contrastColor};`}
 			in:scale={{ duration: 300 }}
 			out:scale={{ duration: 300 }}
@@ -28,7 +30,7 @@
 			{:else if notification.icon === 'locked'}
 				<LockedIcon />
 			{/if}
-			<span class="uppercase">{notification.message}</span>
+			<span class="text-center uppercase">{notification.message}</span>
 		</div>
 	{/each}
 </div>
