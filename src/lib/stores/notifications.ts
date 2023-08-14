@@ -13,8 +13,8 @@ export function addNotification(message: string, icon = 'check', color = '#fffff
 	let id: number;
 
 	notifications.update((values) => {
-		id = values.length !== 0 ? values[values.length - 1].id + 1 : 0;
-		values.push({
+		id = values.length !== 0 ? values[0].id + 1 : 0;
+		values.unshift({
 			id: id,
 			message: message,
 			icon: <'check' | 'copied' | 'unlocked' | 'locked'>icon,
