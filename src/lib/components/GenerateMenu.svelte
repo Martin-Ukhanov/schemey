@@ -293,8 +293,8 @@
 						out:send={{ key: color.id }}
 						animate:flip={{ duration: 300 }}
 					>
-						<div class="flex flex-col">
-							<div class="flex justify-center">
+						<div class="flex flex-row lg:flex-col">
+							<div class="flex flex-col lg:flex-row justify-center items-center">
 								{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
 									<button
 										class={contrastColor === '#000000'
@@ -318,7 +318,7 @@
 								</button>
 							</div>
 
-							<div class="flex">
+							<div class="flex flex-col lg:flex-row">
 								<button
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
@@ -347,7 +347,7 @@
 								</button>
 							</div>
 
-							<div class="flex">
+							<div class="flex flex-col lg:flex-row">
 								<button
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
