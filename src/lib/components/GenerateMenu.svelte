@@ -282,7 +282,6 @@
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
-										transition:slide={{ duration: 300, axis: 'x' }}
 										on:click={() => {
 											removeColor(index);
 										}}
