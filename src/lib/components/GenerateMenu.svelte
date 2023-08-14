@@ -387,7 +387,7 @@
 			{#key menuWidth < 640}
 				{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 					<button
-						class="button max-sm:mt-4 sm:ml-4"
+						class="button mt-4 sm:mt-0 sm:ml-4"
 						transition:slide={{ duration: 300, axis: menuWidth < 640 ? 'y' : 'x' }}
 						on:click={addColor}
 					>
