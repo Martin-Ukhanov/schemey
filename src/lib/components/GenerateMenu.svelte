@@ -38,6 +38,7 @@
 
 	const MIN_COLOR_SCHEME_SIZE = 2;
 	const MAX_COLOR_SCHEME_SIZE = 5;
+	const MAX_COLOR_SCHEMES_LENGTH = 100;
 
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
@@ -193,6 +194,10 @@
 
 	$: if (browser) {
 		document.body.classList.toggle('no-scroll', menuOpen);
+	}
+
+	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
+		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
 	}
 </script>
 
