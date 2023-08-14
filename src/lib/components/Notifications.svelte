@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { notifications } from '$lib/stores/notifications';
+	import { notifications, dismissNotification } from '$lib/stores/notifications';
 	import { contrastingColor } from '$lib/utils';
-	import { fly, scale } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import CheckSquareIcon from './icons/CheckSquareIcon.svelte';
 	import CopyIcon from './icons/CopyIcon.svelte';
@@ -14,12 +14,15 @@
 >
 	{#each $notifications as notification (notification.id)}
 		{@const contrastColor = contrastingColor(notification.color)}
-		<div
+		<button
 			class="p-4 flex items-center gap-x-2 border-3 rounded-md border-black pointer-events-auto"
 			style={`background-color: ${notification.color}; color: ${contrastColor}; fill: ${contrastColor};`}
 			in:scale={{ duration: 300 }}
 			out:scale={{ duration: 300 }}
 			animate:flip={{ duration: 300 }}
+			on:click={() => {
+				dismissNotification(notification.id);
+			}}
 		>
 			{#if notification.icon === 'check'}
 				<CheckSquareIcon />
@@ -31,6 +34,6 @@
 				<LockedIcon />
 			{/if}
 			<span class="text-center uppercase">{notification.message}</span>
-		</div>
+		</button>
 	{/each}
 </div>
