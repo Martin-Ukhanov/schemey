@@ -27,6 +27,8 @@
 	import List from './List.svelte';
 	import Notifications from './Notifications.svelte';
 	import { addNotification } from '$lib/stores/notifications';
+	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte';
+	import ArrowRightIcon from './icons/ArrowRightIcon.svelte';
 
 	type Color = {
 		id: number;
@@ -134,6 +136,21 @@
 			colorSchemeIndex--;
 			gotoColorScheme();
 		}
+	}
+
+	function swapColors(index1: number, index2: number): void {
+		const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
+		[newColorScheme[index1], newColorScheme[index2]] = [
+			newColorScheme[index2],
+			newColorScheme[index1]
+		];
+
+		colorSchemes.splice(0, colorSchemeIndex);
+		colorSchemes = [newColorScheme, ...colorSchemes];
+
+		colorSchemeIndex = 0;
+
+		gotoColorScheme();
 	}
 
 	function addColor(): void {
@@ -267,6 +284,7 @@
 				class="flex-1 sm:max-lg:pr-2 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-scroll"
 			>
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
+					{@const colorSchemeLength = colorSchemes[colorSchemeIndex].length}
 					{@const contrastColor = contrastingColor(color.hex)}
 					<div
 						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center border-3 overflow-x-auto sm:overflow-x-visible rounded-md border-black"
@@ -277,7 +295,7 @@
 					>
 						<div class="flex flex-col">
 							<div class="flex justify-center">
-								{#if colorSchemes[colorSchemeIndex].length > MIN_COLOR_SCHEME_SIZE}
+								{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
 									<button
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
@@ -325,6 +343,39 @@
 										<LockedIcon />
 									{:else}
 										<UnlockedIcon />
+									{/if}
+								</button>
+							</div>
+
+							<div class="flex">
+								<button
+									class={contrastColor === '#000000'
+										? 'button-transparent-black'
+										: 'button-transparent-white'}
+									on:click={() => {
+										const index2 = index - 1 < 0 ? colorSchemeLength - 1 : index - 1;
+										swapColors(index, index2);
+									}}
+								>
+									{#if menuWidth < 1024}
+										<ArrowUpIcon />
+									{:else}
+										<ArrowLeftIcon />
+									{/if}
+								</button>
+								<button
+									class={contrastColor === '#000000'
+										? 'button-transparent-black'
+										: 'button-transparent-white'}
+									on:click={() => {
+										const index2 = index + 1 > colorSchemeLength - 1 ? 0 : index + 1;
+										swapColors(index, index2);
+									}}
+								>
+									{#if menuWidth < 1024}
+										<ArrowDownIcon />
+									{:else}
+										<ArrowRightIcon />
 									{/if}
 								</button>
 							</div>
