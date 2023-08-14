@@ -15,7 +15,7 @@
 		<div
 			class="p-4 flex items-center gap-x-2 border-3 rounded-md border-black"
 			style={`background-color: ${notification.color}; color: ${contrastColor}; fill: ${contrastColor};`}
-			in:fly={{ duration: 300, y: '-100%' }}
+			in:scale={{ duration: 300 }}
 			out:scale={{ duration: 300 }}
 			animate:flip={{ duration: 300 }}
 		>
