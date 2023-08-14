@@ -360,6 +360,7 @@
 										<ArrowLeftIcon />
 									{/if}
 								</button>
+
 								<button
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
