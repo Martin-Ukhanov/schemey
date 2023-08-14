@@ -29,6 +29,6 @@ export function addNotification(message: string, icon = 'check', color = '#fffff
 	}, 3000);
 }
 
-function dismissNotification(id: number): void {
+export function dismissNotification(id: number): void {
 	notifications.update((values) => values.filter((value) => value.id !== id));
 }
