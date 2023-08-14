@@ -28,7 +28,7 @@
 			{:else if notification.icon === 'locked'}
 				<LockedIcon />
 			{/if}
-			{notification.message}
+			<span class="uppercase">{notification.message}</span>
 		</div>
 	{/each}
 </div>
