@@ -192,12 +192,12 @@
 		colorSchemes[colorSchemeIndex][index].locked = !colorSchemes[colorSchemeIndex][index].locked;
 	}
 
-	$: if (browser) {
-		document.body.classList.toggle('no-scroll', menuOpen);
-	}
-
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
+	}
+
+	$: if (browser) {
+		document.body.classList.toggle('no-scroll', menuOpen);
 	}
 </script>
 
