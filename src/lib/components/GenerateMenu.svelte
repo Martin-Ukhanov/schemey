@@ -325,7 +325,7 @@
 										: 'button-transparent-white'}
 									on:click={() => {
 										copyToClipboard(color.hex.toUpperCase());
-										addNotification('Color Copied', color.hex);
+										addNotification('Color Copied', 'copied', color.hex);
 									}}
 								>
 									<CopyIcon />
@@ -337,6 +337,11 @@
 										: 'button-transparent-white'}
 									on:click={() => {
 										toggleLockedColor(index);
+										addNotification(
+											color.locked ? 'Color Locked' : 'Color Unlocked',
+											color.locked ? 'locked' : 'unlocked',
+											color.hex
+										);
 									}}
 								>
 									{#if color.locked}
