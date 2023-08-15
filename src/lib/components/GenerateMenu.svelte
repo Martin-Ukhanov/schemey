@@ -204,7 +204,7 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 h-72 min-h-72 max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 left-0 right-0 h-[300px] min-h-[300px] max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
