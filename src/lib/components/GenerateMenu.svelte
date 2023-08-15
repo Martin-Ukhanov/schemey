@@ -61,11 +61,13 @@
 				const dy = mouseY - e.y;
 				mouseY = e.y;
 				menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
+				document.body.style.cursor = 'grabbing';
 			};
 
 			document.onmouseup = () => {
 				document.onmousemove = null;
 				document.onmouseup = null;
+				document.body.style.cursor = 'default';
 			};
 		}
 	}
@@ -223,7 +225,7 @@
 
 		{#if menuOpen}
 			<button
-				class="button rounded-b-none"
+				class="button rounded-b-none cursor-grab active:cursor-grabbing"
 				transition:scale={{ duration: 300 }}
 				on:mousedown={resizeMenuMouse}
 				on:touchstart={resizeMenuTouch}
