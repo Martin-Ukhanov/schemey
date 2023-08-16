@@ -6,7 +6,7 @@
 <div class="flex flex-col overflow-y-auto">
 	{#each items as item}
 		<button
-			class="button mr-2 justify-start border-none text-left"
+			class="button justify-start border-none text-left"
 			class:brightness-80={item === selectedItem}
 			on:click={() => {
 				selectedItem = item;
