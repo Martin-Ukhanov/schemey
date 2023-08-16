@@ -4,8 +4,7 @@
 		COLOR_SPACE_PRESETS,
 		generateColorScheme,
 		colorSchemeToSlug,
-		contrastingColor,
-		copyToClipboard
+		contrastingColor
 	} from '$lib/utils';
 	import { browser } from '$app/environment';
 	import { scale, slide } from 'svelte/transition';
@@ -316,7 +315,7 @@
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
 									on:click={() => {
-										copyToClipboard(color.hex.toUpperCase());
+										navigator.clipboard.writeText(color.hex.toUpperCase());
 										addNotification(`${color.hex} Copied`, 'copied', color.hex);
 									}}
 								>
