@@ -26,6 +26,7 @@
 	import { addNotification } from '$lib/stores/notifications';
 	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte';
 	import ArrowRightIcon from './icons/ArrowRightIcon.svelte';
+	import ColorPicker from './ColorPicker.svelte';
 
 	type Color = {
 		id: number;
@@ -42,8 +43,10 @@
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
 	let menuOpen = true;
+
 	let colorSpace = 'all';
 	let colorSpaceModalOpen = false;
+
 	let currentColorId = 0;
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
@@ -51,6 +54,10 @@
 		})
 	];
 	let colorSchemeIndex = 0;
+
+	let originalColorPickerHex: string;
+	let colorPickerColor: Color;
+	let colorPickerModalOpen = false;
 
 	function resizeMenuMouse(e: MouseEvent): void {
 		let mouseY = e.y;
@@ -199,6 +206,10 @@
 
 	$: if (browser) {
 		document.body.classList.toggle('no-scroll', menuOpen);
+	}
+
+	$: if (colorPickerColor) {
+		colorSchemes = colorSchemes;
 	}
 </script>
 
@@ -382,6 +393,11 @@
 							class={contrastColor === '#000000'
 								? 'button-transparent-black'
 								: 'button-transparent-white'}
+							on:click={() => {
+								originalColorPickerHex = color.hex;
+								colorPickerColor = color;
+								colorPickerModalOpen = true;
+							}}
 						>
 							<span class="text-lg font-bold">{color.hex}</span>
 						</button>
@@ -405,5 +421,32 @@
 </menu>
 
 <Modal title="Color Space" bind:open={colorSpaceModalOpen}>
-	<List items={Object.keys(COLOR_SPACE_PRESETS)} bind:selectedItem={colorSpace} />
+	<List
+		items={Object.keys(COLOR_SPACE_PRESETS)}
+		bind:selectedItem={colorSpace}
+		on:click={() => {
+			colorSpaceModalOpen = false;
+		}}
+	/>
+</Modal>
+
+<Modal
+	title="Color Picker"
+	bind:open={colorPickerModalOpen}
+	on:close={() => {
+		if (colorPickerColor.hex !== originalColorPickerHex) {
+			const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
+
+			colorPickerColor.hex = originalColorPickerHex;
+
+			colorSchemes.splice(0, colorSchemeIndex);
+			colorSchemes = [newColorScheme, ...colorSchemes];
+
+			colorSchemeIndex = 0;
+
+			gotoColorScheme();
+		}
+	}}
+>
+	<ColorPicker bind:hex={colorPickerColor.hex} />
 </Modal>
