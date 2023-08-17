@@ -5,6 +5,10 @@ export function clamp(num: number, min: number, max: number): number {
 	return Math.min(Math.max(num, min), max);
 }
 
+export function validHex(hex: string): boolean {
+	return /^#?[0-9a-fA-F]{6}$/.test(hex);
+}
+
 export function contrastingColor(hex: string): '#000000' | '#ffffff' {
 	return Color(hex).isLight() ? '#000000' : '#ffffff';
 }
