@@ -68,7 +68,7 @@
 		on:touchstart={moveColorPickerCursorTouch}
 	>
 		<div
-			class="absolute -translate-x-1/2 translate-y-1/2 w-8 h-8 border-3 rounded-full border-black cursor-grab group-active:cursor-grabbing"
+			class="absolute -translate-x-1/2 translate-y-1/2 w-7 h-7 border-3 rounded-full border-black cursor-grab group-active:cursor-grabbing"
 			style={`bottom: ${v}%; left: ${s}%; background-color: ${hex};`}
 		>
 			<div class="w-full h-full border-3 rounded-full border-white">
@@ -91,12 +91,12 @@
 		/>
 
 		<div
-			class="h-5 border-3 rounded-md border-black"
+			class="h-4 border-3 rounded-md border-black"
 			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
 		/>
 
 		<div
-			class="absolute -top-[7px] -translate-x-1/2 w-8 h-8 border-3 rounded-full border-black pointer-events-none"
+			class="absolute -top-[6px] -translate-x-1/2 w-7 h-7 border-3 rounded-full border-black pointer-events-none"
 			style={`left: ${(h / 360) * (hueSliderWidth - 32) + 16}px;`}
 		>
 			<div class="w-full h-full border-3 rounded-full border-white">
