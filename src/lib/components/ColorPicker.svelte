@@ -24,11 +24,13 @@
 		if (browser) {
 			document.onmousemove = (e) => {
 				setSaturationAndValue(e);
+				document.body.style.cursor = 'grabbing';
 			};
 
 			document.onmouseup = () => {
 				document.onmousemove = null;
 				document.onmouseup = null;
+				document.body.style.cursor = 'default';
 			};
 		}
 	}
