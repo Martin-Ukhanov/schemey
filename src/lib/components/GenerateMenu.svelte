@@ -200,6 +200,21 @@
 		colorSchemes[colorSchemeIndex][index].locked = !colorSchemes[colorSchemeIndex][index].locked;
 	}
 
+	function colorPicker(): void {
+		if (colorPickerColor.hex !== originalColorPickerHex) {
+			const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
+
+			colorPickerColor.hex = originalColorPickerHex;
+
+			colorSchemes.splice(0, colorSchemeIndex);
+			colorSchemes = [newColorScheme, ...colorSchemes];
+
+			colorSchemeIndex = 0;
+
+			gotoColorScheme();
+		}
+	}
+
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
 	}
@@ -430,23 +445,6 @@
 	/>
 </Modal>
 
-<Modal
-	title="Color Picker"
-	bind:open={colorPickerModalOpen}
-	on:close={() => {
-		if (colorPickerColor.hex !== originalColorPickerHex) {
-			const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
-
-			colorPickerColor.hex = originalColorPickerHex;
-
-			colorSchemes.splice(0, colorSchemeIndex);
-			colorSchemes = [newColorScheme, ...colorSchemes];
-
-			colorSchemeIndex = 0;
-
-			gotoColorScheme();
-		}
-	}}
->
+<Modal title="Color Picker" bind:open={colorPickerModalOpen} on:close={colorPicker}>
 	<ColorPicker bind:hex={colorPickerColor.hex} />
 </Modal>
