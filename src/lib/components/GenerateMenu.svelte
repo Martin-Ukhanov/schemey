@@ -130,6 +130,7 @@
 		colorSchemes.splice(0, colorSchemeIndex);
 		colorSchemes = [colorScheme, ...colorSchemes];
 		colorSchemeIndex = 0;
+
 		gotoColorScheme();
 	}
 
