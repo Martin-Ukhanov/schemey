@@ -86,7 +86,7 @@
 			min="0"
 			max="360"
 			step="1"
-			class="appearance-none absolute w-full h-full bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
+			class="appearance-none absolute w-full h-full bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-7 [&::-webkit-slider-thumb]:h-7 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
 			bind:value={h}
 		/>
 
@@ -97,7 +97,7 @@
 
 		<div
 			class="absolute -top-[6px] -translate-x-1/2 w-7 h-7 border-3 rounded-full border-black pointer-events-none"
-			style={`left: ${(h / 360) * (hueSliderWidth - 32) + 16}px;`}
+			style={`left: ${(h / 360) * (hueSliderWidth - 28) + 14}px;`}
 		>
 			<div class="w-full h-full border-3 rounded-full border-white">
 				<div
