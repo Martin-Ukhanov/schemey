@@ -107,13 +107,13 @@
 		);
 	}
 
-	function addColorScheme(): void {
+	function newColorScheme(): Color[] {
 		const currentColorScheme = colorSchemes[colorSchemeIndex];
+		const newColorScheme = structuredClone(currentColorScheme);
 		const lockedColorsCount = currentColorScheme.filter((color) => color.locked).length;
 		const newColorsCount = currentColorScheme.length - lockedColorsCount;
 
 		if (newColorsCount > 0) {
-			const newColorScheme = structuredClone(currentColorScheme);
 			const newColors = generateColorScheme(newColorsCount, COLOR_SPACE_PRESETS[colorSpace]);
 
 			for (let i = 0; i < newColorScheme.length; i++) {
@@ -121,14 +121,16 @@
 					newColorScheme[i].hex = <string>newColors.shift();
 				}
 			}
-
-			colorSchemes.splice(0, colorSchemeIndex);
-			colorSchemes = [newColorScheme, ...colorSchemes];
-
-			colorSchemeIndex = 0;
-
-			gotoColorScheme();
 		}
+
+		return newColorScheme;
+	}
+
+	function addColorScheme(colorScheme: Color[]): void {
+		colorSchemes.splice(0, colorSchemeIndex);
+		colorSchemes = [colorScheme, ...colorSchemes];
+		colorSchemeIndex = 0;
+		gotoColorScheme();
 	}
 
 	function undoColorScheme(): void {
@@ -152,12 +154,7 @@
 			newColorScheme[index1]
 		];
 
-		colorSchemes.splice(0, colorSchemeIndex);
-		colorSchemes = [newColorScheme, ...colorSchemes];
-
-		colorSchemeIndex = 0;
-
-		gotoColorScheme();
+		addColorScheme(newColorScheme);
 	}
 
 	function addColor(): void {
@@ -171,12 +168,7 @@
 				})
 			);
 
-			colorSchemes.splice(0, colorSchemeIndex);
-			colorSchemes = [newColorScheme, ...colorSchemes];
-
-			colorSchemeIndex = 0;
-
-			gotoColorScheme();
+			addColorScheme(newColorScheme);
 		}
 	}
 
@@ -187,12 +179,7 @@
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.splice(index, 1);
 
-			colorSchemes.splice(0, colorSchemeIndex);
-			colorSchemes = [newColorScheme, ...colorSchemes];
-
-			colorSchemeIndex = 0;
-
-			gotoColorScheme();
+			addColorScheme(newColorScheme);
 		}
 	}
 
@@ -203,15 +190,9 @@
 	function colorPicker(): void {
 		if (colorPickerColor.hex !== originalColorPickerHex) {
 			const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
-
 			colorPickerColor.hex = originalColorPickerHex;
 
-			colorSchemes.splice(0, colorSchemeIndex);
-			colorSchemes = [newColorScheme, ...colorSchemes];
-
-			colorSchemeIndex = 0;
-
-			gotoColorScheme();
+			addColorScheme(newColorScheme);
 		}
 	}
 
@@ -273,7 +254,12 @@
 				{colorSpace}
 			</button>
 
-			<button class="button flex-1" on:click={addColorScheme}>
+			<button
+				class="button flex-1"
+				on:click={() => {
+					addColorScheme(newColorScheme());
+				}}
+			>
 				<GenerateIcon />
 			</button>
 
