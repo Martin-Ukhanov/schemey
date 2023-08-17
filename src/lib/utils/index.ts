@@ -2,6 +2,10 @@ import convert from 'color-convert';
 import type { RGB } from 'color-convert/conversions';
 import iwanthue, { type ColorSpace } from 'iwanthue';
 
+export function clamp(num: number, min: number, max: number): number {
+	return Math.min(Math.max(num, min), max);
+}
+
 function rgbLuminance(rgb: RGB): number {
 	return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
 }
