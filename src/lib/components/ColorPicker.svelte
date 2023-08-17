@@ -60,8 +60,7 @@
 <div class="flex-1 flex flex-col gap-y-4">
 	<button
 		class="relative w-full h-full border-3 rounded-md border-black group"
-		style={`background: linear-gradient(#ffffff00, #000000ff),
-  linear-gradient(0.25turn, #ffffffff, #00000000), hsl(${h}, 100%, 50%);`}
+		style={`background: linear-gradient(#ffffff00, #000000ff), linear-gradient(0.25turn, #ffffffff, #00000000), hsl(${h}, 100%, 50%);`}
 		bind:this={colorPickerElement}
 		bind:clientWidth={colorPickerWidth}
 		bind:clientHeight={colorPickerHeight}
@@ -81,10 +80,7 @@
 		</div>
 	</button>
 
-	<div
-		class="relative h-6 border-3 rounded-full border-black group"
-		bind:clientWidth={hueSliderWidth}
-	>
+	<div class="relative h-8 group" bind:clientWidth={hueSliderWidth}>
 		<input
 			type="range"
 			min="0"
@@ -95,12 +91,12 @@
 		/>
 
 		<div
-			class="w-full h-full rounded-full"
+			class="w-full h-full border-3 rounded-md border-black"
 			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
 		/>
 
 		<div
-			class="absolute -top-[10px] -translate-x-1/2 w-8 h-8 border-3 rounded-full border-black pointer-events-none"
+			class="absolute -top-[7px] -translate-x-1/2 w-8 h-8 border-3 rounded-full border-black pointer-events-none"
 			style={`left: ${(h / 360) * (hueSliderWidth - 32) + 16}px;`}
 		>
 			<div class="w-full h-full border-3 rounded-full border-white">
