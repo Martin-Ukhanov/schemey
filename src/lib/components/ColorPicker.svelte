@@ -109,9 +109,9 @@
 	</div>
 
 	<div
-		class="h-16 flex justify-center items-center border-3 rounded-md border-black"
+		class="p-2 flex justify-center items-center border-3 rounded-md border-black"
 		style={`background: ${hex};`}
 	>
-		<span class="text-center" style={`color: ${contrastingColor(hex)}`}>{hex.toUpperCase()}</span>
+		<span style={`color: ${contrastingColor(hex)}`}>{hex.toUpperCase()}</span>
 	</div>
 </div>
