@@ -80,7 +80,7 @@
 		</div>
 	</button>
 
-	<div class="relative h-8 group" bind:clientWidth={hueSliderWidth}>
+	<div class="relative group" bind:clientWidth={hueSliderWidth}>
 		<input
 			type="range"
 			min="0"
@@ -91,7 +91,7 @@
 		/>
 
 		<div
-			class="w-full h-full border-3 rounded-md border-black"
+			class="w-full h-5 border-3 rounded-md border-black"
 			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
 		/>
 
