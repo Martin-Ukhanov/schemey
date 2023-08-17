@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import {
-		COLOR_SPACE_PRESETS,
-		generateColorScheme,
-		colorSchemeToSlug,
-		contrastingColor
-	} from '$lib/utils';
+	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
+	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { browser } from '$app/environment';
 	import { scale, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
@@ -115,7 +111,7 @@
 		const newColorsCount = currentColorScheme.length - lockedColorsCount;
 
 		if (newColorsCount > 0) {
-			const newColors = generateColorScheme(newColorsCount, COLOR_SPACE_PRESETS[colorSpace]);
+			const newColors = generateColorScheme(newColorsCount, $colorSpacePresets[colorSpace]);
 
 			for (let i = 0; i < newColorScheme.length; i++) {
 				if (!newColorScheme[i].locked) {
@@ -165,7 +161,7 @@
 		if (currentColorScheme.length < MAX_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.push(
-				...generateColorScheme(1, COLOR_SPACE_PRESETS[colorSpace]).map((color) => {
+				...generateColorScheme(1, $colorSpacePresets[colorSpace]).map((color) => {
 					return { id: uniqueColorId(), hex: color, locked: false };
 				})
 			);
@@ -425,7 +421,7 @@
 
 <Modal title="Color Space" bind:open={colorSpaceModalOpen}>
 	<List
-		items={Object.keys(COLOR_SPACE_PRESETS)}
+		items={Object.keys($colorSpacePresets)}
 		bind:selectedItem={colorSpace}
 		on:click={() => {
 			colorSpaceModalOpen = false;
