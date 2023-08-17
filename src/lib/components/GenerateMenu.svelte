@@ -98,6 +98,7 @@
 	function uniqueColorId(): number {
 		const colorId = currentColorId;
 		currentColorId++;
+
 		return colorId;
 	}
 
