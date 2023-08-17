@@ -1,16 +1,12 @@
 import Color from 'color';
-import iwanthue, { type RGBColor, type ColorSpace } from 'iwanthue';
+import iwanthue, { type ColorSpace } from 'iwanthue';
 
 export function clamp(num: number, min: number, max: number): number {
 	return Math.min(Math.max(num, min), max);
 }
 
-function rgbLuminance(rgb: RGBColor): number {
-	return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
-}
-
 export function contrastingColor(hex: string): '#000000' | '#ffffff' {
-	return rgbLuminance(<RGBColor>Color(hex).rgb().array()) <= 0.5 ? '#ffffff' : '#000000';
+	return Color(hex).isLight() ? '#000000' : '#ffffff';
 }
 
 type ColorSpacePresets = {
