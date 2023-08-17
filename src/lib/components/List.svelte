@@ -7,7 +7,7 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<div class="flex flex-col overflow-y-auto">
+<div class="p-2 flex flex-col overflow-y-auto border-3 rounded-md border-black">
 	{#each items as item}
 		<button
 			class="button justify-start border-none text-left"
