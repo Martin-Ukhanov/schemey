@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clamp, contrastingColor } from '$lib/utils';
+	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { browser } from '$app/environment';
 	import Color from 'color';
 
@@ -9,6 +9,7 @@
 	let colorPickerWidth: number;
 	let colorPickerHeight: number;
 	let hueSliderWidth: number;
+	let hexInput: string;
 
 	let [h, s, v] = Color(hex).hsv().array();
 
@@ -56,7 +57,28 @@
 		}
 	}
 
-	$: hex = Color.hsv([h, s, v]).hex();
+	function handleHexInput(): void {
+		if (validHex(hexInput)) {
+			if (hexInput[0] !== '#') {
+				hexInput = '#' + hexInput;
+			}
+
+			[h, s, v] = Color(hexInput).hsv().array();
+		}
+	}
+
+	function hexInputUnfocus(): void {
+		if (!validHex(hexInput)) {
+			hexInput = hex;
+		}
+	}
+
+	$: {
+		hex = Color.hsv([h, s, v]).hex();
+		hexInput = hex;
+	}
+
+	$: contrastColor = contrastingColor(hex);
 </script>
 
 <div class="flex-1 flex flex-col gap-y-4">
@@ -110,10 +132,16 @@
 		</div>
 	</div>
 
-	<div
-		class="p-2 flex justify-center items-center border-3 rounded-md border-black"
-		style={`background: ${hex};`}
-	>
-		<span style={`color: ${contrastingColor(hex)}`}>{hex.toUpperCase()}</span>
-	</div>
+	<input
+		type="text"
+		name="hex"
+		placeholder="#000000"
+		class="p-2 flex justify-center items-center border-3 outline-none rounded-md text-center uppercase border-black"
+		class:placeholder-white={contrastColor === '#ffffff'}
+		class:placeholder-black={contrastColor === '#000000'}
+		style={`background-color: ${hex}; color: ${contrastColor};`}
+		bind:value={hexInput}
+		on:input={handleHexInput}
+		on:focusout={hexInputUnfocus}
+	/>
 </div>
