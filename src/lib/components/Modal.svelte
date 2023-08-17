@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { fade, scale } from 'svelte/transition';
+	import { createEventDispatcher } from 'svelte';
 	import XIcon from './icons/XIcon.svelte';
 
 	export let title: string;
 	export let open = false;
+
+	const dispatch = createEventDispatcher();
 </script>
 
 {#if open}
@@ -22,6 +25,7 @@
 					class="button-transparent-black absolute left-0 p-0"
 					on:click={() => {
 						open = false;
+						dispatch('close');
 					}}
 				>
 					<XIcon />
