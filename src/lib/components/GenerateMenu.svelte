@@ -60,13 +60,15 @@
 
 		if (browser) {
 			document.onmousemove = (e) => {
+				e.preventDefault();
 				const dy = mouseY - e.y;
 				mouseY = e.y;
 				menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
 				document.body.style.cursor = 'grabbing';
 			};
 
-			document.onmouseup = () => {
+			document.onmouseup = (e) => {
+				e.preventDefault();
 				document.onmousemove = null;
 				document.onmouseup = null;
 				document.body.style.cursor = 'default';
@@ -79,12 +81,14 @@
 
 		if (browser) {
 			document.ontouchmove = (e) => {
+				e.preventDefault();
 				const dy = touchY - e.touches[0].clientY;
 				touchY = e.touches[0].clientY;
 				menuElement.style.height = parseInt(getComputedStyle(menuElement).height) + dy + 'px';
 			};
 
-			document.ontouchend = () => {
+			document.ontouchend = (e) => {
+				e.preventDefault();
 				document.ontouchmove = null;
 				document.ontouchend = null;
 			};
@@ -231,8 +235,8 @@
 			<button
 				class="button rounded-b-none cursor-grab active:cursor-grabbing"
 				transition:scale={{ duration: 300 }}
-				on:mousedown={resizeMenuMouse}
-				on:touchstart={resizeMenuTouch}
+				on:mousedown|preventDefault={resizeMenuMouse}
+				on:touchstart|preventDefault={resizeMenuTouch}
 			>
 				<ResizeIcon />
 			</button>

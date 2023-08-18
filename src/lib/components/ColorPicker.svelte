@@ -24,11 +24,13 @@
 
 		if (browser) {
 			document.onmousemove = (e) => {
+				e.preventDefault();
 				setSaturationAndValue(e);
 				document.body.style.cursor = 'grabbing';
 			};
 
-			document.onmouseup = () => {
+			document.onmouseup = (e) => {
+				e.preventDefault();
 				document.onmousemove = null;
 				document.onmouseup = null;
 				document.body.style.cursor = 'default';
@@ -47,10 +49,12 @@
 
 		if (browser) {
 			document.ontouchmove = (e) => {
+				e.preventDefault();
 				setSaturationAndValue(e);
 			};
 
 			document.ontouchend = () => {
+				e.preventDefault();
 				document.ontouchmove = null;
 				document.ontouchend = null;
 			};
@@ -88,8 +92,8 @@
 		bind:this={colorPickerElement}
 		bind:clientWidth={colorPickerWidth}
 		bind:clientHeight={colorPickerHeight}
-		on:mousedown={moveColorPickerCursorMouse}
-		on:touchstart={moveColorPickerCursorTouch}
+		on:mousedown|preventDefault={moveColorPickerCursorMouse}
+		on:touchstart|preventDefault={moveColorPickerCursorTouch}
 	>
 		<div
 			class="absolute -translate-x-1/2 translate-y-1/2 w-7 h-7 border-3 rounded-full border-black cursor-grab group-active:cursor-grabbing"
