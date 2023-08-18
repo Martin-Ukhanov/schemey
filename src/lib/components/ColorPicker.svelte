@@ -9,6 +9,7 @@
 	let colorPickerWidth: number;
 	let colorPickerHeight: number;
 	let hueSliderWidth: number;
+	let hueSliderThumbWidth: number;
 	let hexInput: string;
 
 	let [h, s, v] = Color(hex).hsv().array();
@@ -125,7 +126,10 @@
 
 		<div
 			class="absolute -top-[6px] -translate-x-1/2 w-7 h-7 border-3 rounded-full border-black pointer-events-none"
-			style={`left: ${(h / 360) * (hueSliderWidth - 28) + 14}px;`}
+			style={`left: ${
+				(h / 360) * (hueSliderWidth - hueSliderThumbWidth) + hueSliderThumbWidth / 2
+			}px;`}
+			bind:clientWidth={hueSliderThumbWidth}
 		>
 			<div class="w-full h-full border-3 rounded-full border-white">
 				<div
