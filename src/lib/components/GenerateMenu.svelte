@@ -402,7 +402,7 @@
 								colorPickerModalOpen = true;
 							}}
 						>
-							<span class="text-lg font-bold">{color.hex}</span>
+							<span class="text-xl">{color.hex}</span>
 						</button>
 					</div>
 				{/each}
