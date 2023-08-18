@@ -119,7 +119,7 @@
 		/>
 
 		<div
-			class="h-4 border-3 rounded-md border-black"
+			class="h-4 border-3 rounded-full border-black"
 			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
 		/>
 
