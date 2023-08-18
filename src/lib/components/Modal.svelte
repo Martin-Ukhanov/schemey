@@ -31,7 +31,7 @@
 					<XIcon />
 				</button>
 
-				<div class="text-center text-xl font-bold text-black">{title}</div>
+				<div class="text-center text-xl font-bold uppercase text-black">{title}</div>
 			</div>
 
 			<slot />
