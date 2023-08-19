@@ -5,8 +5,6 @@
 
 	export let data: PageData;
 
-	let colorScheme: string[];
-
 	let primaryBackgroundColor: string | null = null;
 	let primaryColor: string | null = null;
 	let secondaryColor: string | null = null;
@@ -20,7 +18,7 @@
 	let secondaryBackgroundContrastColor: string | null = null;
 
 	$: {
-		colorScheme = data.colorScheme;
+		const { colorScheme } = data;
 
 		primaryBackgroundColor = colorScheme[0];
 		primaryColor = colorScheme[1];
@@ -38,34 +36,46 @@
 	}
 </script>
 
-<div
-	class="h-screen"
-	style={`background-color: ${primaryBackgroundColor}; color: ${primaryBackgroundContrastColor}`}
->
-	<h1 class="text-5xl mb-4">Hello World</h1>
-	<div class="flex gap-4">
-		<button
-			class="button border-none"
-			style={`background-color: ${primaryColor}; color: ${primaryContrastColor}`}
-		>
-			Click Me
-		</button>
+<div class="h-screen flex">
+	<div class="flex-1" style={`background-color: ${primaryBackgroundColor};`} />
+	{#if secondaryBackgroundColor}
+		<div class="flex-1" style={`background-color: ${secondaryBackgroundColor};`} />
+	{/if}
+	<div
+		class="absolute w-full h-full p-4 flex flex-col justify-center items-center gap-y-4 text-center"
+	>
+		<h1 class="text-8xl" style={`color: ${primaryColor};`}>Primary Color</h1>
 		{#if secondaryColor}
-			<button
-				class="button border-none"
-				style={`background-color: ${secondaryColor}; color: ${secondaryContrastColor}`}
-			>
-				Click Me
-			</button>
+			<h2 class="text-6xl" style={`color: ${secondaryColor};`}>Secondary Color</h2>
 		{/if}
 		{#if tertiaryColor}
+			<h3 class="text-5xl" style={`color: ${tertiaryColor};`}>Tertiary Color</h3>
+		{/if}
+		<div class="mt-2 flex flex-col items-center gap-y-4">
 			<button
 				class="button border-none"
-				style={`background-color: ${tertiaryColor}; color: ${tertiaryContrastColor}`}
+				style={`background-color: ${primaryColor}; color: ${primaryContrastColor};`}
 			>
-				Click Me
+				Primary Color
 			</button>
-		{/if}
+			{#if secondaryColor}
+				<button
+					class="button border-none"
+					style={`background-color: ${secondaryColor}; color: ${secondaryContrastColor};`}
+				>
+					Secondary Color
+				</button>
+			{/if}
+			{#if tertiaryColor}
+				<button
+					class="button border-none"
+					style={`background-color: ${tertiaryColor}; color: ${tertiaryContrastColor};`}
+				>
+					Tertiary Color
+				</button>
+			{/if}
+		</div>
 	</div>
 </div>
-<GenerateMenu initialColorScheme={colorScheme} />
+
+<GenerateMenu initialColorScheme={data.colorScheme} />
