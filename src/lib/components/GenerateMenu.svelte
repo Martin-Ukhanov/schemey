@@ -212,7 +212,41 @@
 </script>
 
 <menu
-	class="fixed bottom-0 left-0 right-0 h-fit min-h-[291px] max-h-[calc(100%-theme(spacing.16))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
+	class="absolute top-0 w-full flex border-b-3 bg-white border-black transition-transform duration-300"
+	class:-translate-y-full={menuOpen}
+>
+	<button
+		class="button flex-1 border-none rounded-none"
+		disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+		on:click={undoColorScheme}
+	>
+		<UndoIcon />
+	</button>
+
+	<div class="w-[3px] bg-black" />
+
+	<button
+		class="button flex-1 border-none rounded-none"
+		on:click={() => {
+			addColorScheme(newColorScheme());
+		}}
+	>
+		<GenerateIcon />
+	</button>
+
+	<div class="w-[3px] bg-black" />
+
+	<button
+		class="button flex-1 border-none rounded-none"
+		disabled={colorSchemeIndex === 0}
+		on:click={redoColorScheme}
+	>
+		<RedoIcon />
+	</button>
+</menu>
+
+<menu
+	class="fixed bottom-0 w-full h-fit min-h-[291px] max-h-[calc(100%-theme(height.16))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -268,13 +302,13 @@
 			<div class="flex gap-x-4">
 				<button
 					class="button flex-1"
-					on:click={undoColorScheme}
 					disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+					on:click={undoColorScheme}
 				>
 					<UndoIcon />
 				</button>
 
-				<button class="button flex-1" on:click={redoColorScheme} disabled={colorSchemeIndex === 0}>
+				<button class="button flex-1" disabled={colorSchemeIndex === 0} on:click={redoColorScheme}>
 					<RedoIcon />
 				</button>
 			</div>
