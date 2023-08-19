@@ -44,37 +44,13 @@
 	<div
 		class="absolute w-full h-full p-4 flex flex-col justify-center items-center gap-y-4 text-center"
 	>
-		<h1 class="text-8xl" style={`color: ${primaryColor};`}>Primary Color</h1>
+		<h1 class="text-8xl" style={`color: ${primaryColor};`}>Primary</h1>
 		{#if secondaryColor}
-			<h2 class="text-6xl" style={`color: ${secondaryColor};`}>Secondary Color</h2>
+			<h2 class="text-6xl" style={`color: ${secondaryColor};`}>Secondary</h2>
 		{/if}
 		{#if tertiaryColor}
-			<h3 class="text-5xl" style={`color: ${tertiaryColor};`}>Tertiary Color</h3>
+			<h3 class="text-5xl" style={`color: ${tertiaryColor};`}>Tertiary</h3>
 		{/if}
-		<div class="mt-2 flex flex-col items-center gap-y-4">
-			<button
-				class="button border-none"
-				style={`background-color: ${primaryColor}; color: ${primaryContrastColor};`}
-			>
-				Primary Color
-			</button>
-			{#if secondaryColor}
-				<button
-					class="button border-none"
-					style={`background-color: ${secondaryColor}; color: ${secondaryContrastColor};`}
-				>
-					Secondary Color
-				</button>
-			{/if}
-			{#if tertiaryColor}
-				<button
-					class="button border-none"
-					style={`background-color: ${tertiaryColor}; color: ${tertiaryContrastColor};`}
-				>
-					Tertiary Color
-				</button>
-			{/if}
-		</div>
 	</div>
 </div>
 
