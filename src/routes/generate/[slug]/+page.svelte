@@ -87,13 +87,14 @@
 		</div>
 
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<div class="h-16 flex justify-center gap-x-4">
+			<div class="h-14 flex justify-center gap-x-4">
 				<button
 					class="button w-[136px] border-none"
 					style={`background-color: ${primary.hex}; color: ${primary.contrast};`}
 				>
 					Primary
 				</button>
+
 				{#if secondary}
 					<button
 						class="button w-[136px] border-none"
@@ -104,24 +105,24 @@
 				{/if}
 			</div>
 
-			<div class="h-16 flex justify-center gap-x-4">
-				{#if tertiary}
+			{#if tertiary}
+				<div class="h-14 flex justify-center gap-x-4">
 					<button
 						class="button w-[136px] border-none"
 						style={`background-color: ${tertiary.hex}; color: ${tertiary.contrast};`}
 					>
 						Tertiary
 					</button>
-				{/if}
-				{#if quaternary}
-					<button
-						class="button w-[136px] border-none"
-						style={`background-color: ${quaternary.hex}; color: ${quaternary.contrast};`}
-					>
-						Quaternary
-					</button>
-				{/if}
-			</div>
+					{#if quaternary}
+						<button
+							class="button w-[136px] border-none"
+							style={`background-color: ${quaternary.hex}; color: ${quaternary.contrast};`}
+						>
+							Quaternary
+						</button>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	</div>
 
