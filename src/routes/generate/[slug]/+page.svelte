@@ -39,7 +39,7 @@
 >
 	<GenerateMenu initialColorScheme={data.colorScheme} />
 
-	<div class="w-full h-20 flex">
+	<div class="w-full h-16 flex">
 		<div class="flex-1" style={`background-color: ${primary.hex};`} />
 		{#if secondary}
 			<div class="flex-1" style={`background-color: ${secondary.hex};`} />
@@ -87,7 +87,7 @@
 		</div>
 
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<div class="h-14 flex justify-center gap-x-4">
+			<div class="h-12 flex justify-center gap-x-4">
 				<button
 					class="button w-[136px] border-none"
 					style={`background-color: ${primary.hex}; color: ${primary.contrast};`}
@@ -106,7 +106,7 @@
 			</div>
 
 			{#if tertiary}
-				<div class="h-14 flex justify-center gap-x-4">
+				<div class="h-12 flex justify-center gap-x-4">
 					<button
 						class="button w-[136px] border-none"
 						style={`background-color: ${tertiary.hex}; color: ${tertiary.contrast};`}
@@ -126,7 +126,7 @@
 		</div>
 	</div>
 
-	<div class="w-full h-20 flex">
+	<div class="w-full h-16 flex">
 		<div class="flex-1" style={`background-color: ${primary.hex};`} />
 		{#if secondary}
 			<div class="flex-1" style={`background-color: ${secondary.hex};`} />
