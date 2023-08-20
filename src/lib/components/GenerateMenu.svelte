@@ -213,7 +213,7 @@
 
 {#if !menuOpen}
 	<menu
-		class="w-full flex border-b-3 bg-white border-black"
+		class="w-full flex border-b-3 z-10 bg-white border-black"
 		transition:slide={{ duration: 300, axis: 'y' }}
 	>
 		<button
@@ -248,7 +248,7 @@
 {/if}
 
 <menu
-	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.40)-theme(borderWidth.3))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.40)-theme(borderWidth.3))] py-4 border-t-3 z-10 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
