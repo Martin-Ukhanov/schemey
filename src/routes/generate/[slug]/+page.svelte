@@ -34,7 +34,7 @@
 </script>
 
 <div
-	class="h-screen flex flex-col"
+	class="flex-1 flex flex-col"
 	style={`background-color: ${background.hex}; color: ${background.contrast};`}
 >
 	<GenerateMenu initialColorScheme={data.colorScheme} />
