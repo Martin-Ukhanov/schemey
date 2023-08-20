@@ -88,38 +88,38 @@
 
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
 			<div class="h-12 flex justify-center gap-x-4">
-				<button
-					class="button w-[136px] border-none"
+				<div
+					class="button w-[136px] border-none !brightness-100 cursor-default"
 					style={`background-color: ${primary.hex}; color: ${primary.contrast};`}
 				>
 					Primary
-				</button>
+				</div>
 
 				{#if secondary}
-					<button
-						class="button w-[136px] border-none"
+					<div
+						class="button w-[136px] border-none !brightness-100 cursor-default"
 						style={`background-color: ${secondary.hex}; color: ${secondary.contrast};`}
 					>
 						Secondary
-					</button>
+					</div>
 				{/if}
 			</div>
 
 			{#if tertiary}
 				<div class="h-12 flex justify-center gap-x-4">
-					<button
-						class="button w-[136px] border-none"
+					<div
+						class="button w-[136px] border-none !brightness-100 cursor-default"
 						style={`background-color: ${tertiary.hex}; color: ${tertiary.contrast};`}
 					>
 						Tertiary
-					</button>
+					</div>
 					{#if quaternary}
-						<button
-							class="button w-[136px] border-none"
+						<div
+							class="button w-[136px] border-none !brightness-100 cursor-default"
 							style={`background-color: ${quaternary.hex}; color: ${quaternary.contrast};`}
 						>
 							Quaternary
-						</button>
+						</div>
 					{/if}
 				</div>
 			{/if}
