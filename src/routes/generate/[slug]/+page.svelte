@@ -3,55 +3,118 @@
 	import { contrastingColor } from '$lib/utils';
 	import GenerateMenu from '$lib/components/GenerateMenu.svelte';
 
+	type Color = {
+		hex: string;
+		contrast: string;
+	};
+
 	export let data: PageData;
 
-	let primaryBackgroundColor: string | null = null;
-	let primaryColor: string | null = null;
-	let secondaryColor: string | null = null;
-	let tertiaryColor: string | null = null;
-	let secondaryBackgroundColor: string | null = null;
-
-	let primaryBackgroundContrastColor: string | null = null;
-	let primaryContrastColor: string | null = null;
-	let secondaryContrastColor: string | null = null;
-	let tertiaryContrastColor: string | null = null;
-	let secondaryBackgroundContrastColor: string | null = null;
+	let background: Color;
+	let accent1: Color;
+	let accent2: Color | null;
+	let accent3: Color | null;
+	let accent4: Color | null;
 
 	$: {
 		const { colorScheme } = data;
 
-		primaryBackgroundColor = colorScheme[0];
-		primaryColor = colorScheme[1];
-		secondaryColor = colorScheme[2];
-		tertiaryColor = colorScheme[3];
-		secondaryBackgroundColor = colorScheme[4];
-
-		primaryBackgroundContrastColor = contrastingColor(primaryBackgroundColor);
-		primaryContrastColor = contrastingColor(primaryColor);
-		secondaryContrastColor = secondaryColor ? contrastingColor(secondaryColor) : null;
-		tertiaryContrastColor = tertiaryColor ? contrastingColor(tertiaryColor) : null;
-		secondaryBackgroundContrastColor = secondaryBackgroundColor
-			? contrastingColor(secondaryBackgroundColor)
-			: null;
+		background = { hex: colorScheme[0], contrast: contrastingColor(colorScheme[0]) };
+		accent1 = { hex: colorScheme[1], contrast: contrastingColor(colorScheme[1]) };
+		colorScheme[2]
+			? (accent2 = { hex: colorScheme[2], contrast: contrastingColor(colorScheme[2]) })
+			: (accent2 = null);
+		colorScheme[3]
+			? (accent3 = { hex: colorScheme[3], contrast: contrastingColor(colorScheme[3]) })
+			: (accent3 = null);
+		colorScheme[4]
+			? (accent4 = { hex: colorScheme[4], contrast: contrastingColor(colorScheme[4]) })
+			: (accent4 = null);
 	}
 </script>
 
-<div class="h-screen flex">
-	<div class="flex-1" style={`background-color: ${primaryBackgroundColor};`} />
-	{#if secondaryBackgroundColor}
-		<div class="flex-1" style={`background-color: ${secondaryBackgroundColor};`} />
-	{/if}
-	<div
-		class="absolute w-full h-full p-4 flex flex-col justify-center items-center gap-y-4 text-center"
-	>
-		<h1 class="text-8xl" style={`color: ${primaryColor};`}>Primary</h1>
-		{#if secondaryColor}
-			<h2 class="text-6xl" style={`color: ${secondaryColor};`}>Secondary</h2>
+<div
+	class="h-screen flex flex-col"
+	style={`background-color: ${background.hex}; color: ${background.contrast};`}
+>
+	<GenerateMenu initialColorScheme={data.colorScheme} />
+
+	<div class="w-full h-32 flex">
+		<div class="flex-1" style={`background-color: ${accent1.hex};`} />
+		{#if accent2}
+			<div class="flex-1" style={`background-color: ${accent2.hex};`} />
 		{/if}
-		{#if tertiaryColor}
-			<h3 class="text-5xl" style={`color: ${tertiaryColor};`}>Tertiary</h3>
+		{#if accent3}
+			<div class="flex-1" style={`background-color: ${accent3.hex};`} />
+		{/if}
+		{#if accent4}
+			<div class="flex-1" style={`background-color: ${accent4.hex};`} />
+		{/if}
+	</div>
+
+	<div class="flex-1 p-4 flex flex-col justify-center items-center gap-y-8">
+		<div class="flex flex-col gap-y-4 text-center">
+			<h1 class=" text-5xl sm:text-7xl uppercase" style={`color: ${accent1.hex};`}>Heading 1</h1>
+			{#if accent2}
+				<h2 class="text-4xl sm:text-6xl uppercase" style={`color: ${accent2.hex};`}>Heading 2</h2>
+			{/if}
+			{#if accent3}
+				<h3 class="text-3xl sm:text-5xl uppercase" style={`color: ${accent3.hex};`}>Heading 3</h3>
+			{/if}
+			{#if accent4}
+				<h4 class="text-2xl sm:text-4xl uppercase" style={`color: ${accent4.hex};`}>Heading 4</h4>
+			{/if}
+		</div>
+
+		<div class="flex flex-col sm:flex-row justify-center gap-4">
+			<div class="flex gap-x-4">
+				<button
+					class="button w-fit border-none"
+					style={`background-color: ${accent1.hex}; color: ${accent1.contrast};`}
+				>
+					Button 1
+				</button>
+				{#if accent2}
+					<button
+						class="button w-fit border-none"
+						style={`background-color: ${accent2.hex}; color: ${accent2.contrast};`}
+					>
+						Button 2
+					</button>
+				{/if}
+			</div>
+
+			<div class="flex gap-x-4">
+				{#if accent3}
+					<button
+						class="button w-fit border-none"
+						style={`background-color: ${accent3.hex}; color: ${accent3.contrast};`}
+					>
+						Button 3
+					</button>
+				{/if}
+				{#if accent4}
+					<button
+						class="button w-fit border-none"
+						style={`background-color: ${accent4.hex}; color: ${accent4.contrast};`}
+					>
+						Button 4
+					</button>
+				{/if}
+			</div>
+		</div>
+	</div>
+
+	<div class="w-full h-32 flex">
+		<div class="flex-1" style={`background-color: ${accent1.hex};`} />
+		{#if accent2}
+			<div class="flex-1" style={`background-color: ${accent2.hex};`} />
+		{/if}
+		{#if accent3}
+			<div class="flex-1" style={`background-color: ${accent3.hex};`} />
+		{/if}
+		{#if accent4}
+			<div class="flex-1" style={`background-color: ${accent4.hex};`} />
 		{/if}
 	</div>
 </div>
-
-<GenerateMenu initialColorScheme={data.colorScheme} />
