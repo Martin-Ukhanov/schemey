@@ -67,7 +67,7 @@
 		</div>
 
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<div class="flex gap-x-4">
+			<div class="flex justify-center gap-x-4">
 				<button
 					class="button w-fit border-none"
 					style={`background-color: ${accent1.hex}; color: ${accent1.contrast};`}
@@ -84,7 +84,7 @@
 				{/if}
 			</div>
 
-			<div class="flex gap-x-4">
+			<div class="flex justify-center gap-x-4">
 				{#if accent3}
 					<button
 						class="button w-fit border-none"
