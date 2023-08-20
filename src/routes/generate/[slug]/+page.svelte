@@ -11,25 +11,25 @@
 	export let data: PageData;
 
 	let background: Color;
-	let accent1: Color;
-	let accent2: Color | null;
-	let accent3: Color | null;
-	let accent4: Color | null;
+	let primary: Color;
+	let secondary: Color | null;
+	let tertiary: Color | null;
+	let quaternary: Color | null;
 
 	$: {
 		const { colorScheme } = data;
 
 		background = { hex: colorScheme[0], contrast: contrastingColor(colorScheme[0]) };
-		accent1 = { hex: colorScheme[1], contrast: contrastingColor(colorScheme[1]) };
+		primary = { hex: colorScheme[1], contrast: contrastingColor(colorScheme[1]) };
 		colorScheme[2]
-			? (accent2 = { hex: colorScheme[2], contrast: contrastingColor(colorScheme[2]) })
-			: (accent2 = null);
+			? (secondary = { hex: colorScheme[2], contrast: contrastingColor(colorScheme[2]) })
+			: (secondary = null);
 		colorScheme[3]
-			? (accent3 = { hex: colorScheme[3], contrast: contrastingColor(colorScheme[3]) })
-			: (accent3 = null);
+			? (tertiary = { hex: colorScheme[3], contrast: contrastingColor(colorScheme[3]) })
+			: (tertiary = null);
 		colorScheme[4]
-			? (accent4 = { hex: colorScheme[4], contrast: contrastingColor(colorScheme[4]) })
-			: (accent4 = null);
+			? (quaternary = { hex: colorScheme[4], contrast: contrastingColor(colorScheme[4]) })
+			: (quaternary = null);
 	}
 </script>
 
@@ -40,15 +40,15 @@
 	<GenerateMenu initialColorScheme={data.colorScheme} />
 
 	<div class="w-full h-24 flex">
-		<div class="flex-1" style={`background-color: ${accent1.hex};`} />
-		{#if accent2}
-			<div class="flex-1" style={`background-color: ${accent2.hex};`} />
+		<div class="flex-1" style={`background-color: ${primary.hex};`} />
+		{#if secondary}
+			<div class="flex-1" style={`background-color: ${secondary.hex};`} />
 		{/if}
-		{#if accent3}
-			<div class="flex-1" style={`background-color: ${accent3.hex};`} />
+		{#if tertiary}
+			<div class="flex-1" style={`background-color: ${tertiary.hex};`} />
 		{/if}
-		{#if accent4}
-			<div class="flex-1" style={`background-color: ${accent4.hex};`} />
+		{#if quaternary}
+			<div class="flex-1" style={`background-color: ${quaternary.hex};`} />
 		{/if}
 	</div>
 
@@ -56,30 +56,30 @@
 		<div class="flex flex-col gap-y-4 text-center">
 			<h1
 				class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
-				style={`color: ${accent1.hex};`}
+				style={`color: ${primary.hex};`}
 			>
 				Primary
 			</h1>
-			{#if accent2}
+			{#if secondary}
 				<h2
 					class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
-					style={`color: ${accent2.hex};`}
+					style={`color: ${secondary.hex};`}
 				>
 					Secondary
 				</h2>
 			{/if}
-			{#if accent3}
+			{#if tertiary}
 				<h3
 					class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
-					style={`color: ${accent3.hex};`}
+					style={`color: ${tertiary.hex};`}
 				>
 					Tertiary
 				</h3>
 			{/if}
-			{#if accent4}
+			{#if quaternary}
 				<h4
 					class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
-					style={`color: ${accent4.hex};`}
+					style={`color: ${quaternary.hex};`}
 				>
 					Quaternary
 				</h4>
@@ -90,14 +90,14 @@
 			<div class="h-16 flex justify-center gap-x-4">
 				<button
 					class="button w-[136px] border-none"
-					style={`background-color: ${accent1.hex}; color: ${accent1.contrast};`}
+					style={`background-color: ${primary.hex}; color: ${primary.contrast};`}
 				>
 					Primary
 				</button>
-				{#if accent2}
+				{#if secondary}
 					<button
 						class="button w-[136px] border-none"
-						style={`background-color: ${accent2.hex}; color: ${accent2.contrast};`}
+						style={`background-color: ${secondary.hex}; color: ${secondary.contrast};`}
 					>
 						Secondary
 					</button>
@@ -105,18 +105,18 @@
 			</div>
 
 			<div class="h-16 flex justify-center gap-x-4">
-				{#if accent3}
+				{#if tertiary}
 					<button
 						class="button w-[136px] border-none"
-						style={`background-color: ${accent3.hex}; color: ${accent3.contrast};`}
+						style={`background-color: ${tertiary.hex}; color: ${tertiary.contrast};`}
 					>
 						Tertiary
 					</button>
 				{/if}
-				{#if accent4}
+				{#if quaternary}
 					<button
 						class="button w-[136px] border-none"
-						style={`background-color: ${accent4.hex}; color: ${accent4.contrast};`}
+						style={`background-color: ${quaternary.hex}; color: ${quaternary.contrast};`}
 					>
 						Quaternary
 					</button>
@@ -126,15 +126,15 @@
 	</div>
 
 	<div class="w-full h-24 flex">
-		<div class="flex-1" style={`background-color: ${accent1.hex};`} />
-		{#if accent2}
-			<div class="flex-1" style={`background-color: ${accent2.hex};`} />
+		<div class="flex-1" style={`background-color: ${primary.hex};`} />
+		{#if secondary}
+			<div class="flex-1" style={`background-color: ${secondary.hex};`} />
 		{/if}
-		{#if accent3}
-			<div class="flex-1" style={`background-color: ${accent3.hex};`} />
+		{#if tertiary}
+			<div class="flex-1" style={`background-color: ${tertiary.hex};`} />
 		{/if}
-		{#if accent4}
-			<div class="flex-1" style={`background-color: ${accent4.hex};`} />
+		{#if quaternary}
+			<div class="flex-1" style={`background-color: ${quaternary.hex};`} />
 		{/if}
 	</div>
 </div>
