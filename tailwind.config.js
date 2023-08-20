@@ -18,9 +18,6 @@ export default {
 			minHeight: (theme) => ({
 				...theme('spacing')
 			}),
-			borderWidth: {
-				3: '3px'
-			},
 			brightness: {
 				70: 0.7,
 				80: 0.8
