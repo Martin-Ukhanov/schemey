@@ -325,6 +325,7 @@
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 					{@const colorSchemeLength = colorSchemes[colorSchemeIndex].length}
 					{@const contrastColor = contrastingColor(color.hex)}
+
 					<div
 						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center gap-4 border-3 overflow-x-auto overflow-y-hidden sm:overflow-x-visible sm:overflow-y-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
