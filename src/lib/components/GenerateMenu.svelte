@@ -227,7 +227,7 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button flex-1 border-none rounded-none"
+			class="button flex-[2] border-none rounded-none"
 			on:click={() => {
 				addColorScheme(newColorScheme());
 			}}
