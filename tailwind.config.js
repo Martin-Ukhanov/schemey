@@ -9,6 +9,10 @@ export default {
 			fontFamily: {
 				nunito: ['Nunito', 'sans-serif']
 			},
+			screens: {
+				xxs: '390px',
+				xs: '480px'
+			},
 			maxWidth: (theme) => ({
 				...theme('spacing')
 			}),
