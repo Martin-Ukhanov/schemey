@@ -213,7 +213,7 @@
 
 {#if !menuOpen}
 	<menu
-		class="w-full flex border-b-3 z-10 bg-white border-black"
+		class="w-full flex border-b-2 z-10 bg-white border-black"
 		transition:slide={{ duration: 300, axis: 'y' }}
 	>
 		<button
@@ -224,7 +224,7 @@
 			<UndoIcon />
 		</button>
 
-		<div class="w-[3px] bg-black" />
+		<div class="w-0.5 bg-black" />
 
 		<button
 			class="button flex-1 border-none rounded-none"
@@ -235,7 +235,7 @@
 			<GenerateIcon />
 		</button>
 
-		<div class="w-[3px] bg-black" />
+		<div class="w-0.5 bg-black" />
 
 		<button
 			class="button flex-1 border-none rounded-none"
@@ -248,7 +248,7 @@
 {/if}
 
 <menu
-	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.32))] py-4 border-t-3 z-10 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.32))] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -327,7 +327,7 @@
 					{@const contrastColor = contrastingColor(color.hex)}
 
 					<div
-						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center gap-4 border-3 overflow-x-auto overflow-y-hidden sm:overflow-x-visible sm:overflow-y-visible rounded-md border-black"
+						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center gap-4 border-2 overflow-x-auto overflow-y-hidden sm:overflow-x-visible sm:overflow-y-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
 						in:scale={{ duration: 300 }}
 						out:scale={{ duration: 300 }}

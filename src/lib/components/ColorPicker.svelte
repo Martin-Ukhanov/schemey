@@ -88,7 +88,7 @@
 
 <div class="flex-1 flex flex-col gap-y-4">
 	<button
-		class="relative w-full h-full border-3 rounded-md border-black group"
+		class="relative w-full h-full border-2 rounded-md border-black group"
 		style={`background: linear-gradient(#ffffff00, #000000ff), linear-gradient(0.25turn, #ffffffff, #00000000), hsl(${h}, 100%, 50%);`}
 		bind:this={colorPickerElement}
 		bind:clientWidth={colorPickerWidth}
@@ -97,12 +97,12 @@
 		on:touchstart|preventDefault={moveColorPickerCursorTouch}
 	>
 		<div
-			class="absolute -translate-x-1/2 translate-y-1/2 w-7 h-7 border-3 rounded-full border-black cursor-grab group-active:cursor-grabbing"
+			class="absolute -translate-x-1/2 translate-y-1/2 w-7 h-7 border-2 rounded-full border-black cursor-grab group-active:cursor-grabbing"
 			style={`bottom: ${v}%; left: ${s}%; background-color: ${hex};`}
 		>
-			<div class="w-full h-full border-3 rounded-full border-white">
+			<div class="w-full h-full border-2 rounded-full border-white">
 				<div
-					class="w-full h-full border-3 rounded-full border-black"
+					class="w-full h-full border-2 rounded-full border-black"
 					style={`background-color: ${hex};`}
 				/>
 			</div>
@@ -120,20 +120,20 @@
 		/>
 
 		<div
-			class="h-4 border-3 rounded-full border-black"
+			class="h-4 border-2 rounded-full border-black"
 			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
 		/>
 
 		<div
-			class="absolute -top-[6px] -translate-x-1/2 w-7 h-7 border-3 rounded-full border-black pointer-events-none"
+			class="absolute -top-[6px] -translate-x-1/2 w-7 h-7 border-2 rounded-full border-black pointer-events-none"
 			style={`left: ${
 				(h / 360) * (hueSliderWidth - hueSliderThumbWidth) + hueSliderThumbWidth / 2
 			}px;`}
 			bind:clientWidth={hueSliderThumbWidth}
 		>
-			<div class="w-full h-full border-3 rounded-full border-white">
+			<div class="w-full h-full border-2 rounded-full border-white">
 				<div
-					class="w-full h-full border-3 rounded-full border-black"
+					class="w-full h-full border-2 rounded-full border-black"
 					style={`background-color: hsl(${h} 100% 50%);`}
 				/>
 			</div>
@@ -144,7 +144,7 @@
 		type="text"
 		name="hex"
 		placeholder="#000000"
-		class="p-2 flex justify-center items-center border-3 outline-none rounded-md text-center uppercase border-black"
+		class="p-2 flex justify-center items-center border-2 outline-none rounded-md text-center uppercase border-black"
 		class:placeholder-white={contrastColor === '#ffffff'}
 		class:placeholder-black={contrastColor === '#000000'}
 		style={`background-color: ${hex}; color: ${contrastColor};`}
