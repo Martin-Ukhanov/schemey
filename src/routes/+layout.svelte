@@ -1,9 +1,12 @@
 <script lang="ts">
 	import '../app.css';
+	import Header from '$lib/components/Header.svelte';
 	import Notifications from '$lib/components/Notifications.svelte';
 </script>
 
-<main class="min-h-[100dvh] flex flex-col">
+<Header />
+
+<main class="min-h-[calc(100dvh-theme(height.16))] flex flex-col">
 	<slot />
 </main>
 
