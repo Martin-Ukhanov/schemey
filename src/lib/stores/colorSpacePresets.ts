@@ -13,7 +13,7 @@ export const colorSpacePresets = readable(<ColorSpacePresets>{
 	shades: [0, 240, 0, 15, 0, 100],
 	intense: [0, 360, 20, 100, 15, 80],
 	red: [330, 20, 10, 100, 35, 100],
-	blue: [220, 260, 8, 80, 0, 50],
+	blue: [220, 280, 10, 100, 35, 100],
 	green: [90, 150, 10, 100, 35, 100],
 	yellow: [60, 90, 10, 100, 35, 100],
 	teal: [150, 200, 0, 100, 35, 100],
