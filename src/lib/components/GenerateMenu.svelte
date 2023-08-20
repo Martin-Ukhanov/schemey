@@ -1,12 +1,18 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { flip } from 'svelte/animate';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
-	import { browser } from '$app/environment';
+	import { addNotification } from '$lib/stores/notifications';
 	import { scale, slide } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
+	import Modal from './Modal.svelte';
+	import List from './List.svelte';
+	import ColorPicker from './ColorPicker.svelte';
 	import ArrowUpIcon from './icons/ArrowUpIcon.svelte';
 	import ArrowDownIcon from './icons/ArrowDownIcon.svelte';
+	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte';
+	import ArrowRightIcon from './icons/ArrowRightIcon.svelte';
 	import ResizeIcon from './icons/ResizeIcon.svelte';
 	import GenerateIcon from './icons/GenerateIcon.svelte';
 	import UndoIcon from './icons/UndoIcon.svelte';
@@ -17,12 +23,6 @@
 	import LockedIcon from './icons/LockedIcon.svelte';
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
-	import Modal from './Modal.svelte';
-	import List from './List.svelte';
-	import { addNotification } from '$lib/stores/notifications';
-	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte';
-	import ArrowRightIcon from './icons/ArrowRightIcon.svelte';
-	import ColorPicker from './ColorPicker.svelte';
 
 	type Color = {
 		id: number;
@@ -211,42 +211,44 @@
 	}
 </script>
 
+{#if !menuOpen}
+	<menu
+		class="w-full flex border-b-3 bg-white border-black"
+		transition:slide={{ duration: 300, axis: 'y' }}
+	>
+		<button
+			class="button flex-1 border-none rounded-none"
+			disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+			on:click={undoColorScheme}
+		>
+			<UndoIcon />
+		</button>
+
+		<div class="w-[3px] bg-black" />
+
+		<button
+			class="button flex-1 border-none rounded-none"
+			on:click={() => {
+				addColorScheme(newColorScheme());
+			}}
+		>
+			<GenerateIcon />
+		</button>
+
+		<div class="w-[3px] bg-black" />
+
+		<button
+			class="button flex-1 border-none rounded-none"
+			disabled={colorSchemeIndex === 0}
+			on:click={redoColorScheme}
+		>
+			<RedoIcon />
+		</button>
+	</menu>
+{/if}
+
 <menu
-	class="absolute top-0 w-full flex border-b-3 bg-white border-black transition-transform duration-300"
-	class:-translate-y-full={menuOpen}
->
-	<button
-		class="button flex-1 border-none rounded-none"
-		disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
-		on:click={undoColorScheme}
-	>
-		<UndoIcon />
-	</button>
-
-	<div class="w-[3px] bg-black" />
-
-	<button
-		class="button flex-1 border-none rounded-none"
-		on:click={() => {
-			addColorScheme(newColorScheme());
-		}}
-	>
-		<GenerateIcon />
-	</button>
-
-	<div class="w-[3px] bg-black" />
-
-	<button
-		class="button flex-1 border-none rounded-none"
-		disabled={colorSchemeIndex === 0}
-		on:click={redoColorScheme}
-	>
-		<RedoIcon />
-	</button>
-</menu>
-
-<menu
-	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.16))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.48)-theme(borderWidth.3))] py-4 border-t-3 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!menuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
