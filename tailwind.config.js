@@ -10,7 +10,6 @@ export default {
 				nunito: ['Nunito', 'sans-serif']
 			},
 			screens: {
-				xxs: '390px',
 				xs: '480px'
 			},
 			maxWidth: (theme) => ({
