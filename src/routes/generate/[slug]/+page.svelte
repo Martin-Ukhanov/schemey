@@ -52,53 +52,73 @@
 		{/if}
 	</div>
 
-	<div class="flex-1 p-4 flex flex-col justify-center items-center gap-y-8">
+	<div class="flex-1 p-4 flex flex-col justify-center items-center gap-y-8 overflow-x-hidden">
 		<div class="flex flex-col gap-y-4 text-center">
-			<h1 class=" text-5xl sm:text-7xl uppercase" style={`color: ${accent1.hex};`}>Heading 1</h1>
+			<h1
+				class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
+				style={`color: ${accent1.hex};`}
+			>
+				Primary
+			</h1>
 			{#if accent2}
-				<h2 class="text-4xl sm:text-6xl uppercase" style={`color: ${accent2.hex};`}>Heading 2</h2>
+				<h2
+					class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
+					style={`color: ${accent2.hex};`}
+				>
+					Secondary
+				</h2>
 			{/if}
 			{#if accent3}
-				<h3 class="text-3xl sm:text-5xl uppercase" style={`color: ${accent3.hex};`}>Heading 3</h3>
+				<h3
+					class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
+					style={`color: ${accent3.hex};`}
+				>
+					Tertiary
+				</h3>
 			{/if}
 			{#if accent4}
-				<h4 class="text-2xl sm:text-4xl uppercase" style={`color: ${accent4.hex};`}>Heading 4</h4>
+				<h4
+					class="text-4xl xxs:text-5xl xs:text-6xl sm:text-7xl uppercase"
+					style={`color: ${accent4.hex};`}
+				>
+					Quaternary
+				</h4>
 			{/if}
 		</div>
 
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<div class="flex justify-center gap-x-4">
+			<div class="h-16 flex justify-center gap-x-4">
 				<button
-					class="button w-fit border-none"
+					class="button w-[136px] border-none"
 					style={`background-color: ${accent1.hex}; color: ${accent1.contrast};`}
 				>
-					Button 1
+					Primary
 				</button>
 				{#if accent2}
 					<button
-						class="button w-fit border-none"
+						class="button w-[136px] border-none"
 						style={`background-color: ${accent2.hex}; color: ${accent2.contrast};`}
 					>
-						Button 2
+						Secondary
 					</button>
 				{/if}
 			</div>
 
-			<div class="flex justify-center gap-x-4">
+			<div class="h-16 flex justify-center gap-x-4">
 				{#if accent3}
 					<button
-						class="button w-fit border-none"
+						class="button w-[136px] border-none"
 						style={`background-color: ${accent3.hex}; color: ${accent3.contrast};`}
 					>
-						Button 3
+						Tertiary
 					</button>
 				{/if}
 				{#if accent4}
 					<button
-						class="button w-fit border-none"
+						class="button w-[136px] border-none"
 						style={`background-color: ${accent4.hex}; color: ${accent4.contrast};`}
 					>
-						Button 4
+						Quaternary
 					</button>
 				{/if}
 			</div>
