@@ -39,7 +39,7 @@
 >
 	<GenerateMenu initialColorScheme={data.colorScheme} />
 
-	<div class="w-full h-28 flex">
+	<div class="w-full h-24 flex">
 		<div class="flex-1" style={`background-color: ${accent1.hex};`} />
 		{#if accent2}
 			<div class="flex-1" style={`background-color: ${accent2.hex};`} />
@@ -105,7 +105,7 @@
 		</div>
 	</div>
 
-	<div class="w-full h-28 flex">
+	<div class="w-full h-24 flex">
 		<div class="flex-1" style={`background-color: ${accent1.hex};`} />
 		{#if accent2}
 			<div class="flex-1" style={`background-color: ${accent2.hex};`} />
