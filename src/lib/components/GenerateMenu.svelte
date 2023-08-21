@@ -17,7 +17,7 @@
 	import GenerateIcon from './icons/GenerateIcon.svelte';
 	import UndoIcon from './icons/UndoIcon.svelte';
 	import RedoIcon from './icons/RedoIcon.svelte';
-	import BookmarkIcon from './icons/BookmarkIcon.svelte';
+	import SaveIcon from './icons/SaveIcon.svelte';
 	import XSquareIcon from './icons/XSquareIcon.svelte';
 	import CopyIcon from './icons/CopyIcon.svelte';
 	import LockedIcon from './icons/LockedIcon.svelte';
@@ -330,7 +330,7 @@
 			</div>
 
 			<button class="button" use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}>
-				<BookmarkIcon />
+				<SaveIcon />
 			</button>
 		</div>
 
@@ -372,7 +372,7 @@
 										: 'button-transparent-white'}
 									use:showTooltip={{ position: 'top', message: 'Save Color' }}
 								>
-									<BookmarkIcon />
+									<SaveIcon />
 								</button>
 							</div>
 
