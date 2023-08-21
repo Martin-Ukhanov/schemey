@@ -202,12 +202,12 @@
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
 	}
 
-	$: if (browser) {
-		document.body.classList.toggle('no-scroll', menuOpen);
-	}
-
 	$: if (colorPickerColor) {
 		colorSchemes = colorSchemes;
+	}
+
+	$: if (browser) {
+		document.body.classList.toggle('no-scroll', menuOpen);
 	}
 </script>
 
