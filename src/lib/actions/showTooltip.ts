@@ -5,22 +5,28 @@ export function showTooltip(
 	{ position, message }: { position: 'top' | 'bottom'; message: string }
 ) {
 	let timeout: number;
-	let mouseDown = false;
+	let scrollableParent: HTMLElement;
 
-	function onMouseEnter(): void {
-		if (!mouseDown) {
-			timeout = setTimeout(() => {
-				const rect = node.getBoundingClientRect();
+	function getScrollableParent(element: HTMLElement): HTMLElement {
+		const isScrollable = (element: HTMLElement) => {
+			const hasScrollableXContent = element.scrollWidth > element.clientWidth;
+			const hasScrollableYContent = element.scrollHeight > element.clientHeight;
 
-				tooltip.set({
-					visible: true,
-					position: position,
-					x: rect.left + node.offsetWidth / 2,
-					y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
-					message: message
-				});
-			}, 1000);
-		}
+			const style = getComputedStyle(element);
+			const isOverflowXHidden = style.overflowX.indexOf('hidden') !== -1;
+			const isOverflowYHidden = style.overflowY.indexOf('hidden') !== -1;
+
+			return (
+				(hasScrollableXContent && !isOverflowXHidden) ||
+				(hasScrollableYContent && !isOverflowYHidden)
+			);
+		};
+
+		return !element || element === document.body
+			? document.body
+			: isScrollable(element)
+			? element
+			: getScrollableParent(<HTMLElement>element.parentNode);
 	}
 
 	function hide(): void {
@@ -28,28 +34,36 @@ export function showTooltip(
 		tooltip.update((value) => {
 			return { ...value, visible: false };
 		});
+		scrollableParent?.removeEventListener('scroll', hide);
 	}
 
-	function onMouseDown(): void {
-		mouseDown = true;
-		hide();
-	}
+	function onMouseEnter(): void {
+		timeout = setTimeout(() => {
+			const rect = node.getBoundingClientRect();
 
-	function onMouseLeave(): void {
-		mouseDown = false;
-		hide();
+			tooltip.set({
+				visible: true,
+				position: position,
+				x: rect.left + node.offsetWidth / 2,
+				y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
+				message: message
+			});
+
+			scrollableParent = getScrollableParent(node);
+			scrollableParent.addEventListener('scroll', hide);
+		}, 1000);
 	}
 
 	node.addEventListener('mouseenter', onMouseEnter);
-	node.addEventListener('mousedown', onMouseDown);
-	node.addEventListener('mouseleave', onMouseLeave);
+	node.addEventListener('mousedown', hide);
+	node.addEventListener('mouseleave', hide);
 
 	return {
 		destroy() {
 			hide();
 			node.removeEventListener('mouseenter', onMouseEnter);
-			node.removeEventListener('mousedown', onMouseDown);
-			node.removeEventListener('mouseleave', onMouseLeave);
+			node.removeEventListener('mousedown', hide);
+			node.removeEventListener('mouseleave', hide);
 		}
 	};
 }
