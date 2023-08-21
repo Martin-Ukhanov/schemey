@@ -213,11 +213,11 @@
 
 {#if !menuOpen}
 	<menu
-		class="w-full flex border-b-2 z-10 bg-white border-black"
+		class="w-full flex border-b-2 bg-white border-black"
 		transition:slide={{ duration: 300, axis: 'y' }}
 	>
 		<button
-			class="button flex-1 border-none rounded-none"
+			class="button w-1/4 border-none rounded-none"
 			disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
 			on:click={undoColorScheme}
 		>
@@ -227,7 +227,7 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button flex-[2] border-none rounded-none"
+			class="button w-1/2 border-none rounded-none"
 			on:click={() => {
 				addColorScheme(newColorScheme());
 			}}
@@ -238,7 +238,7 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button flex-1 border-none rounded-none"
+			class="button w-1/4 border-none rounded-none"
 			disabled={colorSchemeIndex === 0}
 			on:click={redoColorScheme}
 		>
