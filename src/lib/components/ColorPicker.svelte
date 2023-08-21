@@ -97,10 +97,10 @@
 		on:touchstart|preventDefault={moveColorPickerCursorTouch}
 	>
 		<div
-			class="absolute -translate-x-1/2 translate-y-1/2 w-7 h-7 border-2 rounded-full border-black cursor-grab group-active:cursor-grabbing"
+			class="absolute -translate-x-1/2 translate-y-1/2 w-6 h-6 border-2 rounded-full border-black cursor-grab group-active:cursor-grabbing"
 			style={`bottom: ${v}%; left: ${s}%; background-color: ${hex};`}
 		>
-			<div class="w-full h-full border-2 rounded-full border-white">
+			<div class="w-full h-full border-4 rounded-full border-white">
 				<div
 					class="w-full h-full border-2 rounded-full border-black"
 					style={`background-color: ${hex};`}
@@ -115,7 +115,7 @@
 			min="0"
 			max="360"
 			step="1"
-			class="appearance-none absolute w-full h-full bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-7 [&::-webkit-slider-thumb]:h-7 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
+			class="appearance-none absolute w-full h-full bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
 			bind:value={h}
 		/>
 
@@ -125,13 +125,13 @@
 		/>
 
 		<div
-			class="absolute -top-[6px] -translate-x-1/2 w-7 h-7 border-2 rounded-full border-black pointer-events-none"
+			class="absolute -top-[4px] -translate-x-1/2 w-6 h-6 border-2 rounded-full border-black pointer-events-none"
 			style={`left: ${
 				(h / 360) * (hueSliderWidth - hueSliderThumbWidth) + hueSliderThumbWidth / 2
 			}px;`}
 			bind:clientWidth={hueSliderThumbWidth}
 		>
-			<div class="w-full h-full border-2 rounded-full border-white">
+			<div class="w-full h-full border-4 rounded-full border-white">
 				<div
 					class="w-full h-full border-2 rounded-full border-black"
 					style={`background-color: hsl(${h} 100% 50%);`}
