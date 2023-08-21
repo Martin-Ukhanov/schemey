@@ -16,9 +16,11 @@
 				style="border-width: 0 7px 7px 7px; border-color: transparent transparent black transparent;"
 			/>
 		{/if}
+
 		<div class="p-2 rounded-md text-center text-xs uppercase bg-black text-white">
 			{$tooltip.message}
 		</div>
+
 		{#if $tooltip.position === 'top'}
 			<div
 				class="w-0 h-0"
