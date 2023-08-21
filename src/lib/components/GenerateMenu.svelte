@@ -24,6 +24,8 @@
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
 
+	import { showTooltip } from '$lib/actions/showTooltip';
+
 	type Color = {
 		id: number;
 		hex: string;
@@ -212,13 +214,11 @@
 </script>
 
 {#if !menuOpen}
-	<menu
-		class="w-full flex border-b-2 bg-white border-black"
-		transition:slide={{ duration: 300, axis: 'y' }}
-	>
+	<menu class="w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
 		<button
-			class="button w-1/4 border-none rounded-none"
+			class="button w-1/4 border-t-0 border-x-0 rounded-none !border-black"
 			disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
 			on:click={undoColorScheme}
 		>
 			<UndoIcon />
@@ -227,7 +227,8 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button w-1/2 border-none rounded-none"
+			class="button w-1/2 border-t-0 border-x-0 rounded-none"
+			use:showTooltip={{ position: 'bottom', message: 'Generate' }}
 			on:click={() => {
 				addColorScheme(newColorScheme());
 			}}
@@ -238,8 +239,9 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button w-1/4 border-none rounded-none"
+			class="button w-1/4 border-t-0 border-x-0 rounded-none !border-black"
 			disabled={colorSchemeIndex === 0}
+			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
 			on:click={redoColorScheme}
 		>
 			<RedoIcon />
@@ -254,23 +256,27 @@
 	bind:clientWidth={menuWidth}
 >
 	<div class="absolute bottom-full left-4 flex gap-x-2">
-		<button
-			class="button rounded-b-none"
-			on:click={() => {
-				menuOpen = !menuOpen;
-			}}
-		>
-			{#if menuOpen}
-				<ArrowDownIcon />
-			{:else}
-				<ArrowUpIcon />
-			{/if}
-		</button>
+		{#key menuOpen}
+			<button
+				class="button rounded-b-none"
+				use:showTooltip={{ position: 'top', message: menuOpen ? 'Close' : 'Open' }}
+				on:click={() => {
+					menuOpen = !menuOpen;
+				}}
+			>
+				{#if menuOpen}
+					<ArrowDownIcon />
+				{:else}
+					<ArrowUpIcon />
+				{/if}
+			</button>
+		{/key}
 
 		{#if menuOpen}
 			<button
 				class="button rounded-b-none cursor-grab active:cursor-grabbing"
 				transition:scale={{ duration: 300 }}
+				use:showTooltip={{ position: 'top', message: 'Resize' }}
 				on:mousedown|preventDefault={resizeMenuMouse}
 				on:touchstart|preventDefault={resizeMenuTouch}
 			>
@@ -285,6 +291,7 @@
 		<div class="sm:w-40 flex flex-col gap-y-4">
 			<button
 				class="button"
+				use:showTooltip={{ position: 'top', message: 'Change Color Space' }}
 				on:click={() => {
 					colorSpaceModalOpen = true;
 				}}
@@ -294,6 +301,7 @@
 
 			<button
 				class="button flex-1"
+				use:showTooltip={{ position: 'top', message: 'Generate' }}
 				on:click={() => {
 					addColorScheme(newColorScheme());
 				}}
@@ -305,17 +313,23 @@
 				<button
 					class="button flex-1"
 					disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+					use:showTooltip={{ position: 'top', message: 'Undo' }}
 					on:click={undoColorScheme}
 				>
 					<UndoIcon />
 				</button>
 
-				<button class="button flex-1" disabled={colorSchemeIndex === 0} on:click={redoColorScheme}>
+				<button
+					class="button flex-1"
+					disabled={colorSchemeIndex === 0}
+					use:showTooltip={{ position: 'top', message: 'Redo' }}
+					on:click={redoColorScheme}
+				>
 					<RedoIcon />
 				</button>
 			</div>
 
-			<button class="button">
+			<button class="button" use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}>
 				<BookmarkIcon />
 			</button>
 		</div>
@@ -342,6 +356,7 @@
 												? 'button-transparent-black'
 												: 'button-transparent-white'}
 											transition:slide={{ duration: 300, axis: menuWidth < 1024 ? 'y' : 'x' }}
+											use:showTooltip={{ position: 'top', message: 'Remove' }}
 											on:click={() => {
 												removeColor(index);
 											}}
@@ -355,6 +370,7 @@
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
+									use:showTooltip={{ position: 'top', message: 'Save Color' }}
 								>
 									<BookmarkIcon />
 								</button>
@@ -365,6 +381,7 @@
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
+									use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
 									on:click={() => {
 										navigator.clipboard.writeText(color.hex.toUpperCase());
 										addNotification(`${color.hex} Copied`, 'copied', color.hex);
@@ -373,25 +390,28 @@
 									<CopyIcon />
 								</button>
 
-								<button
-									class={contrastColor === '#000000'
-										? 'button-transparent-black'
-										: 'button-transparent-white'}
-									on:click={() => {
-										toggleLockedColor(index);
-										addNotification(
-											`${color.hex} ${color.locked ? 'Locked' : 'Unlocked'}`,
-											color.locked ? 'locked' : 'unlocked',
-											color.hex
-										);
-									}}
-								>
-									{#if color.locked}
-										<LockedIcon />
-									{:else}
-										<UnlockedIcon />
-									{/if}
-								</button>
+								{#key color.locked}
+									<button
+										class={contrastColor === '#000000'
+											? 'button-transparent-black'
+											: 'button-transparent-white'}
+										use:showTooltip={{ position: 'top', message: color.locked ? 'Unlock' : 'Lock' }}
+										on:click={() => {
+											toggleLockedColor(index);
+											addNotification(
+												`${color.hex} ${color.locked ? 'Locked' : 'Unlocked'}`,
+												color.locked ? 'locked' : 'unlocked',
+												color.hex
+											);
+										}}
+									>
+										{#if color.locked}
+											<LockedIcon />
+										{:else}
+											<UnlockedIcon />
+										{/if}
+									</button>
+								{/key}
 							</div>
 
 							<div class="flex flex-col lg:flex-row">
@@ -399,6 +419,7 @@
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
+									use:showTooltip={{ position: 'top', message: 'Shift Left' }}
 									on:click={() => {
 										const index2 = index - 1 < 0 ? colorSchemeLength - 1 : index - 1;
 										swapColors(index, index2);
@@ -415,6 +436,7 @@
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
+									use:showTooltip={{ position: 'top', message: 'Shift Right' }}
 									on:click={() => {
 										const index2 = index + 1 > colorSchemeLength - 1 ? 0 : index + 1;
 										swapColors(index, index2);
@@ -433,6 +455,7 @@
 							class={contrastColor === '#000000'
 								? 'button-transparent-black'
 								: 'button-transparent-white'}
+							use:showTooltip={{ position: 'top', message: 'Color Picker' }}
 							on:click={() => {
 								originalColorPickerHex = color.hex;
 								colorPickerColor = color;
@@ -450,6 +473,7 @@
 					<button
 						class="button mt-4 sm:mt-0 sm:ml-4"
 						transition:slide={{ duration: 300, axis: menuWidth < 640 ? 'y' : 'x' }}
+						use:showTooltip={{ position: 'top', message: 'Add Color' }}
 						on:click={addColor}
 					>
 						<PlusIcon />
