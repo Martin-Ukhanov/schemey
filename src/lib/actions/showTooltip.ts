@@ -16,7 +16,7 @@ export function showTooltip(
 					visible: true,
 					position: position,
 					x: rect.left + node.offsetWidth / 2,
-					y: position === 'top' ? rect.top - 2 : rect.bottom + 2,
+					y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
 					message: message
 				});
 			}, 1000);
