@@ -46,10 +46,10 @@ export function showTooltip(
 
 	return {
 		destroy() {
+			hide();
 			node.removeEventListener('mouseenter', onMouseEnter);
 			node.removeEventListener('mousedown', onMouseDown);
 			node.removeEventListener('mouseleave', onMouseLeave);
-			hide();
 		}
 	};
 }
