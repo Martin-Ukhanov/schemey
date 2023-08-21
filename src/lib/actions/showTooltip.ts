@@ -1,13 +1,16 @@
 import { tooltip } from '$lib/stores/tooltip';
 
 export function showTooltip(
-	node: HTMLElement,
+	element: HTMLElement,
 	{ position, message }: { position: 'top' | 'bottom'; message: string }
 ) {
 	let timeout: number;
-	let scrollableParent: HTMLElement;
+	let scrollableParents: HTMLElement[];
 
-	function getScrollableParent(element: HTMLElement): HTMLElement {
+	function getScrollableParents(
+		element: HTMLElement,
+		scrollableParents: HTMLElement[]
+	): HTMLElement[] {
 		const isScrollable = (element: HTMLElement) => {
 			const hasScrollableXContent = element.scrollWidth > element.clientWidth;
 			const hasScrollableYContent = element.scrollHeight > element.clientHeight;
@@ -23,10 +26,10 @@ export function showTooltip(
 		};
 
 		return !element || element === document.body
-			? document.body
+			? [...scrollableParents, document.body]
 			: isScrollable(element)
-			? element
-			: getScrollableParent(<HTMLElement>element.parentNode);
+			? getScrollableParents(<HTMLElement>element.parentNode, [...scrollableParents, element])
+			: getScrollableParents(<HTMLElement>element.parentNode, scrollableParents);
 	}
 
 	function hide(): void {
@@ -34,36 +37,40 @@ export function showTooltip(
 		tooltip.update((value) => {
 			return { ...value, visible: false };
 		});
-		scrollableParent?.removeEventListener('scroll', hide);
+		scrollableParents?.forEach((scrollableParent) => {
+			scrollableParent.removeEventListener('scroll', hide);
+		});
 	}
 
 	function onMouseEnter(): void {
 		timeout = setTimeout(() => {
-			const rect = node.getBoundingClientRect();
+			const rect = element.getBoundingClientRect();
 
 			tooltip.set({
 				visible: true,
 				position: position,
-				x: rect.left + node.offsetWidth / 2,
+				x: rect.left + element.offsetWidth / 2,
 				y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
 				message: message
 			});
 
-			scrollableParent = getScrollableParent(node);
-			scrollableParent.addEventListener('scroll', hide);
+			scrollableParents = getScrollableParents(element, []);
+			scrollableParents.forEach((scrollableParent) => {
+				scrollableParent.addEventListener('scroll', hide);
+			});
 		}, 1000);
 	}
 
-	node.addEventListener('mouseenter', onMouseEnter);
-	node.addEventListener('mousedown', hide);
-	node.addEventListener('mouseleave', hide);
+	element.addEventListener('mouseenter', onMouseEnter);
+	element.addEventListener('mousedown', hide);
+	element.addEventListener('mouseleave', hide);
 
 	return {
 		destroy() {
 			hide();
-			node.removeEventListener('mouseenter', onMouseEnter);
-			node.removeEventListener('mousedown', hide);
-			node.removeEventListener('mouseleave', hide);
+			element.removeEventListener('mouseenter', onMouseEnter);
+			element.removeEventListener('mousedown', hide);
+			element.removeEventListener('mouseleave', hide);
 		}
 	};
 }
