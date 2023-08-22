@@ -18,10 +18,6 @@
 		user-select: none;
 	}
 
-	*::-webkit-scrollbar {
-		display: none;
-	}
-
 	body {
 		@apply font-nunito bg-white text-black;
 	}
