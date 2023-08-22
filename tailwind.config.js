@@ -19,8 +19,7 @@ export default {
 				...theme('spacing')
 			}),
 			brightness: {
-				70: 0.7,
-				80: 0.8
+				85: 0.85
 			}
 		}
 	},
