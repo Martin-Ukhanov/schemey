@@ -9,7 +9,7 @@ type Notification = {
 
 export const notifications = writable(<Notification[]>[]);
 
-export function addNotification(message: string, icon = 'check', color = '#ffffff'): void {
+export function addNotification(message: string, icon = 'check', color = '#000000'): void {
 	let id: number;
 
 	notifications.update((values) => {
