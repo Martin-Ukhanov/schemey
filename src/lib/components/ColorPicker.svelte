@@ -144,7 +144,7 @@
 		type="text"
 		name="hex"
 		placeholder="#000000"
-		class="p-2 flex justify-center items-center border-2 outline-none rounded-md text-center uppercase border-black"
+		class="input text-lg text-center font-bold uppercase"
 		class:placeholder-white={contrastColor === '#ffffff'}
 		class:placeholder-black={contrastColor === '#000000'}
 		style={`background-color: ${hex}; color: ${contrastColor};`}
