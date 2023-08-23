@@ -216,7 +216,7 @@
 {#if !menuOpen}
 	<menu class="w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
 		<button
-			class="button w-1/4 border-t-0 border-x-0 rounded-none !border-black"
+			class="button w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
 			on:click={undoColorScheme}
@@ -239,7 +239,7 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button w-1/4 border-t-0 border-x-0 rounded-none !border-black"
+			class="button w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemeIndex === 0}
 			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
 			on:click={redoColorScheme}
