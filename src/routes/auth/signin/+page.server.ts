@@ -11,7 +11,7 @@ export const load = (async ({ url, locals: { getSession } }) => {
 	}
 }) satisfies PageServerLoad;
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
@@ -26,4 +26,4 @@ export const actions: Actions = {
 			return fail(500, { failure: true, message: error.message, email: email });
 		}
 	}
-};
+} satisfies Actions;
