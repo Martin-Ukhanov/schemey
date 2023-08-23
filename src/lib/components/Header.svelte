@@ -3,10 +3,9 @@
 	import { enhance, applyAction } from '$app/forms';
 	import { addNotification } from '$lib/stores/notifications';
 	import Loader from './Loader.svelte';
+	import { signInModalOpen, signUpModalOpen } from '$lib/stores/auth';
 
 	let loading = false;
-
-	$: route = $page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/';
 </script>
 
 <header class="h-16 p-2 flex justify-between items-center border-b-2 border-black">
@@ -15,7 +14,9 @@
 		{#if $page.data.session}
 			<form
 				method="post"
-				action={`/auth/signout?redirect=${route}`}
+				action={`/auth/signout?redirect=${
+					$page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/'
+				}`}
 				use:enhance={() => {
 					loading = true;
 
@@ -39,8 +40,18 @@
 				</button>
 			</form>
 		{:else}
-			<a href={`/auth/signin?redirect=${route}`} class="button-transparent-black">Sign In</a>
-			<a href={`/auth/signup?redirect=${route}`} class="button">Sign Up</a>
+			<button
+				class="button-transparent-black"
+				on:click={() => {
+					$signInModalOpen = true;
+				}}>Sign In</button
+			>
+			<button
+				class="button"
+				on:click={() => {
+					$signUpModalOpen = true;
+				}}>Sign Up</button
+			>
 		{/if}
 	</nav>
 </header>

@@ -3,16 +3,12 @@ import { fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 
-export const load = (async ({ url, locals: { getSession } }) => {
-	const session = await getSession();
-
-	if (session) {
-		throw redirect(303, url.searchParams.get('redirect') ?? '/');
-	}
+export const load = (() => {
+	throw redirect(303, '/');
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, locals: { supabase } }) => {
+	default: async ({ url, request, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
 		const password = formData.get('password') as string;
@@ -23,7 +19,9 @@ export const actions = {
 		});
 
 		if (error) {
-			return fail(500, { failure: true, message: error.message, email: email });
+			return fail(500, { message: error.message, email: email });
 		}
+
+		throw redirect(303, url.searchParams.get('redirect') ?? '/');
 	}
 } satisfies Actions;

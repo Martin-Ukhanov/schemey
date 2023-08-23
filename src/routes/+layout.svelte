@@ -7,6 +7,10 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import Notifications from '$lib/components/Notifications.svelte';
 	import { clearNotifications } from '$lib/stores/notifications';
+	import Modal from '$lib/components/Modal.svelte';
+	import SignIn from '$lib/components/SignIn.svelte';
+	import { signInModalOpen, signUpModalOpen } from '$lib/stores/auth';
+	import SignUp from '$lib/components/SignUp.svelte';
 
 	export let data: LayoutData;
 
@@ -32,6 +36,14 @@
 <main class="min-h-[calc(100dvh-theme(height.16))] flex flex-col">
 	<slot />
 </main>
+
+<Modal title="Sign In" bind:open={$signInModalOpen}>
+	<SignIn />
+</Modal>
+
+<Modal title="Sign Up" bind:open={$signUpModalOpen}>
+	<SignUp />
+</Modal>
 
 <Tooltip />
 
