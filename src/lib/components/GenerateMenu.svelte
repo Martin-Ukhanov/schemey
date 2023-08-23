@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { scale, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import { v4 as uuid } from 'uuid';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { addNotification } from '$lib/stores/notifications';
-	import { scale, slide } from 'svelte/transition';
+	import { showTooltip } from '$lib/actions/showTooltip';
 	import Modal from './Modal.svelte';
 	import List from './List.svelte';
 	import ColorPicker from './ColorPicker.svelte';
@@ -24,10 +26,8 @@
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
 
-	import { showTooltip } from '$lib/actions/showTooltip';
-
 	type Color = {
-		id: number;
+		id: string;
 		hex: string;
 		locked: boolean;
 	};
@@ -45,10 +45,9 @@
 	let colorSpace = 'all';
 	let colorSpaceModalOpen = false;
 
-	let currentColorId = 0;
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
-			return { id: uniqueColorId(), hex: color, locked: false };
+			return { id: uuid(), hex: color, locked: false };
 		})
 	];
 	let colorSchemeIndex = 0;
@@ -95,13 +94,6 @@
 				document.ontouchend = null;
 			};
 		}
-	}
-
-	function uniqueColorId(): number {
-		const colorId = currentColorId;
-		currentColorId++;
-
-		return colorId;
 	}
 
 	function gotoColorScheme(): void {
@@ -168,7 +160,7 @@
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.push(
 				...generateColorScheme(1, $colorSpacePresets[colorSpace]).map((color) => {
-					return { id: uniqueColorId(), hex: color, locked: false };
+					return { id: uuid(), hex: color, locked: false };
 				})
 			);
 
