@@ -19,7 +19,7 @@ export const actions = {
 		});
 
 		if (error) {
-			return fail(500, { message: error.message, email: email });
+			return fail(500, { message: error.message });
 		}
 
 		throw redirect(303, url.searchParams.get('redirect') ?? '/');

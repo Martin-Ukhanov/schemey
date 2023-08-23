@@ -42,7 +42,6 @@
 			id="email"
 			placeholder="example@email.com"
 			autocomplete="email"
-			value={failureData?.email ?? ''}
 			class="input"
 			disabled={loading}
 		/>
