@@ -34,6 +34,19 @@
 		};
 	}}
 >
+	<label for="name" class="flex flex-col gap-y-2">
+		<span class="font-bold uppercase">Name</span>
+		<input
+			type="text"
+			name="name"
+			id="name"
+			placeholder="John Doe"
+			autocomplete="name"
+			class="input"
+			disabled={loading}
+		/>
+	</label>
+
 	<label for="email" class="flex flex-col gap-y-2">
 		<span class="font-bold uppercase">Email</span>
 		<input
@@ -42,7 +55,6 @@
 			id="email"
 			placeholder="example@email.com"
 			autocomplete="email"
-			value={failureData?.email ?? ''}
 			class="input"
 			disabled={loading}
 		/>
