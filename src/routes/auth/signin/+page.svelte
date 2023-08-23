@@ -35,6 +35,7 @@
 				name="email"
 				id="email"
 				placeholder="example@email.com"
+				autocomplete="email"
 				value={form?.email ?? ''}
 				class="input"
 				disabled={loading}
@@ -48,6 +49,7 @@
 				name="password"
 				id="password"
 				placeholder="••••••"
+				autocomplete="current-password"
 				class="input"
 				disabled={loading}
 			/>
