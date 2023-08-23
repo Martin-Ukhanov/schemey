@@ -35,7 +35,7 @@
 	}}
 >
 	<label for="email" class="flex flex-col gap-y-2">
-		<span class="uppercase">Email</span>
+		<span class="font-bold uppercase">Email</span>
 		<input
 			type="text"
 			name="email"
@@ -49,7 +49,7 @@
 	</label>
 
 	<label for="password" class="flex flex-col gap-y-2">
-		<span class="uppercase">Password</span>
+		<span class="font-bold uppercase">Password</span>
 		<input
 			type="password"
 			name="password"
