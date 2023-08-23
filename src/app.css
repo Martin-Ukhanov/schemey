@@ -28,7 +28,7 @@
 	}
 
 	.input:-webkit-autofill {
-		-webkit-box-shadow: 0 0 0 1000px white inset;
+		-webkit-box-shadow: 0 0 0px 1000px white inset;
 		-webkit-text-fill-color: black;
 	}
 
@@ -51,7 +51,7 @@
 	}
 
 	.input {
-		@apply p-2 border-2 outline-none rounded-md border-black;
+		@apply p-2 border-2 focus:outline outline-1 rounded-md border-black outline-black;
 	}
 }
 
