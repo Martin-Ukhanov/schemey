@@ -22,8 +22,18 @@
 		@apply font-nunito bg-white text-black;
 	}
 
-	.button:disabled {
-		@apply border-gray-400 text-gray-400 fill-gray-400 !brightness-100 cursor-default;
+	.button:disabled,
+	.input:disabled {
+		@apply text-gray-400 fill-gray-400 !brightness-100 cursor-default;
+	}
+
+	.input:-webkit-autofill {
+		-webkit-box-shadow: 0 0 0 1000px white inset;
+		-webkit-text-fill-color: black;
+	}
+
+	.input:-webkit-autofill:disabled {
+		-webkit-text-fill-color: theme('colors.gray.400');
 	}
 }
 
@@ -38,6 +48,10 @@
 
 	.button-transparent-white {
 		@apply button-transparent-black hover:bg-white/10 active:bg-white/[0.15] text-white fill-white;
+	}
+
+	.input {
+		@apply p-2 border-2 outline-none rounded-md border-black;
 	}
 }
 
