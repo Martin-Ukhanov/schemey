@@ -86,9 +86,9 @@
 	$: contrastColor = contrastingColor(hex);
 </script>
 
-<div class="flex-1 flex flex-col gap-y-4">
+<div class="flex flex-col gap-y-4">
 	<button
-		class="relative w-full h-full border-2 rounded-md border-black group"
+		class="relative h-48 border-2 rounded-md border-black group"
 		style={`background: linear-gradient(#ffffff00, #000000ff), linear-gradient(0.25turn, #ffffffff, #00000000), hsl(${h}, 100%, 50%);`}
 		bind:this={colorPickerElement}
 		bind:clientWidth={colorPickerWidth}
