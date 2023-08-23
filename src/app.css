@@ -5,7 +5,14 @@
 @layer base {
 	@font-face {
 		font-family: 'Nunito';
-		src: url('/fonts/Nunito.ttf');
+		font-weight: normal;
+		src: url('/fonts/Nunito-Normal.ttf');
+	}
+
+	@font-face {
+		font-family: 'Nunito';
+		font-weight: bold;
+		src: url('/fonts/Nunito-Bold.ttf');
 	}
 
 	* {
