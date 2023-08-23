@@ -51,7 +51,7 @@
 	}
 
 	.input {
-		@apply p-2 border-2 focus:outline outline-1 rounded-md border-black outline-black;
+		@apply p-2 border-2 focus:outline outline-2 outline-offset-2 rounded-md border-black outline-black;
 	}
 }
 
