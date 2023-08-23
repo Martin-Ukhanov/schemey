@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { enhance } from '$app/forms';
+	import { enhance, applyAction } from '$app/forms';
 	import { addNotification } from '$lib/stores/notifications';
 	import Loader from './Loader.svelte';
 
 	let loading = false;
 
-	$: route = $page.route.id?.replace('[slug]', $page.params.slug);
+	$: route = $page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/';
 </script>
 
 <header class="h-16 p-2 flex justify-between items-center border-b-2 border-black">
@@ -15,7 +15,7 @@
 		{#if $page.data.session}
 			<form
 				method="post"
-				action="/auth/signout"
+				action={`/auth/signout?redirect=${route}`}
 				use:enhance={() => {
 					loading = true;
 
@@ -24,7 +24,8 @@
 
 						loading = false;
 
-						if (result.type === 'success') {
+						if (result.type === 'redirect') {
+							await applyAction(result);
 							addNotification(`Successfully Signed Out`);
 						}
 					};

@@ -1,33 +1,72 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { slide } from 'svelte/transition';
 	import { addNotification } from '$lib/stores/notifications.js';
+	import Loader from '$lib/components/Loader.svelte';
 
 	export let form;
+
+	let loading = false;
 </script>
 
-<form
-	method="post"
-	class="flex flex-col gap-y-2"
-	use:enhance={() => {
-		return async ({ update, result }) => {
-			await update();
+<div class="p-4 flex-1 flex flex-col justify-center items-center gap-y-4">
+	<h1 class="text-4xl text-center uppercase">Sign Up</h1>
+	<form
+		method="post"
+		class="w-full max-w-80 p-4 flex flex-col gap-y-4 border-2 rounded-md border-black"
+		use:enhance={() => {
+			loading = true;
 
-			if (result.type === 'success') {
-				addNotification(`Successfully Signed Up`);
-			}
-		};
-	}}
->
-	<input
-		name="email"
-		placeholder="example@email.com"
-		value={form?.email ?? ''}
-		class="p-2 border-2 border-black"
-	/>
-	<input type="password" name="password" placeholder="Password" class="p-2 border-2 border-black" />
-	<button class="button">Sign up</button>
-</form>
+			return async ({ update, result }) => {
+				await update();
 
-{#if form?.success === false}
-	<p class="text-red-600">{form.message}</p>
-{/if}
+				loading = false;
+
+				if (result.type === 'success') {
+					addNotification(`Successfully Signed Up`);
+				}
+			};
+		}}
+	>
+		<label for="email" class="flex flex-col gap-y-2">
+			<span class="text-lg uppercase">Email</span>
+			<input
+				type="text"
+				name="email"
+				id="email"
+				placeholder="example@email.com"
+				value={form?.email ?? ''}
+				class="input"
+				disabled={loading}
+			/>
+		</label>
+
+		<label for="password" class="flex flex-col gap-y-2">
+			<span class="text-lg uppercase">Password</span>
+			<input
+				type="password"
+				name="password"
+				id="password"
+				placeholder="••••••"
+				class="input"
+				disabled={loading}
+			/>
+		</label>
+
+		<button type="submit" class="button" disabled={loading}>
+			<span class:opacity-0={loading}>Sign Up</span>
+			{#if loading}
+				<Loader />
+			{/if}
+		</button>
+
+		{#if form?.failure}
+			<p
+				class="text-sm text-center uppercase text-red-600"
+				transition:slide={{ duration: 300, axis: 'y' }}
+			>
+				{form.message}
+			</p>
+		{/if}
+	</form>
+</div>

@@ -1,16 +1,14 @@
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 
 export const load = (async ({ url, locals: { getSession } }) => {
 	const session = await getSession();
 
 	if (session) {
-		throw redirect(303, '/');
+		throw redirect(303, url.searchParams.get('redirect') ?? '/');
 	}
-
-	return { url: url.origin };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
@@ -20,12 +18,12 @@ export const actions: Actions = {
 		const password = formData.get('password') as string;
 
 		const { error } = await supabase.auth.signUp({
-			email,
-			password
+			email: email,
+			password: password
 		});
 
 		if (error) {
-			return fail(500, { message: error.message, success: false, email });
+			return fail(500, { failure: true, message: error.message, email: email });
 		}
 	}
 };

@@ -23,7 +23,7 @@ export const actions: Actions = {
 		});
 
 		if (error) {
-			return fail(500, { fail: true, message: error.message, email: email });
+			return fail(500, { failure: true, message: error.message, email: email });
 		}
 	}
 };
