@@ -54,21 +54,33 @@
 
 	<div class="flex-1 p-4 flex flex-col justify-center items-center gap-y-8 overflow-x-hidden">
 		<div class="flex flex-col gap-y-4 text-center">
-			<h1 class="text-5xl xs:text-6xl sm:text-7xl uppercase" style={`color: ${primary.hex};`}>
+			<h1
+				class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+				style={`color: ${primary.hex};`}
+			>
 				Primary
 			</h1>
 			{#if secondary}
-				<h2 class="text-5xl xs:text-6xl sm:text-7xl uppercase" style={`color: ${secondary.hex};`}>
+				<h2
+					class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+					style={`color: ${secondary.hex};`}
+				>
 					Secondary
 				</h2>
 			{/if}
 			{#if tertiary}
-				<h3 class="text-5xl xs:text-6xl sm:text-7xl uppercase" style={`color: ${tertiary.hex};`}>
+				<h3
+					class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+					style={`color: ${tertiary.hex};`}
+				>
 					Tertiary
 				</h3>
 			{/if}
 			{#if quaternary}
-				<h4 class="text-5xl xs:text-6xl sm:text-7xl uppercase" style={`color: ${quaternary.hex};`}>
+				<h4
+					class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+					style={`color: ${quaternary.hex};`}
+				>
 					Quaternary
 				</h4>
 			{/if}
