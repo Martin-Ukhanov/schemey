@@ -335,7 +335,9 @@
 		</div>
 
 		<div class="flex-1 flex flex-col sm:flex-row">
-			<div class="flex-1 flex flex-col lg:flex-row gap-4 sm:max-lg:overflow-y-auto">
+			<div
+				class="flex-1 flex flex-col lg:flex-row gap-4 overflow-x-hidden sm:max-lg:overflow-y-auto"
+			>
 				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
 					{@const colorSchemeLength = colorSchemes[colorSchemeIndex].length}
 					{@const contrastColor = contrastingColor(color.hex)}
