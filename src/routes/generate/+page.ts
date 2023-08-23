@@ -4,7 +4,7 @@ import type { PageLoad } from './$types';
 
 export const load = (() => {
 	throw redirect(
-		308,
+		303,
 		`/generate/${colorSchemeToSlug(generateColorScheme(4, [0, 360, 0, 100, 0, 100]))}`
 	);
 }) satisfies PageLoad;
