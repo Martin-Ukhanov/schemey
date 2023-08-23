@@ -1,11 +1,12 @@
 <script lang="ts">
 	import '../app.css';
 	import type { LayoutData } from './$types';
-	import { invalidate } from '$app/navigation';
+	import { invalidate, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import Notifications from '$lib/components/Notifications.svelte';
+	import { clearNotifications } from '$lib/stores/notifications';
 
 	export let data: LayoutData;
 
@@ -20,6 +21,8 @@
 
 		return () => data.subscription.unsubscribe();
 	});
+
+	beforeNavigate(clearNotifications);
 
 	$: ({ supabase, session } = data);
 </script>
