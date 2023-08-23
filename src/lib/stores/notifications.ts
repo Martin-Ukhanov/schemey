@@ -14,6 +14,7 @@ export function addNotification(message: string, icon = 'check', color = '#00000
 
 	notifications.update((values) => {
 		id = values.length !== 0 ? values[0].id + 1 : 0;
+
 		values.unshift({
 			id: id,
 			message: message,
@@ -31,4 +32,8 @@ export function addNotification(message: string, icon = 'check', color = '#00000
 
 export function dismissNotification(id: number): void {
 	notifications.update((values) => values.filter((value) => value.id !== id));
+}
+
+export function clearNotifications(): void {
+	notifications.set([]);
 }
