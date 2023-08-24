@@ -93,18 +93,20 @@
 		{/if}
 	</label>
 
-	<button type="submit" class="button-primary mb-4" disabled={loading}>
-		<span class:opacity-0={loading}>Sign In</span>
-		{#if loading}
-			<Loader />
-		{/if}
-	</button>
+	<div class="mb-4 flex flex-col">
+		<button type="submit" class="button-primary" disabled={loading}>
+			<span class:opacity-0={loading}>Sign In</span>
+			{#if loading}
+				<Loader />
+			{/if}
+		</button>
 
-	{#if failureData?.message}
-		<p class="error mb-4" transition:slide={{ duration: 300, axis: 'y' }}>
-			{failureData.message}
-		</p>
-	{/if}
+		{#if failureData?.message}
+			<p class="error mt-2" transition:slide={{ duration: 300, axis: 'y' }}>
+				{failureData.message}
+			</p>
+		{/if}
+	</div>
 
 	<p class="text-xs text-center uppercase">
 		Don't have an account? <button
