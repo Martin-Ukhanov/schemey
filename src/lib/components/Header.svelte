@@ -55,7 +55,7 @@
 			>
 		{/if}
 	</nav>
-	<button class="button-transparent-black block sm:hidden">
+	<button class="button block sm:hidden border-none">
 		<MenuIcon />
 	</button>
 </header>
