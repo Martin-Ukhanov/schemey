@@ -48,15 +48,16 @@ export function showTooltip(
 		if (!get(isResizingMenu)) {
 			timeout = setTimeout(() => {
 				const rect = element.getBoundingClientRect();
+				const documentElement = document.documentElement;
 
 				tooltip.set({
 					visible: true,
 					position: position,
-					x: rect.left + document.documentElement.scrollLeft + element.offsetWidth / 2,
+					x: rect.left + documentElement.scrollLeft + element.offsetWidth / 2,
 					y:
 						position === 'top'
-							? rect.top + document.documentElement.scrollTop - 4
-							: rect.bottom + document.documentElement.scrollTop + 4,
+							? rect.top + documentElement.scrollTop - 4
+							: rect.bottom + documentElement.scrollTop + 4,
 					message: message
 				});
 
