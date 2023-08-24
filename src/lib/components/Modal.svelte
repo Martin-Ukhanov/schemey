@@ -22,7 +22,7 @@
 		<div class="h-fit p-4 mx-4 flex flex-col gap-y-4 rounded-md bg-white">
 			<div class="relative flex justify-center items-center">
 				<button
-					class="button-transparent-black absolute left-0 p-0"
+					class="button absolute left-0 p-0 border-none"
 					on:click={() => {
 						open = false;
 						dispatch('close');

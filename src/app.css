@@ -49,15 +49,15 @@
 
 @layer components {
 	.button {
-		@apply p-2 flex justify-center items-center border-2 outline-none rounded-md font-bold uppercase bg-white text-black border-black fill-black hover:brightness-90 active:brightness-85 cursor-pointer touch-manipulation;
+		@apply p-2 flex justify-center items-center border-2 outline-none rounded-md font-bold uppercase bg-white text-black border-black fill-black hover:brightness-95 active:brightness-90 cursor-pointer touch-manipulation;
 	}
 
 	.button-transparent-black {
-		@apply button border-none bg-transparent hover:bg-black/10 active:bg-black/[0.15] !brightness-100;
+		@apply button border-none bg-transparent hover:bg-black/20 active:bg-black/25 !brightness-100;
 	}
 
 	.button-transparent-white {
-		@apply button-transparent-black hover:bg-white/10 active:bg-white/[0.15] text-white fill-white;
+		@apply button-transparent-black hover:bg-white/20 active:bg-white/25 text-white fill-white;
 	}
 
 	.input {

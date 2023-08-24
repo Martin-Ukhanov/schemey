@@ -10,7 +10,7 @@
 </script>
 
 <header class="h-16 p-2 flex justify-between items-center border-b-2 border-black">
-	<a href="/" class="button-transparent-black text-xl sm:text-2xl font-bold">ColorSchemes.io</a>
+	<a href="/" class="button border-none text-xl sm:text-2xl font-bold">ColorSchemes.io</a>
 	<nav class="hidden sm:flex gap-x-2">
 		{#if $page.data.session}
 			<form
@@ -42,7 +42,7 @@
 			</form>
 		{:else}
 			<button
-				class="button-transparent-black"
+				class="button border-none"
 				on:click={() => {
 					$signInModalOpen = true;
 				}}>Sign In</button
