@@ -17,10 +17,7 @@ export default {
 			}),
 			minHeight: (theme) => ({
 				...theme('spacing')
-			}),
-			brightness: {
-				85: 0.85
-			}
+			})
 		}
 	},
 	plugins: []
