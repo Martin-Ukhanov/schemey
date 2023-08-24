@@ -52,6 +52,10 @@
 		@apply p-2 flex justify-center items-center border-2 outline-none rounded-md font-bold uppercase bg-white text-black border-black fill-black hover:brightness-95 active:brightness-90 cursor-pointer touch-manipulation;
 	}
 
+	.button-primary {
+		@apply button border-none bg-lime-500 text-white;
+	}
+
 	.button-transparent-black {
 		@apply button border-none bg-transparent hover:bg-black/20 active:bg-black/25 !brightness-100;
 	}
@@ -60,8 +64,16 @@
 		@apply button-transparent-black hover:bg-white/20 active:bg-white/25 text-white fill-white;
 	}
 
+	.link {
+		@apply outline-none text-lime-500 font-bold underline hover:brightness-95 active:brightness-90 cursor-pointer;
+	}
+
 	.input {
-		@apply p-2 border-2 focus:outline outline-2 outline-offset-2 rounded-md border-black outline-black;
+		@apply p-2 border-2 outline-none rounded-md border-black hover:brightness-95 focus:brightness-90;
+	}
+
+	.error {
+		@apply text-sm text-center uppercase text-red-600;
 	}
 }
 
