@@ -70,11 +70,11 @@
 		@apply fixed w-full h-full overflow-hidden;
 	}
 
-	.placeholder-white::placeholder {
+	.placeholder-transparent-white::placeholder {
 		@apply text-white/50;
 	}
 
-	.placeholder-black::placeholder {
+	.placeholder-transparent-black::placeholder {
 		@apply text-black/50;
 	}
 }

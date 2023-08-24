@@ -145,8 +145,8 @@
 		name="hex"
 		placeholder="#000000"
 		class="input text-lg text-center font-bold uppercase"
-		class:placeholder-white={contrastColor === '#ffffff'}
-		class:placeholder-black={contrastColor === '#000000'}
+		class:placeholder-transparent-white={contrastColor === '#ffffff'}
+		class:placeholder-transparent-black={contrastColor === '#000000'}
 		style={`background-color: ${hex}; color: ${contrastColor};`}
 		bind:value={hexInput}
 		on:input={handleHexInput}
