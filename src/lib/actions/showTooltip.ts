@@ -4,7 +4,7 @@ export function showTooltip(
 	element: HTMLElement,
 	{ position, message }: { position: 'top' | 'bottom'; message: string }
 ) {
-	let timeout: number;
+	let timeout: NodeJS.Timeout;
 	let scrollableParents: HTMLElement[];
 
 	function getScrollableParents(
