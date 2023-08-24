@@ -108,6 +108,10 @@
 		{/if}
 	</div>
 
+	<p class="mb-2 text-xs text-center uppercase">
+		Forgot your password? <button class="link text-xs uppercase">Reset</button>
+	</p>
+
 	<p class="text-xs text-center uppercase">
 		Don't have an account? <button
 			class="link text-xs uppercase"
