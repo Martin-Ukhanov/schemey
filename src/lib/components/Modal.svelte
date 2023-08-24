@@ -19,7 +19,7 @@
 		class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-96 z-10"
 		transition:scale={{ duration: 300 }}
 	>
-		<div class="h-fit p-4 mx-4 flex flex-col gap-y-4 rounded-md bg-white">
+		<div class="h-fit p-4 mx-4 flex flex-col gap-y-4 border-2 rounded-md bg-white border-black">
 			<div class="relative flex justify-center items-center">
 				<button
 					class="button absolute left-0 p-0 border-none"
