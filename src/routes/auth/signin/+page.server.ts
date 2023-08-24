@@ -10,8 +10,8 @@ export const load = (() => {
 export const actions = {
 	default: async ({ url, request, locals: { supabase } }) => {
 		const formData = await request.formData();
-		const email = formData.get('email') as string;
-		const password = formData.get('password') as string;
+		const email = <string>formData.get('email');
+		const password = <string>formData.get('password');
 
 		const { error } = await supabase.auth.signInWithPassword({
 			email: email,

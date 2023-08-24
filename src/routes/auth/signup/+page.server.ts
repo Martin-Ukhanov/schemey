@@ -10,9 +10,9 @@ export const load = (() => {
 export const actions = {
 	default: async ({ url, request, locals: { supabase } }) => {
 		const formData = await request.formData();
-		const name = formData.get('name') as string;
-		const email = formData.get('email') as string;
-		const password = formData.get('password') as string;
+		const name = <string>formData.get('name');
+		const email = <string>formData.get('email');
+		const password = <string>formData.get('password');
 
 		const { error } = await supabase.auth.signUp({
 			email: email,
