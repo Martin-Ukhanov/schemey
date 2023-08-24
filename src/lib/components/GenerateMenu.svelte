@@ -6,6 +6,7 @@
 	import { v4 as uuid } from 'uuid';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
+	import { isResizingMenu } from '$lib/stores/generateMenu';
 	import { addNotification } from '$lib/stores/notifications';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import Modal from './Modal.svelte';
@@ -57,6 +58,7 @@
 	let colorPickerModalOpen = false;
 
 	function resizeMenuMouse(e: MouseEvent): void {
+		$isResizingMenu = true;
 		let mouseY = e.y;
 
 		if (browser) {
@@ -70,6 +72,7 @@
 
 			document.onmouseup = (e) => {
 				e.preventDefault();
+				$isResizingMenu = false;
 				document.onmousemove = null;
 				document.onmouseup = null;
 				document.body.style.cursor = 'default';
@@ -78,6 +81,7 @@
 	}
 
 	function resizeMenuTouch(e: TouchEvent): void {
+		$isResizingMenu = true;
 		let touchY = e.touches[0].clientY;
 
 		if (browser) {
@@ -90,6 +94,7 @@
 
 			document.ontouchend = (e) => {
 				e.preventDefault();
+				$isResizingMenu = false;
 				document.ontouchmove = null;
 				document.ontouchend = null;
 			};
