@@ -52,8 +52,11 @@ export function showTooltip(
 				tooltip.set({
 					visible: true,
 					position: position,
-					x: rect.left + element.offsetWidth / 2,
-					y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
+					x: rect.left + document.documentElement.scrollLeft + element.offsetWidth / 2,
+					y:
+						position === 'top'
+							? rect.top + document.documentElement.scrollTop - 4
+							: rect.bottom + document.documentElement.scrollTop + 4,
 					message: message
 				});
 
