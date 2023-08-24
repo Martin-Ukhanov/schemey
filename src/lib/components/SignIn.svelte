@@ -2,11 +2,14 @@
 	import { page } from '$app/stores';
 	import { applyAction, enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
-	import { signInModalOpen } from '$lib/stores/auth';
+	import { signInModalOpen, signUpModalOpen } from '$lib/stores/auth';
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
 
 	export let redirect = $page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/';
+
+	let emailErrorMessage: string | undefined;
+	let passwordErrorMessage: string | undefined;
 
 	let failureData: Record<string, unknown> | undefined;
 	let loading = false;
@@ -15,9 +18,25 @@
 <form
 	method="post"
 	action={`/auth/signin?redirect=${redirect}`}
-	class="p-4 flex flex-col gap-y-4 border-2 rounded-md border-black"
-	use:enhance={() => {
-		loading = true;
+	class="p-4 flex flex-col border-2 rounded-md border-black"
+	use:enhance={({ formData, cancel }) => {
+		emailErrorMessage = undefined;
+		passwordErrorMessage = undefined;
+		failureData = undefined;
+
+		if (!formData.get('email')) {
+			emailErrorMessage = 'Please enter your email.';
+		}
+
+		if (!formData.get('password')) {
+			passwordErrorMessage = 'Please enter your password.';
+		}
+
+		if (emailErrorMessage || passwordErrorMessage) {
+			cancel();
+		} else {
+			loading = true;
+		}
 
 		return async ({ update, result }) => {
 			await update();
@@ -34,8 +53,9 @@
 		};
 	}}
 >
-	<label for="email" class="flex flex-col gap-y-2">
-		<span class="font-bold uppercase">Email</span>
+	<label for="email" class="mb-4 flex flex-col">
+		<span class="mb-2 font-bold uppercase">Email</span>
+
 		<input
 			type="text"
 			name="email"
@@ -45,10 +65,17 @@
 			class="input"
 			disabled={loading}
 		/>
+
+		{#if emailErrorMessage}
+			<p class="error mt-2" transition:slide={{ duration: 300, axis: 'y' }}>
+				{emailErrorMessage}
+			</p>
+		{/if}
 	</label>
 
-	<label for="password" class="flex flex-col gap-y-2">
-		<span class="font-bold uppercase">Password</span>
+	<label for="password" class="mb-4 flex flex-col">
+		<span class="mb-2 font-bold uppercase">Password</span>
+
 		<input
 			type="password"
 			name="password"
@@ -58,9 +85,15 @@
 			class="input"
 			disabled={loading}
 		/>
+
+		{#if passwordErrorMessage}
+			<p class="error mt-2" transition:slide={{ duration: 300, axis: 'y' }}>
+				{passwordErrorMessage}
+			</p>
+		{/if}
 	</label>
 
-	<button type="submit" class="button" disabled={loading}>
+	<button type="submit" class="button-primary mb-4" disabled={loading}>
 		<span class:opacity-0={loading}>Sign In</span>
 		{#if loading}
 			<Loader />
@@ -68,11 +101,20 @@
 	</button>
 
 	{#if failureData?.message}
-		<p
-			class="text-sm text-center uppercase text-red-600"
-			transition:slide={{ duration: 300, axis: 'y' }}
-		>
+		<p class="error mb-4" transition:slide={{ duration: 300, axis: 'y' }}>
 			{failureData.message}
 		</p>
 	{/if}
+
+	<p class="text-xs text-center uppercase">
+		Don't have an account? <button
+			class="link text-xs uppercase"
+			on:click={() => {
+				$signInModalOpen = false;
+				$signUpModalOpen = true;
+			}}
+		>
+			Sign Up
+		</button>
+	</p>
 </form>
