@@ -1,4 +1,6 @@
+import { get } from 'svelte/store';
 import { tooltip } from '$lib/stores/tooltip';
+import { isResizingMenu } from '$lib/stores/generateMenu';
 
 export function showTooltip(
 	element: HTMLElement,
@@ -43,22 +45,24 @@ export function showTooltip(
 	}
 
 	function onMouseEnter(): void {
-		timeout = setTimeout(() => {
-			const rect = element.getBoundingClientRect();
+		if (!get(isResizingMenu)) {
+			timeout = setTimeout(() => {
+				const rect = element.getBoundingClientRect();
 
-			tooltip.set({
-				visible: true,
-				position: position,
-				x: rect.left + element.offsetWidth / 2,
-				y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
-				message: message
-			});
+				tooltip.set({
+					visible: true,
+					position: position,
+					x: rect.left + element.offsetWidth / 2,
+					y: position === 'top' ? rect.top - 4 : rect.bottom + 4,
+					message: message
+				});
 
-			scrollableParents = getScrollableParents(element, []);
-			scrollableParents.forEach((scrollableParent) => {
-				scrollableParent.addEventListener('scroll', hide);
-			});
-		}, 1000);
+				scrollableParents = getScrollableParents(element, []);
+				scrollableParents.forEach((scrollableParent) => {
+					scrollableParent.addEventListener('scroll', hide);
+				});
+			}, 1000);
+		}
 	}
 
 	element.addEventListener('mouseenter', onMouseEnter);
