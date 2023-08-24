@@ -335,7 +335,7 @@
 					{@const contrastColor = contrastingColor(color.hex)}
 
 					<div
-						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center gap-4 border-2 overflow-x-auto overflow-y-hidden sm:overflow-x-visible sm:overflow-y-visible rounded-md border-black"
+						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center gap-4 border-2 overflow-x-auto overflow-y-hidden sm:overflow-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
 						in:scale={{ duration: 300 }}
 						out:scale={{ duration: 300 }}
