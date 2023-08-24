@@ -28,7 +28,7 @@ export function showTooltip(
 		};
 
 		return !element || element === document.body
-			? [...scrollableParents, document.body]
+			? scrollableParents
 			: isScrollable(element)
 			? getScrollableParents(<HTMLElement>element.parentNode, [...scrollableParents, element])
 			: getScrollableParents(<HTMLElement>element.parentNode, scrollableParents);
@@ -42,6 +42,7 @@ export function showTooltip(
 		scrollableParents?.forEach((scrollableParent) => {
 			scrollableParent.removeEventListener('scroll', hide);
 		});
+		window.removeEventListener('scroll', hide);
 	}
 
 	function onMouseEnter(): void {
@@ -65,6 +66,7 @@ export function showTooltip(
 				scrollableParents.forEach((scrollableParent) => {
 					scrollableParent.addEventListener('scroll', hide);
 				});
+				window.addEventListener('scroll', hide);
 			}, 1000);
 		}
 	}
