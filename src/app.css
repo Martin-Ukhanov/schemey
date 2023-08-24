@@ -73,7 +73,7 @@
 	}
 
 	.error {
-		@apply text-sm text-center uppercase text-red-600;
+		@apply text-sm text-center uppercase text-red-500;
 	}
 }
 
