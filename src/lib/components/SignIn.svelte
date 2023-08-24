@@ -25,11 +25,11 @@
 		failureData = undefined;
 
 		if (!formData.get('email')) {
-			emailErrorMessage = 'Please enter your email.';
+			emailErrorMessage = 'Please Enter Your Email';
 		}
 
 		if (!formData.get('password')) {
-			passwordErrorMessage = 'Please enter your password.';
+			passwordErrorMessage = 'Please Enter Your Password';
 		}
 
 		if (emailErrorMessage || passwordErrorMessage) {

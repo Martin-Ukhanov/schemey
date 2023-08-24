@@ -35,21 +35,21 @@
 		const password = formData.get('password');
 
 		if (!name) {
-			nameErrorMessage = 'Please enter your name.';
+			nameErrorMessage = 'Please Enter Your Name';
 		} else if (name.length > 20) {
-			nameErrorMessage = 'Name must be maximum 20 characters.';
+			nameErrorMessage = 'Name Must be Maximum 20 Characters';
 		}
 
 		if (!email) {
-			emailErrorMessage = 'Please enter your email.';
+			emailErrorMessage = 'Please Enter Your Email';
 		} else if (!isValidEmail(email)) {
-			emailErrorMessage = 'Please enter a valid email.';
+			emailErrorMessage = 'Please Enter a Valid Email';
 		}
 
 		if (!password) {
-			passwordErrorMessage = 'Please enter a password.';
+			passwordErrorMessage = 'Please Enter a Password.';
 		} else if (password.length < 6) {
-			passwordErrorMessage = 'Password must be minimum 6 characters.';
+			passwordErrorMessage = 'Password Must be Minimum 6 Characters';
 		}
 
 		if (nameErrorMessage || emailErrorMessage || passwordErrorMessage) {
