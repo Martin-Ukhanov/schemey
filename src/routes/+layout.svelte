@@ -26,7 +26,11 @@
 		return () => data.subscription.unsubscribe();
 	});
 
-	beforeNavigate(clearNotifications);
+	beforeNavigate((navigation) => {
+		if (navigation.from?.route.id !== navigation.to?.route.id) {
+			clearNotifications();
+		}
+	});
 
 	$: ({ supabase, session } = data);
 </script>
