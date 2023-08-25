@@ -52,77 +52,76 @@
 		{/if}
 	</div>
 
-	<div class="flex-1 p-4 flex flex-col justify-center items-center gap-y-8 overflow-x-hidden">
-		<div class="flex flex-col gap-y-4 text-center">
-			<h1
-				class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
-				style={`color: ${primary.hex};`}
-			>
-				Primary
-			</h1>
-			{#if secondary}
-				<h2
+	<div class="flex-1 p-4 grid items-center overflow-x-auto overscroll-none">
+		<div class="flex flex-col gap-y-8">
+			<div class="flex flex-col gap-y-4 text-center">
+				<h1
 					class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
-					style={`color: ${secondary.hex};`}
-				>
-					Secondary
-				</h2>
-			{/if}
-			{#if tertiary}
-				<h3
-					class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
-					style={`color: ${tertiary.hex};`}
-				>
-					Tertiary
-				</h3>
-			{/if}
-			{#if quaternary}
-				<h4
-					class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
-					style={`color: ${quaternary.hex};`}
-				>
-					Quaternary
-				</h4>
-			{/if}
-		</div>
-
-		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<div class="h-12 flex justify-center gap-x-4">
-				<div
-					class="button w-[136px] border-none !brightness-100 cursor-default"
-					style={`background-color: ${primary.hex}; color: ${primary.contrast};`}
+					style={`color: ${primary.hex};`}
 				>
 					Primary
-				</div>
-
+				</h1>
 				{#if secondary}
-					<div
-						class="button w-[136px] border-none !brightness-100 cursor-default"
-						style={`background-color: ${secondary.hex}; color: ${secondary.contrast};`}
+					<h2
+						class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+						style={`color: ${secondary.hex};`}
 					>
 						Secondary
-					</div>
+					</h2>
+				{/if}
+				{#if tertiary}
+					<h3
+						class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+						style={`color: ${tertiary.hex};`}
+					>
+						Tertiary
+					</h3>
+				{/if}
+				{#if quaternary}
+					<h4
+						class="text-5xl xs:text-6xl sm:text-7xl font-bold uppercase"
+						style={`color: ${quaternary.hex};`}
+					>
+						Quaternary
+					</h4>
 				{/if}
 			</div>
-
-			{#if tertiary}
+			<div class="flex flex-col sm:flex-row justify-center gap-4">
 				<div class="h-12 flex justify-center gap-x-4">
 					<div
 						class="button w-[136px] border-none !brightness-100 cursor-default"
-						style={`background-color: ${tertiary.hex}; color: ${tertiary.contrast};`}
+						style={`background-color: ${primary.hex}; color: ${primary.contrast};`}
 					>
-						Tertiary
+						Primary
 					</div>
-					{#if quaternary}
+					{#if secondary}
 						<div
 							class="button w-[136px] border-none !brightness-100 cursor-default"
-							style={`background-color: ${quaternary.hex}; color: ${quaternary.contrast};`}
+							style={`background-color: ${secondary.hex}; color: ${secondary.contrast};`}
 						>
-							Quaternary
+							Secondary
 						</div>
 					{/if}
 				</div>
-			{/if}
+				{#if tertiary}
+					<div class="h-12 flex justify-center gap-x-4">
+						<div
+							class="button w-[136px] border-none !brightness-100 cursor-default"
+							style={`background-color: ${tertiary.hex}; color: ${tertiary.contrast};`}
+						>
+							Tertiary
+						</div>
+						{#if quaternary}
+							<div
+								class="button w-[136px] border-none !brightness-100 cursor-default"
+								style={`background-color: ${quaternary.hex}; color: ${quaternary.contrast};`}
+							>
+								Quaternary
+							</div>
+						{/if}
+					</div>
+				{/if}
+			</div>
 		</div>
 	</div>
 
