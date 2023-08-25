@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
-	import { scale, slide } from 'svelte/transition';
+	import { scale, slide, type TransitionConfig } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { v4 as uuid } from 'uuid';
+	import theme from 'tailwindcss/defaultTheme';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { isResizingMenu } from '$lib/stores/generateMenu';
@@ -198,6 +199,14 @@
 		}
 	}
 
+	function removeColorButtonTransition(node: Element): TransitionConfig {
+		return slide(node, { axis: menuWidth < parseInt(theme.screens.lg) ? 'y' : 'x', duration: 300 });
+	}
+
+	function addColorButtonTransition(node: Element): TransitionConfig {
+		return slide(node, { axis: menuWidth < parseInt(theme.screens.sm) ? 'y' : 'x', duration: 300 });
+	}
+
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
 	}
@@ -349,22 +358,21 @@
 					>
 						<div class="flex flex-row lg:flex-col">
 							<div class="flex flex-col lg:flex-row justify-center items-center">
-								{#key menuWidth < 1024}
-									{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
-										<button
-											class={contrastColor === '#000000'
-												? 'button-transparent-black'
-												: 'button-transparent-white'}
-											transition:slide={{ duration: 300, axis: menuWidth < 1024 ? 'y' : 'x' }}
-											use:showTooltip={{ position: 'top', message: 'Remove' }}
-											on:click={() => {
-												removeColor(index);
-											}}
-										>
-											<XSquareIcon />
-										</button>
-									{/if}
-								{/key}
+								{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
+									<button
+										class={contrastColor === '#000000'
+											? 'button-transparent-black'
+											: 'button-transparent-white'}
+										in:removeColorButtonTransition
+										out:removeColorButtonTransition
+										use:showTooltip={{ position: 'top', message: 'Remove' }}
+										on:click={() => {
+											removeColor(index);
+										}}
+									>
+										<XSquareIcon />
+									</button>
+								{/if}
 
 								<button
 									class={contrastColor === '#000000'
@@ -468,18 +476,17 @@
 				{/each}
 			</div>
 
-			{#key menuWidth < 640}
-				{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
-					<button
-						class="button mt-4 sm:mt-0 sm:ml-4"
-						transition:slide={{ duration: 300, axis: menuWidth < 640 ? 'y' : 'x' }}
-						use:showTooltip={{ position: 'top', message: 'Add Color' }}
-						on:click={addColor}
-					>
-						<PlusIcon />
-					</button>
-				{/if}
-			{/key}
+			{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
+				<button
+					class="button mt-4 sm:mt-0 sm:ml-4"
+					in:addColorButtonTransition
+					out:addColorButtonTransition
+					use:showTooltip={{ position: 'top', message: 'Add Color' }}
+					on:click={addColor}
+				>
+					<PlusIcon />
+				</button>
+			{/if}
 		</div>
 	</div>
 </menu>
