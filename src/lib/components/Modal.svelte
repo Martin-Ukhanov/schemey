@@ -1,13 +1,23 @@
 <script lang="ts">
-	import { fade, scale } from 'svelte/transition';
+	import { fade, fly, scale, type TransitionConfig } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
+	import theme from 'tailwindcss/defaultTheme';
 	import XIcon from './icons/XIcon.svelte';
 
 	export let title: string;
 	export let open = false;
 
+	let windowWidth: number;
 	const dispatch = createEventDispatcher();
+
+	function modalTransition(node: Element): TransitionConfig {
+		return windowWidth < parseInt(theme.screens.sm)
+			? fly(node, { y: '100%', opacity: 1, duration: 300 })
+			: scale(node, { duration: 300 });
+	}
 </script>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 {#if open}
 	<div class="fixed top-0 left-0 w-full h-full z-10">
@@ -17,11 +27,12 @@
 		/>
 
 		<div
-			class="absolute top-0 left-0 w-full h-full p-4 grid items-center overflow-y-auto overscroll-none"
+			class="absolute top-0 left-0 w-full h-full sm:p-4 grid items-end sm:items-center overflow-y-auto overscroll-none"
 		>
 			<div
-				class="relative left-1/2 -translate-x-1/2 w-full max-w-96 p-4 flex flex-col gap-y-4 border-2 rounded-md bg-white border-black"
-				transition:scale={{ duration: 300 }}
+				class="relative left-1/2 -translate-x-1/2 w-screen sm:w-96 p-4 flex flex-col gap-y-4 border-t-2 sm:border-2 sm:rounded-md bg-white border-black"
+				in:modalTransition
+				out:modalTransition
 			>
 				<div class="relative flex justify-center items-center">
 					<button
