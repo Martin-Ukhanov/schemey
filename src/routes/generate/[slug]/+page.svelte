@@ -52,7 +52,7 @@
 		{/if}
 	</div>
 
-	<div class="flex-1 p-4 grid items-center overflow-x-auto overscroll-none">
+	<div class="flex-1 p-4 grid grid-rows-1 items-center overflow-x-auto overscroll-none">
 		<div class="flex flex-col gap-y-8">
 			<div class="flex flex-col gap-y-4 text-center">
 				<h1
