@@ -103,7 +103,8 @@
 
 	function gotoColorScheme(): void {
 		goto(
-			`/generate/${colorSchemeToSlug(colorSchemes[colorSchemeIndex].map((color) => color.hex))}`
+			'/generate/' + colorSchemeToSlug(colorSchemes[colorSchemeIndex].map((color) => color.hex)),
+			{ replaceState: true }
 		);
 	}
 
