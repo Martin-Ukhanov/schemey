@@ -8,11 +8,13 @@
 	export let open = false;
 
 	let windowWidth: number;
+	let modalHeight: number;
+
 	const dispatch = createEventDispatcher();
 
 	function modalTransition(node: Element): TransitionConfig {
 		return windowWidth < parseInt(theme.screens.sm)
-			? fly(node, { y: '100%', opacity: 1, duration: 300 })
+			? fly(node, { y: modalHeight, opacity: 1, duration: 300 })
 			: scale(node, { duration: 300 });
 	}
 </script>
@@ -28,11 +30,12 @@
 
 		<div
 			class="absolute top-0 left-0 w-full h-full sm:p-4 grid items-end sm:items-center overflow-y-auto overscroll-none"
+			in:modalTransition
+			out:modalTransition
 		>
 			<div
 				class="relative left-1/2 -translate-x-1/2 w-screen sm:w-96 p-4 flex flex-col gap-y-4 border-t-2 sm:border-2 sm:rounded-md bg-white border-black"
-				in:modalTransition
-				out:modalTransition
+				bind:clientHeight={modalHeight}
 			>
 				<div class="relative flex justify-center items-center">
 					<button
