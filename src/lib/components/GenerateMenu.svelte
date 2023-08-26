@@ -42,17 +42,17 @@
 
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
-	let menuOpen = true;
+	let isMenuOpen = true;
 
-	let colorSpace = 'all';
-	let colorSpaceModalOpen = false;
+	let currentColorSpace = 'all';
+	let isColorSpaceModalOpen = false;
 
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
 			return { id: uuid(), hex: color, locked: false };
 		})
 	];
-	let colorSchemeIndex = 0;
+	let currentColorSchemeIndex = 0;
 
 	let originalColorPickerHex: string;
 	let colorPickerColor: Color;
@@ -104,19 +104,20 @@
 
 	function gotoColorScheme(): void {
 		goto(
-			'/generate/' + colorSchemeToSlug(colorSchemes[colorSchemeIndex].map((color) => color.hex)),
+			'/generate/' +
+				colorSchemeToSlug(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)),
 			{ replaceState: true }
 		);
 	}
 
 	function newColorScheme(): Color[] {
-		const currentColorScheme = colorSchemes[colorSchemeIndex];
+		const currentColorScheme = colorSchemes[currentColorSchemeIndex];
 		const newColorScheme = structuredClone(currentColorScheme);
 		const lockedColorsCount = currentColorScheme.filter((color) => color.locked).length;
 		const newColorsCount = currentColorScheme.length - lockedColorsCount;
 
 		if (newColorsCount > 0) {
-			const newColors = generateColorScheme(newColorsCount, $colorSpacePresets[colorSpace]);
+			const newColors = generateColorScheme(newColorsCount, $colorSpacePresets[currentColorSpace]);
 
 			for (let i = 0; i < newColorScheme.length; i++) {
 				if (!newColorScheme[i].locked) {
@@ -129,29 +130,29 @@
 	}
 
 	function addColorScheme(colorScheme: Color[]): void {
-		colorSchemes.splice(0, colorSchemeIndex);
+		colorSchemes.splice(0, currentColorSchemeIndex);
 		colorSchemes = [colorScheme, ...colorSchemes];
-		colorSchemeIndex = 0;
+		currentColorSchemeIndex = 0;
 
 		gotoColorScheme();
 	}
 
 	function undoColorScheme(): void {
-		if (colorSchemeIndex < colorSchemes.length - 1) {
-			colorSchemeIndex++;
+		if (currentColorSchemeIndex < colorSchemes.length - 1) {
+			currentColorSchemeIndex++;
 			gotoColorScheme();
 		}
 	}
 
 	function redoColorScheme(): void {
-		if (colorSchemeIndex > 0) {
-			colorSchemeIndex--;
+		if (currentColorSchemeIndex > 0) {
+			currentColorSchemeIndex--;
 			gotoColorScheme();
 		}
 	}
 
 	function swapColors(index1: number, index2: number): void {
-		const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
+		const newColorScheme = structuredClone(colorSchemes[currentColorSchemeIndex]);
 		[newColorScheme[index1], newColorScheme[index2]] = [
 			newColorScheme[index2],
 			newColorScheme[index1]
@@ -161,12 +162,12 @@
 	}
 
 	function addColor(): void {
-		const currentColorScheme = colorSchemes[colorSchemeIndex];
+		const currentColorScheme = colorSchemes[currentColorSchemeIndex];
 
 		if (currentColorScheme.length < MAX_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.push(
-				...generateColorScheme(1, $colorSpacePresets[colorSpace]).map((color) => {
+				...generateColorScheme(1, $colorSpacePresets[currentColorSpace]).map((color) => {
 					return { id: uuid(), hex: color, locked: false };
 				})
 			);
@@ -176,7 +177,7 @@
 	}
 
 	function removeColor(index: number): void {
-		const currentColorScheme = colorSchemes[colorSchemeIndex];
+		const currentColorScheme = colorSchemes[currentColorSchemeIndex];
 
 		if (currentColorScheme.length > MIN_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
@@ -187,12 +188,13 @@
 	}
 
 	function toggleLockedColor(index: number): void {
-		colorSchemes[colorSchemeIndex][index].locked = !colorSchemes[colorSchemeIndex][index].locked;
+		colorSchemes[currentColorSchemeIndex][index].locked =
+			!colorSchemes[currentColorSchemeIndex][index].locked;
 	}
 
 	function colorPicker(): void {
 		if (colorPickerColor.hex !== originalColorPickerHex) {
-			const newColorScheme = structuredClone(colorSchemes[colorSchemeIndex]);
+			const newColorScheme = structuredClone(colorSchemes[currentColorSchemeIndex]);
 			colorPickerColor.hex = originalColorPickerHex;
 
 			addColorScheme(newColorScheme);
@@ -216,15 +218,15 @@
 	}
 
 	$: if (browser) {
-		document.body.classList.toggle('no-scroll', menuOpen);
+		document.body.classList.toggle('no-scroll', isMenuOpen);
 	}
 </script>
 
-{#if !menuOpen}
+{#if !isMenuOpen}
 	<menu class="w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
 		<button
 			class="button w-1/4 border-t-0 border-x-0 rounded-none"
-			disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
 			on:click={undoColorScheme}
 		>
@@ -247,7 +249,7 @@
 
 		<button
 			class="button w-1/4 border-t-0 border-x-0 rounded-none"
-			disabled={colorSchemeIndex === 0}
+			disabled={currentColorSchemeIndex === 0}
 			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
 			on:click={redoColorScheme}
 		>
@@ -258,20 +260,20 @@
 
 <menu
 	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.32))] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-300"
-	class:translate-y-full={!menuOpen}
+	class:translate-y-full={!isMenuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
 >
 	<div class="absolute bottom-full left-4 flex gap-x-2">
-		{#key menuOpen}
+		{#key isMenuOpen}
 			<button
 				class="button rounded-b-none"
-				use:showTooltip={{ position: 'top', message: menuOpen ? 'Close' : 'Open' }}
+				use:showTooltip={{ position: 'top', message: isMenuOpen ? 'Close' : 'Open' }}
 				on:click={() => {
-					menuOpen = !menuOpen;
+					isMenuOpen = !isMenuOpen;
 				}}
 			>
-				{#if menuOpen}
+				{#if isMenuOpen}
 					<ArrowDownIcon />
 				{:else}
 					<ArrowUpIcon />
@@ -279,7 +281,7 @@
 			</button>
 		{/key}
 
-		{#if menuOpen}
+		{#if isMenuOpen}
 			<button
 				class="button rounded-b-none cursor-grab active:cursor-grabbing"
 				transition:scale={{ duration: 300 }}
@@ -300,10 +302,10 @@
 				class="button"
 				use:showTooltip={{ position: 'top', message: 'Change Color Space' }}
 				on:click={() => {
-					colorSpaceModalOpen = true;
+					isColorSpaceModalOpen = true;
 				}}
 			>
-				{colorSpace}
+				{currentColorSpace}
 			</button>
 
 			<button
@@ -319,7 +321,8 @@
 			<div class="flex gap-x-4">
 				<button
 					class="button flex-1"
-					disabled={colorSchemes.length === 1 || colorSchemeIndex === colorSchemes.length - 1}
+					disabled={colorSchemes.length === 1 ||
+						currentColorSchemeIndex === colorSchemes.length - 1}
 					use:showTooltip={{ position: 'top', message: 'Undo' }}
 					on:click={undoColorScheme}
 				>
@@ -328,7 +331,7 @@
 
 				<button
 					class="button flex-1"
-					disabled={colorSchemeIndex === 0}
+					disabled={currentColorSchemeIndex === 0}
 					use:showTooltip={{ position: 'top', message: 'Redo' }}
 					on:click={redoColorScheme}
 				>
@@ -345,8 +348,8 @@
 			<div
 				class="flex-1 flex flex-col lg:flex-row gap-4 overflow-x-hidden sm:max-lg:overflow-y-auto"
 			>
-				{#each colorSchemes[colorSchemeIndex] as color, index (color.id)}
-					{@const colorSchemeLength = colorSchemes[colorSchemeIndex].length}
+				{#each colorSchemes[currentColorSchemeIndex] as color, index (color.id)}
+					{@const colorSchemeLength = colorSchemes[currentColorSchemeIndex].length}
 					{@const contrastColor = contrastingColor(color.hex)}
 
 					<div
@@ -476,7 +479,7 @@
 				{/each}
 			</div>
 
-			{#if colorSchemes[colorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
+			{#if colorSchemes[currentColorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
 				<button
 					class="button mt-4 sm:mt-0 sm:ml-4"
 					in:addColorButtonTransition
@@ -491,16 +494,16 @@
 	</div>
 </menu>
 
-<Modal title="Color Space" bind:open={colorSpaceModalOpen}>
+<Modal title="Color Space" bind:isOpen={isColorSpaceModalOpen}>
 	<List
 		items={Object.keys($colorSpacePresets)}
-		bind:selectedItem={colorSpace}
+		bind:selectedItem={currentColorSpace}
 		on:click={() => {
-			colorSpaceModalOpen = false;
+			isColorSpaceModalOpen = false;
 		}}
 	/>
 </Modal>
 
-<Modal title="Color Picker" bind:open={colorPickerModalOpen} on:close={colorPicker}>
+<Modal title="Color Picker" bind:isOpen={colorPickerModalOpen} on:close={colorPicker}>
 	<ColorPicker bind:hex={colorPickerColor.hex} />
 </Modal>

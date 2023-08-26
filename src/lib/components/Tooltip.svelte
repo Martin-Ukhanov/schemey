@@ -3,7 +3,7 @@
 	import { scale } from 'svelte/transition';
 </script>
 
-{#if $tooltip.visible}
+{#if $tooltip.isVisible}
 	<div
 		class="absolute -translate-x-1/2 flex flex-col items-center z-10"
 		class:-translate-y-full={$tooltip.position === 'top'}

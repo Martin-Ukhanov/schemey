@@ -9,7 +9,7 @@
 	import { clearNotifications } from '$lib/stores/notifications';
 	import Modal from '$lib/components/Modal.svelte';
 	import SignIn from '$lib/components/SignIn.svelte';
-	import { signInModalOpen, signUpModalOpen } from '$lib/stores/auth';
+	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import SignUp from '$lib/components/SignUp.svelte';
 
 	export let data: LayoutData;
@@ -41,11 +41,11 @@
 	<slot />
 </main>
 
-<Modal title="Sign In" bind:open={$signInModalOpen}>
+<Modal title="Sign In" bind:isOpen={$isSignInModalOpen}>
 	<SignIn />
 </Modal>
 
-<Modal title="Sign Up" bind:open={$signUpModalOpen}>
+<Modal title="Sign Up" bind:isOpen={$isSignUpModalOpen}>
 	<SignUp />
 </Modal>
 

@@ -52,7 +52,7 @@ export function showTooltip(
 				const documentElement = document.documentElement;
 
 				tooltip.set({
-					visible: true,
+					isVisible: true,
 					position: position,
 					x: rect.left + documentElement.scrollLeft + element.offsetWidth / 2,
 					y:

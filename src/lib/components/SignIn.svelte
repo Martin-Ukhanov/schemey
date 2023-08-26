@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { applyAction, enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
-	import { signInModalOpen, signUpModalOpen } from '$lib/stores/auth';
+	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
 
@@ -45,7 +45,7 @@
 
 			if (result.type === 'redirect') {
 				await applyAction(result);
-				$signInModalOpen = false;
+				$isSignInModalOpen = false;
 				addNotification(`Successfully Signed In`);
 			} else if (result.type === 'failure') {
 				failureData = result.data;
@@ -116,8 +116,8 @@
 		Don't have an account? <button
 			class="link text-xs uppercase"
 			on:click={() => {
-				$signInModalOpen = false;
-				$signUpModalOpen = true;
+				$isSignInModalOpen = false;
+				$isSignUpModalOpen = true;
 			}}
 		>
 			Sign Up

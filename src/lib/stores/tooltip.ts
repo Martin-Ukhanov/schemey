@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 type Tooltip = {
-	visible: boolean;
+	isVisible: boolean;
 	position: 'top' | 'bottom';
 	x: number;
 	y: number;
@@ -9,7 +9,7 @@ type Tooltip = {
 };
 
 export const tooltip = writable(<Tooltip>{
-	visible: false,
+	isVisible: false,
 	position: 'top',
 	x: 0,
 	y: 0,

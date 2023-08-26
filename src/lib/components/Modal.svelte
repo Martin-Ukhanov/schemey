@@ -5,7 +5,7 @@
 	import XIcon from './icons/XIcon.svelte';
 
 	export let title: string;
-	export let open = false;
+	export let isOpen = false;
 
 	let windowWidth: number;
 	let modalHeight: number;
@@ -21,7 +21,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-{#if open}
+{#if isOpen}
 	<div class="fixed top-0 left-0 w-full h-full z-10">
 		<div
 			class="absolute top-0 left-0 w-full h-full bg-black/50"
@@ -41,7 +41,7 @@
 					<button
 						class="button absolute left-0 p-0 border-none"
 						on:click={() => {
-							open = false;
+							isOpen = false;
 							dispatch('close');
 						}}
 					>

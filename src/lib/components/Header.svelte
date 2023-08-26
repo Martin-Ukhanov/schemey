@@ -2,11 +2,11 @@
 	import { page } from '$app/stores';
 	import { enhance, applyAction } from '$app/forms';
 	import { addNotification } from '$lib/stores/notifications';
-	import { signInModalOpen, signUpModalOpen } from '$lib/stores/auth';
+	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import Loader from './Loader.svelte';
 	import MenuIcon from './icons/MenuIcon.svelte';
 
-	let loading = false;
+	let isLoading = false;
 </script>
 
 <header class="h-16 p-2 flex justify-between items-center border-b-2 border-black">
@@ -21,12 +21,12 @@
 					$page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/'
 				}`}
 				use:enhance={() => {
-					loading = true;
+					isLoading = true;
 
 					return async ({ update, result }) => {
 						await update();
 
-						loading = false;
+						isLoading = false;
 
 						if (result.type === 'redirect') {
 							await applyAction(result);
@@ -35,9 +35,9 @@
 					};
 				}}
 			>
-				<button class="button-primary" disabled={loading}>
-					<span class:opacity-0={loading}>Sign Out</span>
-					{#if loading}
+				<button class="button-primary" disabled={isLoading}>
+					<span class:opacity-0={isLoading}>Sign Out</span>
+					{#if isLoading}
 						<Loader />
 					{/if}
 				</button>
@@ -46,13 +46,13 @@
 			<button
 				class="button border-none"
 				on:click={() => {
-					$signInModalOpen = true;
+					$isSignInModalOpen = true;
 				}}>Sign In</button
 			>
 			<button
 				class="button-primary"
 				on:click={() => {
-					$signUpModalOpen = true;
+					$isSignUpModalOpen = true;
 				}}>Sign Up</button
 			>
 		{/if}

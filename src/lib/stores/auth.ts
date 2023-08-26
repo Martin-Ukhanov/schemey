@@ -1,4 +1,4 @@
 import { writable } from 'svelte/store';
 
-export const signInModalOpen = writable(false);
-export const signUpModalOpen = writable(false);
+export const isSignInModalOpen = writable(false);
+export const isSignUpModalOpen = writable(false);
