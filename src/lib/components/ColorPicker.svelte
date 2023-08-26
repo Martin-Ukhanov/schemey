@@ -79,7 +79,7 @@
 	}
 
 	$: {
-		hex = Color.hsv([h, s, v]).hex();
+		hex = Color.hsv([h, s, v]).hex().toLowerCase();
 		hexInput = hex;
 	}
 
