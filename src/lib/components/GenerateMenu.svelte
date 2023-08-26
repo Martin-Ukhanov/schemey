@@ -201,12 +201,18 @@
 		}
 	}
 
-	function removeColorButtonTransition(node: Element): TransitionConfig {
-		return slide(node, { axis: menuWidth < parseInt(theme.screens.lg) ? 'y' : 'x', duration: 300 });
+	function removeColorButtonTransition(element: Element): TransitionConfig {
+		return slide(element, {
+			axis: menuWidth < parseInt(theme.screens.lg) ? 'y' : 'x',
+			duration: 300
+		});
 	}
 
-	function addColorButtonTransition(node: Element): TransitionConfig {
-		return slide(node, { axis: menuWidth < parseInt(theme.screens.sm) ? 'y' : 'x', duration: 300 });
+	function addColorButtonTransition(element: Element): TransitionConfig {
+		return slide(element, {
+			axis: menuWidth < parseInt(theme.screens.sm) ? 'y' : 'x',
+			duration: 300
+		});
 	}
 
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
