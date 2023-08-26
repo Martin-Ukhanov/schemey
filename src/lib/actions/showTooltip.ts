@@ -37,7 +37,7 @@ export function showTooltip(
 	function hide(): void {
 		clearTimeout(timeout);
 		tooltip.update((value) => {
-			return { ...value, visible: false };
+			return { ...value, isVisible: false };
 		});
 		scrollableParents?.forEach((scrollableParent) => {
 			scrollableParent.removeEventListener('scroll', hide);
