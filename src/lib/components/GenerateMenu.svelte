@@ -187,6 +187,16 @@
 		}
 	}
 
+	function swapColors(index1: number, index2: number): void {
+		const newColorScheme = structuredClone(colorSchemes[currentColorSchemeIndex]);
+		[newColorScheme[index1], newColorScheme[index2]] = [
+			newColorScheme[index2],
+			newColorScheme[index1]
+		];
+
+		addColorScheme(newColorScheme);
+	}
+
 	function toggleLockedColor(index: number): void {
 		colorSchemes[currentColorSchemeIndex][index].locked =
 			!colorSchemes[currentColorSchemeIndex][index].locked;
