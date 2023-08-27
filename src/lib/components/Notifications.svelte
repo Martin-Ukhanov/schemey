@@ -4,6 +4,7 @@
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import CheckSquareIcon from './icons/CheckSquareIcon.svelte';
+	import XSquareIcon from './icons/XSquareIcon.svelte';
 	import CopyIcon from './icons/CopyIcon.svelte';
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import LockedIcon from './icons/LockedIcon.svelte';
@@ -25,6 +26,8 @@
 		>
 			{#if notification.icon === 'check'}
 				<CheckSquareIcon />
+			{:else if notification.icon === 'x'}
+				<XSquareIcon />
 			{:else if notification.icon === 'copied'}
 				<CopyIcon />
 			{:else if notification.icon === 'unlocked'}

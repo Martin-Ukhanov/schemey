@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 
-type Icons = 'check' | 'copied' | 'unlocked' | 'locked' | 'saved';
+type Icons = 'check' | 'x' | 'copied' | 'unlocked' | 'locked' | 'saved';
 
 type Notification = {
 	id: string;
