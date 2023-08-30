@@ -452,11 +452,13 @@
 										swapColors(index, index2);
 									}}
 								>
-									{#if menuWidth < 1024}
+									<div class="lg:hidden">
 										<ArrowUpIcon />
-									{:else}
+									</div>
+
+									<div class="hidden lg:block">
 										<ArrowLeftIcon />
-									{/if}
+									</div>
 								</button>
 
 								<button
@@ -469,11 +471,13 @@
 										swapColors(index, index2);
 									}}
 								>
-									{#if menuWidth < 1024}
+									<div class="lg:hidden">
 										<ArrowDownIcon />
-									{:else}
+									</div>
+
+									<div class="hidden lg:block">
 										<ArrowRightIcon />
-									{/if}
+									</div>
 								</button>
 							</div>
 						</div>
