@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 import { goto } from '$app/navigation';
 import type { PageLoad } from './$types';
 
-export const load = (({ params }) => {
+export const load = (({ params, data }) => {
 	const { slug } = params;
 
 	if (!validColorSchemeSlug(slug)) {
@@ -14,5 +14,5 @@ export const load = (({ params }) => {
 		goto(`/generate/${slug.toLowerCase()}`);
 	}
 
-	return { colorScheme: slugToColorScheme(slug) };
+	return { currentColorScheme: slugToColorScheme(slug), ...data };
 }) satisfies PageLoad;

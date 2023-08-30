@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { scale, slide, type TransitionConfig } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { v4 as uuid } from 'uuid';
 	import theme from 'tailwindcss/defaultTheme';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
+	import { isSignInModalOpen } from '$lib/stores/auth';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { isResizingMenu } from '$lib/stores/generateMenu';
 	import { addNotification } from '$lib/stores/notifications';
@@ -22,6 +24,7 @@
 	import UndoIcon from './icons/UndoIcon.svelte';
 	import RedoIcon from './icons/RedoIcon.svelte';
 	import SaveIcon from './icons/SaveIcon.svelte';
+	import SavedIcon from './icons/SavedIcon.svelte';
 	import XSquareIcon from './icons/XSquareIcon.svelte';
 	import CopyIcon from './icons/CopyIcon.svelte';
 	import LockedIcon from './icons/LockedIcon.svelte';
@@ -39,6 +42,9 @@
 	const MIN_COLOR_SCHEME_SIZE = 2;
 	const MAX_COLOR_SCHEME_SIZE = 5;
 	const MAX_COLOR_SCHEMES_LENGTH = 100;
+
+	let savedColors: string[] = $page.data.savedColors ?? [];
+	let savedColorSchemes: string[][] = $page.data.savedColorSchemes ?? [];
 
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
@@ -151,14 +157,21 @@
 		}
 	}
 
-	function swapColors(index1: number, index2: number): void {
-		const newColorScheme = structuredClone(colorSchemes[currentColorSchemeIndex]);
-		[newColorScheme[index1], newColorScheme[index2]] = [
-			newColorScheme[index2],
-			newColorScheme[index1]
-		];
+	async function saveColorScheme(colorScheme: string[]): Promise<void> {
+		const response = await fetch('/api/colorSchemes', {
+			method: 'POST',
+			body: JSON.stringify({ colorScheme: colorScheme }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+		const data = await response.json();
 
-		addColorScheme(newColorScheme);
+		if (data.success) {
+			addNotification('Color Scheme Saved', 'saved');
+		} else {
+			addNotification('Failed To Save Color Scheme');
+		}
 	}
 
 	function addColor(): void {
@@ -200,6 +213,48 @@
 	function toggleLockedColor(index: number): void {
 		colorSchemes[currentColorSchemeIndex][index].locked =
 			!colorSchemes[currentColorSchemeIndex][index].locked;
+	}
+
+	async function toggleSaveColor(color: string): Promise<void> {
+		if ($page.data.session) {
+			if (savedColors.includes(color)) {
+				// Unsave color
+				const response = await fetch('/api/colors', {
+					method: 'DELETE',
+					body: JSON.stringify({ color: color }),
+					headers: {
+						'content-type': 'application/json'
+					}
+				});
+				const data = await response.json();
+
+				if (data.success) {
+					savedColors = savedColors.filter((color) => color !== color);
+					addNotification(`${color} Unsaved`, 'unsaved', color);
+				} else {
+					addNotification(`Failed To Save ${color}`, 'x', color);
+				}
+			} else {
+				// Save color
+				const response = await fetch('/api/colors', {
+					method: 'POST',
+					body: JSON.stringify({ color: color }),
+					headers: {
+						'content-type': 'application/json'
+					}
+				});
+				const data = await response.json();
+
+				if (data.success) {
+					savedColors = [...savedColors, color];
+					addNotification(`${color} Saved`, 'saved', color);
+				} else {
+					addNotification(`Failed To Save ${color}`, 'x', color);
+				}
+			}
+		} else {
+			$isSignInModalOpen = true;
+		}
 	}
 
 	function colorPicker(): void {
@@ -355,7 +410,13 @@
 				</button>
 			</div>
 
-			<button class="button" use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}>
+			<button
+				class="button"
+				use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}
+				on:click={() => {
+					saveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
+				}}
+			>
 				<SaveIcon />
 			</button>
 		</div>
@@ -398,8 +459,15 @@
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
 									use:showTooltip={{ position: 'top', message: 'Save Color' }}
+									on:click={async () => {
+										await toggleSaveColor(color.hex);
+									}}
 								>
-									<SaveIcon />
+									{#if savedColors.includes(color.hex)}
+										<SavedIcon />
+									{:else}
+										<SaveIcon />
+									{/if}
 								</button>
 							</div>
 
