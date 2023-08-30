@@ -17,18 +17,27 @@
 	let quaternary: Color | null;
 
 	$: {
-		const { colorScheme } = data;
+		const { currentColorScheme } = data;
 
-		background = { hex: colorScheme[0], contrast: contrastingColor(colorScheme[0]) };
-		primary = { hex: colorScheme[1], contrast: contrastingColor(colorScheme[1]) };
-		colorScheme[2]
-			? (secondary = { hex: colorScheme[2], contrast: contrastingColor(colorScheme[2]) })
+		background = { hex: currentColorScheme[0], contrast: contrastingColor(currentColorScheme[0]) };
+		primary = { hex: currentColorScheme[1], contrast: contrastingColor(currentColorScheme[1]) };
+		currentColorScheme[2]
+			? (secondary = {
+					hex: currentColorScheme[2],
+					contrast: contrastingColor(currentColorScheme[2])
+			  })
 			: (secondary = null);
-		colorScheme[3]
-			? (tertiary = { hex: colorScheme[3], contrast: contrastingColor(colorScheme[3]) })
+		currentColorScheme[3]
+			? (tertiary = {
+					hex: currentColorScheme[3],
+					contrast: contrastingColor(currentColorScheme[3])
+			  })
 			: (tertiary = null);
-		colorScheme[4]
-			? (quaternary = { hex: colorScheme[4], contrast: contrastingColor(colorScheme[4]) })
+		currentColorScheme[4]
+			? (quaternary = {
+					hex: currentColorScheme[4],
+					contrast: contrastingColor(currentColorScheme[4])
+			  })
 			: (quaternary = null);
 	}
 </script>
@@ -37,7 +46,7 @@
 	class="flex-1 flex flex-col"
 	style={`background-color: ${background.hex}; color: ${background.contrast};`}
 >
-	<GenerateMenu initialColorScheme={data.colorScheme} />
+	<GenerateMenu initialColorScheme={data.currentColorScheme} />
 
 	<div class="w-full h-16 flex">
 		<div class="flex-1" style={`background-color: ${primary.hex};`} />
