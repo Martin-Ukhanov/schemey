@@ -445,7 +445,11 @@
 					toggleSaveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
 				}}
 			>
-				<SaveIcon />
+				{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)))}
+					<SavedIcon />
+				{:else}
+					<SaveIcon />
+				{/if}
 			</button>
 		</div>
 
