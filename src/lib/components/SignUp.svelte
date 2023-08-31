@@ -13,7 +13,7 @@
 	let passwordErrorMessage: string | undefined;
 
 	let failureData: Record<string, unknown> | undefined;
-	let loading = false;
+	let isLoading = false;
 
 	function isValidEmail(email: FormDataEntryValue): boolean {
 		return /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(<string>email);
@@ -55,13 +55,13 @@
 		if (nameErrorMessage || emailErrorMessage || passwordErrorMessage) {
 			cancel();
 		} else {
-			loading = true;
+			isLoading = true;
 		}
 
 		return async ({ update, result }) => {
 			await update();
 
-			loading = false;
+			isLoading = false;
 
 			if (result.type === 'redirect') {
 				await applyAction(result);
@@ -83,7 +83,7 @@
 			placeholder="John Doe"
 			autocomplete="name"
 			class="input"
-			disabled={loading}
+			disabled={isLoading}
 		/>
 
 		{#if nameErrorMessage}
@@ -103,7 +103,7 @@
 			placeholder="example@email.com"
 			autocomplete="email"
 			class="input"
-			disabled={loading}
+			disabled={isLoading}
 		/>
 
 		{#if emailErrorMessage}
@@ -123,7 +123,7 @@
 			placeholder="••••••"
 			autocomplete="new-password"
 			class="input"
-			disabled={loading}
+			disabled={isLoading}
 		/>
 
 		{#if passwordErrorMessage}
@@ -134,9 +134,9 @@
 	</label>
 
 	<div class="mb-4 flex flex-col">
-		<button type="submit" class="button-primary" disabled={loading}>
-			<span class:opacity-0={loading}>Sign Up</span>
-			{#if loading}
+		<button type="submit" class="button-primary" disabled={isLoading}>
+			<span class:opacity-0={isLoading}>Sign Up</span>
+			{#if isLoading}
 				<Loader />
 			{/if}
 		</button>

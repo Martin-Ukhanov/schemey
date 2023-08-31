@@ -12,7 +12,7 @@
 	let passwordErrorMessage: string | undefined;
 
 	let failureData: Record<string, unknown> | undefined;
-	let loading = false;
+	let isLoading = false;
 </script>
 
 <form
@@ -35,13 +35,13 @@
 		if (emailErrorMessage || passwordErrorMessage) {
 			cancel();
 		} else {
-			loading = true;
+			isLoading = true;
 		}
 
 		return async ({ update, result }) => {
 			await update();
 
-			loading = false;
+			isLoading = false;
 
 			if (result.type === 'redirect') {
 				await applyAction(result);
@@ -63,7 +63,7 @@
 			placeholder="example@email.com"
 			autocomplete="email"
 			class="input"
-			disabled={loading}
+			disabled={isLoading}
 		/>
 
 		{#if emailErrorMessage}
@@ -83,7 +83,7 @@
 			placeholder="••••••"
 			autocomplete="current-password"
 			class="input"
-			disabled={loading}
+			disabled={isLoading}
 		/>
 
 		{#if passwordErrorMessage}
@@ -94,9 +94,9 @@
 	</label>
 
 	<div class="mb-4 flex flex-col">
-		<button type="submit" class="button-primary" disabled={loading}>
-			<span class:opacity-0={loading}>Sign In</span>
-			{#if loading}
+		<button type="submit" class="button-primary" disabled={isLoading}>
+			<span class:opacity-0={isLoading}>Sign In</span>
+			{#if isLoading}
 				<Loader />
 			{/if}
 		</button>
