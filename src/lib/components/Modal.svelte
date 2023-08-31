@@ -14,7 +14,7 @@
 
 	function modalTransition(element: Element): TransitionConfig {
 		return windowWidth < parseInt(theme.screens.sm)
-			? fly(element, { y: modalHeight, opacity: 1, duration: 300 })
+			? fly(element, { y: modalHeight, duration: 300 })
 			: scale(element, { duration: 300 });
 	}
 </script>
