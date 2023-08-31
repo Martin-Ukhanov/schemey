@@ -21,11 +21,12 @@
 	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte';
 	import ArrowRightIcon from './icons/ArrowRightIcon.svelte';
 	import ResizeIcon from './icons/ResizeIcon.svelte';
+	import LibraryIcon from './icons/LibraryIcon.svelte';
+	import SaveIcon from './icons/SaveIcon.svelte';
+	import SavedIcon from './icons/SavedIcon.svelte';
 	import GenerateIcon from './icons/GenerateIcon.svelte';
 	import UndoIcon from './icons/UndoIcon.svelte';
 	import RedoIcon from './icons/RedoIcon.svelte';
-	import SaveIcon from './icons/SaveIcon.svelte';
-	import SavedIcon from './icons/SavedIcon.svelte';
 	import XSquareIcon from './icons/XSquareIcon.svelte';
 	import CopyIcon from './icons/CopyIcon.svelte';
 	import LockedIcon from './icons/LockedIcon.svelte';
@@ -397,6 +398,26 @@
 		class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto sm:overflow-y-visible"
 	>
 		<div class="sm:w-40 flex flex-col gap-y-4">
+			<div class="flex gap-x-4">
+				<button class="button flex-1" use:showTooltip={{ position: 'top', message: 'Library' }}>
+					<LibraryIcon />
+				</button>
+
+				<button
+					class="button flex-1"
+					use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}
+					on:click={() => {
+						toggleSaveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
+					}}
+				>
+					{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)))}
+						<SavedIcon />
+					{:else}
+						<SaveIcon />
+					{/if}
+				</button>
+			</div>
+
 			<button
 				class="button"
 				use:showTooltip={{ position: 'top', message: 'Change Color Space' }}
@@ -437,20 +458,6 @@
 					<RedoIcon />
 				</button>
 			</div>
-
-			<button
-				class="button"
-				use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}
-				on:click={() => {
-					toggleSaveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
-				}}
-			>
-				{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)))}
-					<SavedIcon />
-				{:else}
-					<SaveIcon />
-				{/if}
-			</button>
 		</div>
 
 		<div class="flex-1 flex flex-col sm:flex-row">
