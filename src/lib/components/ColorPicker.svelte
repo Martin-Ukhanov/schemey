@@ -127,7 +127,7 @@
 			min="0"
 			max="360"
 			step="1"
-			class="appearance-none absolute w-full h-full bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
+			class="appearance-none absolute w-full h-full outline-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
 			bind:value={h}
 		/>
 
