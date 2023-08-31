@@ -2,6 +2,7 @@
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { browser } from '$app/environment';
 	import Color from 'color';
+	import { scale } from 'svelte/transition';
 
 	export let hex: string;
 
@@ -9,13 +10,13 @@
 	let colorPickerWidth: number;
 	let colorPickerHeight: number;
 	let hueSliderWidth: number;
+	let hueSliderOriginWidth: number;
 	let hueSliderThumbWidth: number;
 	let hexInput: string;
 
 	let [h, s, v] = Color(hex).hsv().array();
 
-	const originS = s;
-	const originV = v;
+	const [originH, originS, originV] = [h, s, v];
 
 	function moveColorPickerCursorMouse(e: MouseEvent): void {
 		const setSaturationAndValue = (e: MouseEvent): void => {
@@ -99,10 +100,13 @@
 		on:mousedown|preventDefault={moveColorPickerCursorMouse}
 		on:touchstart|preventDefault={moveColorPickerCursorTouch}
 	>
-		<div
-			class="absolute -translate-x-1/2 translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black"
-			style={`bottom: ${originV}%; left: ${originS}%;`}
-		/>
+		{#if originH === h}
+			<div
+				class="absolute -translate-x-1/2 translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black"
+				style={`bottom: ${originV}%; left: ${originS}%;`}
+				transition:scale={{ duration: 300 }}
+			/>
+		{/if}
 
 		<div
 			class="absolute -translate-x-1/2 translate-y-1/2 w-6 h-6 border-2 rounded-full border-black cursor-grab group-active:cursor-grabbing"
@@ -130,6 +134,14 @@
 		<div
 			class="h-4 border-2 rounded-full border-black"
 			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
+		/>
+
+		<div
+			class="absolute bottom-0.5 -translate-x-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
+			style={`left: ${
+				(originH / 360) * (hueSliderWidth - hueSliderOriginWidth) + hueSliderOriginWidth / 2
+			}px;`}
+			bind:clientWidth={hueSliderOriginWidth}
 		/>
 
 		<div
