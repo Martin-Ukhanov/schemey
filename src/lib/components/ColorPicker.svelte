@@ -3,6 +3,7 @@
 	import { browser } from '$app/environment';
 	import Color from 'color';
 	import { scale } from 'svelte/transition';
+	import LibraryIcon from './icons/LibraryIcon.svelte';
 
 	export let hex: string;
 
@@ -160,16 +161,22 @@
 		</div>
 	</div>
 
-	<input
-		type="text"
-		name="hex"
-		placeholder="#000000"
-		class="input text-lg text-center font-bold uppercase !brightness-100"
-		class:placeholder-transparent-white={contrastColor === '#ffffff'}
-		class:placeholder-transparent-black={contrastColor === '#000000'}
-		style={`background-color: ${hex}; color: ${contrastColor};`}
-		bind:value={hexInput}
-		on:input={handleHexInput}
-		on:focusout={hexInputUnfocus}
-	/>
+	<div class="flex gap-x-2">
+		<input
+			type="text"
+			name="hex"
+			placeholder="#000000"
+			class="input flex-1 text-lg text-center font-bold uppercase !brightness-100"
+			class:placeholder-transparent-white={contrastColor === '#ffffff'}
+			class:placeholder-transparent-black={contrastColor === '#000000'}
+			style={`background-color: ${hex}; color: ${contrastColor};`}
+			bind:value={hexInput}
+			on:input={handleHexInput}
+			on:focusout={hexInputUnfocus}
+		/>
+
+		<button class="button">
+			<LibraryIcon />
+		</button>
+	</div>
 </div>
