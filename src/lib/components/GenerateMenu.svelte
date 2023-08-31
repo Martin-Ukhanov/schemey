@@ -109,7 +109,7 @@
 		}
 	}
 
-	function gotoColorScheme(): void {
+	function goToColorScheme(): void {
 		goto(
 			'/generate/' +
 				colorSchemeToSlug(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)),
@@ -141,20 +141,20 @@
 		colorSchemes = [colorScheme, ...colorSchemes];
 		currentColorSchemeIndex = 0;
 
-		gotoColorScheme();
+		goToColorScheme();
 	}
 
 	function undoColorScheme(): void {
 		if (currentColorSchemeIndex < colorSchemes.length - 1) {
 			currentColorSchemeIndex++;
-			gotoColorScheme();
+			goToColorScheme();
 		}
 	}
 
 	function redoColorScheme(): void {
 		if (currentColorSchemeIndex > 0) {
 			currentColorSchemeIndex--;
-			gotoColorScheme();
+			goToColorScheme();
 		}
 	}
 
