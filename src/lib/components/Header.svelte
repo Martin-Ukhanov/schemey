@@ -12,6 +12,7 @@
 
 <header class="h-16 p-2 flex justify-between items-center border-b-2 border-black">
 	<a href="/" class="button border-none text-xl sm:text-2xl font-bold text-lime-500">Schemey</a>
+
 	<nav class="hidden sm:flex gap-x-2">
 		{#if $page.data.session}
 			<form
@@ -33,7 +34,9 @@
 							$savedColors = [];
 							$savedColorSchemes = [];
 
-							addNotification(`Successfully Signed Out`);
+							addNotification('Successfully Signed Out');
+						} else if (result.type === 'failure') {
+							addNotification('Sign Out Failed', 'x');
 						}
 					};
 				}}
@@ -65,6 +68,7 @@
 			</button>
 		{/if}
 	</nav>
+
 	<button class="button block sm:hidden border-none">
 		<MenuIcon />
 	</button>

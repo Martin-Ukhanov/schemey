@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 
@@ -11,8 +11,13 @@ export const actions: Actions = {
 		const session = await getSession();
 
 		if (session) {
-			await supabase.auth.signOut();
-			throw redirect(303, url.searchParams.get('redirect') ?? '/');
+			const { error } = await supabase.auth.signOut();
+
+			if (!error) {
+				throw redirect(303, url.searchParams.get('redirect') ?? '/');
+			}
 		}
+
+		return fail(500);
 	}
 };
