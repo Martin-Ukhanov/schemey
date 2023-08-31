@@ -158,20 +158,47 @@
 		}
 	}
 
-	async function saveColorScheme(colorScheme: string[]): Promise<void> {
-		const response = await fetch('/api/colorSchemes', {
-			method: 'POST',
-			body: JSON.stringify({ colorScheme: colorScheme }),
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-		const data = await response.json();
+	async function toggleSaveColorScheme(colorScheme: string[]): Promise<void> {
+		if ($page.data.session) {
+			if (JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorScheme))) {
+				// Unsave color scheme
+				const response = await fetch('/api/colorSchemes', {
+					method: 'DELETE',
+					body: JSON.stringify({ colorScheme: colorScheme }),
+					headers: {
+						'content-type': 'application/json'
+					}
+				});
+				const data = await response.json();
 
-		if (data.success) {
-			addNotification('Color Scheme Saved', 'saved');
+				if (data.success) {
+					$savedColorSchemes = $savedColorSchemes.filter(
+						(savedColorScheme) => JSON.stringify(savedColorScheme) !== JSON.stringify(colorScheme)
+					);
+					addNotification('Color Scheme Unsaved', 'unsaved');
+				} else {
+					addNotification(`Failed To Unsave Color Scheme`, 'x');
+				}
+			} else {
+				// Save color scheme
+				const response = await fetch('/api/colorSchemes', {
+					method: 'POST',
+					body: JSON.stringify({ colorScheme: colorScheme }),
+					headers: {
+						'content-type': 'application/json'
+					}
+				});
+				const data = await response.json();
+
+				if (data.success) {
+					$savedColorSchemes = [...$savedColorSchemes, colorScheme];
+					addNotification('Color Scheme Saved', 'saved');
+				} else {
+					addNotification('Failed To Save Color Scheme', 'x');
+				}
+			}
 		} else {
-			addNotification('Failed To Save Color Scheme');
+			$isSignInModalOpen = true;
 		}
 	}
 
@@ -233,7 +260,7 @@
 					$savedColors = $savedColors.filter((savedColor) => savedColor !== color);
 					addNotification(`${color} Unsaved`, 'unsaved', color);
 				} else {
-					addNotification(`Failed To Save ${color}`, 'x', color);
+					addNotification(`Failed To Unsave ${color}`, 'x', color);
 				}
 			} else {
 				// Save color
@@ -415,7 +442,7 @@
 				class="button"
 				use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}
 				on:click={() => {
-					saveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
+					toggleSaveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
 				}}
 			>
 				<SaveIcon />
