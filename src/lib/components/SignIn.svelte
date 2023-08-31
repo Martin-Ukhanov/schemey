@@ -3,6 +3,7 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
+	import { savedColors, savedColorSchemes } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
 
@@ -45,6 +46,19 @@
 
 			if (result.type === 'redirect') {
 				await applyAction(result);
+
+				const savedColorsResponse = await fetch('/api/colors', {
+					method: 'GET'
+				});
+				const savedColorsData = await savedColorsResponse.json();
+				$savedColors = savedColorsData;
+
+				const savedColorSchemesResponse = await fetch('/api/colorSchemes', {
+					method: 'GET'
+				});
+				const savedColorSchemesData = await savedColorSchemesResponse.json();
+				$savedColorSchemes = savedColorSchemesData;
+
 				$isSignInModalOpen = false;
 				addNotification(`Successfully Signed In`);
 			} else if (result.type === 'failure') {

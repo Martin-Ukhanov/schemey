@@ -7,6 +7,7 @@
 	import { v4 as uuid } from 'uuid';
 	import theme from 'tailwindcss/defaultTheme';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
+	import { savedColors, savedColorSchemes } from '$lib/stores/user';
 	import { isSignInModalOpen } from '$lib/stores/auth';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { isResizingMenu } from '$lib/stores/generateMenu';
@@ -43,8 +44,8 @@
 	const MAX_COLOR_SCHEME_SIZE = 5;
 	const MAX_COLOR_SCHEMES_LENGTH = 100;
 
-	let savedColors: string[] = $page.data.savedColors ?? [];
-	let savedColorSchemes: string[][] = $page.data.savedColorSchemes ?? [];
+	$savedColors = $page.data.savedColors ?? [];
+	$savedColorSchemes = $page.data.savedColorSchemes ?? [];
 
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
@@ -217,7 +218,7 @@
 
 	async function toggleSaveColor(color: string): Promise<void> {
 		if ($page.data.session) {
-			if (savedColors.includes(color)) {
+			if ($savedColors.includes(color)) {
 				// Unsave color
 				const response = await fetch('/api/colors', {
 					method: 'DELETE',
@@ -229,7 +230,7 @@
 				const data = await response.json();
 
 				if (data.success) {
-					savedColors = savedColors.filter((color) => color !== color);
+					$savedColors = $savedColors.filter((savedColor) => savedColor !== color);
 					addNotification(`${color} Unsaved`, 'unsaved', color);
 				} else {
 					addNotification(`Failed To Save ${color}`, 'x', color);
@@ -246,7 +247,7 @@
 				const data = await response.json();
 
 				if (data.success) {
-					savedColors = [...savedColors, color];
+					$savedColors = [...$savedColors, color];
 					addNotification(`${color} Saved`, 'saved', color);
 				} else {
 					addNotification(`Failed To Save ${color}`, 'x', color);
@@ -463,7 +464,7 @@
 										await toggleSaveColor(color.hex);
 									}}
 								>
-									{#if savedColors.includes(color.hex)}
+									{#if $savedColors.includes(color.hex)}
 										<SavedIcon />
 									{:else}
 										<SaveIcon />

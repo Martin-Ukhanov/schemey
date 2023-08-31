@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { enhance, applyAction } from '$app/forms';
-	import { addNotification } from '$lib/stores/notifications';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
+	import { savedColorSchemes, savedColors } from '$lib/stores/user';
+	import { addNotification } from '$lib/stores/notifications';
 	import Loader from './Loader.svelte';
 	import MenuIcon from './icons/MenuIcon.svelte';
 
@@ -28,6 +29,10 @@
 
 						if (result.type === 'redirect') {
 							await applyAction(result);
+
+							$savedColors = [];
+							$savedColorSchemes = [];
+
 							addNotification(`Successfully Signed Out`);
 						}
 					};
@@ -45,14 +50,19 @@
 				class="button border-none"
 				on:click={() => {
 					$isSignInModalOpen = true;
-				}}>Sign In</button
+				}}
 			>
+				Sign In
+			</button>
+
 			<button
 				class="button-primary"
 				on:click={() => {
 					$isSignUpModalOpen = true;
-				}}>Sign Up</button
+				}}
 			>
+				Sign Up
+			</button>
 		{/if}
 	</nav>
 	<button class="button block sm:hidden border-none">
