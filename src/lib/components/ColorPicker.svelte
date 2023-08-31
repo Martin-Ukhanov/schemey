@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { clamp, contrastingColor, validHex } from '$lib/utils';
-	import { browser } from '$app/environment';
 	import Color from 'color';
+	import { browser } from '$app/environment';
 	import { scale } from 'svelte/transition';
+	import { clamp, contrastingColor, validHex } from '$lib/utils';
+	import { showTooltip } from '$lib/actions/showTooltip';
 	import LibraryIcon from './icons/LibraryIcon.svelte';
 
 	export let hex: string;
@@ -175,7 +176,7 @@
 			on:focusout={hexInputUnfocus}
 		/>
 
-		<button class="button">
+		<button class="button" use:showTooltip={{ position: 'top', message: 'Library' }}>
 			<LibraryIcon />
 		</button>
 	</div>
