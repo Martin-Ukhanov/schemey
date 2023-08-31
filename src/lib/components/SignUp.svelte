@@ -6,7 +6,7 @@
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
 
-	export let redirect = $page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/';
+	export let redirect = $page.route.id?.replace('[slug]', $page.params.slug) ?? '/';
 
 	let nameErrorMessage: string | undefined;
 	let emailErrorMessage: string | undefined;
