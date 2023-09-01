@@ -127,7 +127,11 @@
 			style="grid-auto-rows: min-content;"
 		>
 			{#if $savedColors.length === 0}
-				<p class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">No Colors</p>
+				<p
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase font-bold text-black"
+				>
+					No Colors Saved
+				</p>
 			{:else}
 				{#each $savedColors as color (color)}
 					<button
