@@ -21,11 +21,11 @@
 	let colorPickerWidth: number;
 	let colorPickerHeight: number;
 	let hueSliderWidth: number;
-	let hueSliderOriginWidth: number;
-	let hueSliderThumbWidth: number;
 	let hexInput: string;
 
 	let [h, s, v] = Color(hex).hsv().array();
+
+	h = 360;
 
 	const [originH, originS, originV] = [h, s, v];
 
@@ -180,14 +180,12 @@
 
 			<div
 				class="absolute top-1/2 -translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
-				style={`left: ${(originH / 360) * (hueSliderWidth - hueSliderOriginWidth)}px;`}
-				bind:clientWidth={hueSliderOriginWidth}
+				style={`left: ${(originH / 360) * (hueSliderWidth - 12)}px;`}
 			/>
 
 			<div
 				class="absolute top-1/2 -translate-y-1/2 w-6 h-6 border-2 rounded-full border-black pointer-events-none"
-				style={`left: ${(h / 360) * (hueSliderWidth - hueSliderThumbWidth)}px;`}
-				bind:clientWidth={hueSliderThumbWidth}
+				style={`left: ${(h / 360) * (hueSliderWidth - 24)}px;`}
 			>
 				<div class="w-full h-full border-4 rounded-full border-white">
 					<div
