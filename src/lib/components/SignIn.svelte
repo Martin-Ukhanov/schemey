@@ -60,7 +60,7 @@
 				$savedColorSchemes = savedColorSchemesData;
 
 				$isSignInModalOpen = false;
-				addNotification(`Successfully Signed In`);
+				addNotification('Successfully Signed In', 'check');
 			} else if (result.type === 'failure') {
 				failureData = result.data;
 			}

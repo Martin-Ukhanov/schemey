@@ -67,7 +67,7 @@
 				await applyAction(result);
 
 				$isSignUpModalOpen = false;
-				addNotification(`Successfully Signed Up`);
+				addNotification(`Successfully Signed Up`, 'check');
 			} else if (result.type === 'failure') {
 				failureData = result.data;
 			}
