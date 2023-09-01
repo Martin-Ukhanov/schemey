@@ -21,6 +21,7 @@
 	let colorPickerWidth: number;
 	let colorPickerHeight: number;
 	let hueSliderWidth: number;
+	let hueSliderOriginWidth: number;
 	let hueSliderThumbWidth: number;
 	let hexInput: string;
 
@@ -179,14 +180,13 @@
 
 			<div
 				class="absolute top-1/2 -translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
-				style={`left: ${(originH / 360) * hueSliderWidth}px;`}
+				style={`left: ${(originH / 360) * (hueSliderWidth - hueSliderOriginWidth)}px;`}
+				bind:clientWidth={hueSliderOriginWidth}
 			/>
 
 			<div
-				class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 border-2 rounded-full border-black pointer-events-none"
-				style={`left: ${
-					(h / 360) * (hueSliderWidth - hueSliderThumbWidth) + hueSliderThumbWidth / 2
-				}px;`}
+				class="absolute top-1/2 -translate-y-1/2 w-6 h-6 border-2 rounded-full border-black pointer-events-none"
+				style={`left: ${(h / 360) * (hueSliderWidth - hueSliderThumbWidth)}px;`}
 				bind:clientWidth={hueSliderThumbWidth}
 			>
 				<div class="w-full h-full border-4 rounded-full border-white">
