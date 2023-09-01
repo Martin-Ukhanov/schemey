@@ -32,6 +32,7 @@
 	import LockedIcon from './icons/LockedIcon.svelte';
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
+	import ColorSchemeLibrary from './ColorSchemeLibrary.svelte';
 
 	type Color = {
 		id: string;
@@ -51,6 +52,8 @@
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
 	let isMenuOpen = true;
+
+	let isColorSchemeLibraryModalOpen = false;
 
 	let currentColorSpace = 'all';
 	let isColorSpaceModalOpen = false;
@@ -176,9 +179,9 @@
 					$savedColorSchemes = $savedColorSchemes.filter(
 						(savedColorScheme) => JSON.stringify(savedColorScheme) !== JSON.stringify(colorScheme)
 					);
-					addNotification('Color Scheme Unsaved', 'unsaved');
+					addNotification('Color Scheme Deleted', 'check');
 				} else {
-					addNotification(`Failed To Unsave Color Scheme`, 'x');
+					addNotification(`Failed to Delete Color Scheme`, 'x');
 				}
 			} else {
 				// Save color scheme
@@ -193,9 +196,9 @@
 
 				if (data.success) {
 					$savedColorSchemes = [...$savedColorSchemes, colorScheme];
-					addNotification('Color Scheme Saved', 'saved');
+					addNotification('Color Scheme Saved', 'check');
 				} else {
-					addNotification('Failed To Save Color Scheme', 'x');
+					addNotification('Failed to Save Color Scheme', 'x');
 				}
 			}
 		} else {
@@ -247,7 +250,7 @@
 	async function toggleSaveColor(color: string): Promise<void> {
 		if ($page.data.session) {
 			if ($savedColors.includes(color)) {
-				// Unsave color
+				// Delete color
 				const response = await fetch('/api/colors', {
 					method: 'DELETE',
 					body: JSON.stringify({ color: color }),
@@ -259,9 +262,9 @@
 
 				if (data.success) {
 					$savedColors = $savedColors.filter((savedColor) => savedColor !== color);
-					addNotification(`${color} Unsaved`, 'unsaved', color);
+					addNotification(`${color} Deleted`, 'check', color);
 				} else {
-					addNotification(`Failed To Unsave ${color}`, 'x', color);
+					addNotification(`Failed to Delete ${color}`, 'x', color);
 				}
 			} else {
 				// Save color
@@ -276,9 +279,9 @@
 
 				if (data.success) {
 					$savedColors = [...$savedColors, color];
-					addNotification(`${color} Saved`, 'saved', color);
+					addNotification(`${color} Saved`, 'check', color);
 				} else {
-					addNotification(`Failed To Save ${color}`, 'x', color);
+					addNotification(`Failed to Save ${color}`, 'x', color);
 				}
 			}
 		} else {
@@ -399,7 +402,13 @@
 	>
 		<div class="sm:w-40 flex flex-col gap-y-4">
 			<div class="flex gap-x-4">
-				<button class="button flex-1" use:showTooltip={{ position: 'top', message: 'Library' }}>
+				<button
+					class="button flex-1"
+					use:showTooltip={{ position: 'top', message: 'Library' }}
+					on:click={() => {
+						isColorSchemeLibraryModalOpen = true;
+					}}
+				>
 					<LibraryIcon />
 				</button>
 
@@ -497,7 +506,7 @@
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
-									use:showTooltip={{ position: 'top', message: 'Save Color' }}
+									use:showTooltip={{ position: 'top', message: 'Save Color!!!?' }}
 									on:click={async () => {
 										await toggleSaveColor(color.hex);
 									}}
@@ -620,6 +629,10 @@
 		</div>
 	</div>
 </menu>
+
+<Modal title="Library" bind:isOpen={isColorSchemeLibraryModalOpen}>
+	<ColorSchemeLibrary />
+</Modal>
 
 <Modal title="Color Space" bind:isOpen={isColorSpaceModalOpen}>
 	<List
