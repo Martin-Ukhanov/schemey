@@ -3,13 +3,16 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
-	import { scale } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { savedColors } from '$lib/stores/user';
+	import { addNotification } from '$lib/stores/notifications';
 	import { isSignInModalOpen } from '$lib/stores/auth';
 	import LibraryIcon from './icons/LibraryIcon.svelte';
 	import ReturnIcon from './icons/ReturnIcon.svelte';
+	import TrashIcon from './icons/TrashIcon.svelte';
 
 	export let hex: string;
 
@@ -91,6 +94,24 @@
 		}
 	}
 
+	async function deleteColor(color: string): Promise<void> {
+		const response = await fetch('/api/colors', {
+			method: 'DELETE',
+			body: JSON.stringify({ color: color }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+		const data = await response.json();
+
+		if (data.success) {
+			$savedColors = $savedColors.filter((savedColor) => savedColor !== color);
+			addNotification(`${color} Deleted`, 'check', color);
+		} else {
+			addNotification(`Failed To Delete ${color}`, 'x', color);
+		}
+	}
+
 	$: {
 		hex = Color.hsv([h, s, v]).hex().toLowerCase();
 		hexInput = hex;
@@ -100,34 +121,52 @@
 </script>
 
 {#if isSavedColorsOpen}
-	<div class="h-80 grid grid-cols-5 gap-2 overflow-y-auto">
-		<button
-			class="button aspect-square"
-			use:showTooltip={{ position: 'top', message: 'Return' }}
-			on:click={() => {
-				isSavedColorsOpen = false;
-			}}
-		>
-			<ReturnIcon />
-		</button>
-
-		{#each $savedColors as color}
+	<div class="h-80 flex flex-col">
+		<div class="flex-1 grid grid-cols-5 gap-2 overflow-y-auto" style="grid-auto-rows: min-content;">
 			<button
 				class="button aspect-square"
-				style={`background-color: ${color};`}
-				use:showTooltip={{ position: 'top', message: color }}
 				on:click={() => {
-					hex = color;
-					[h, s, v] = Color(hex).hsv().array();
-
 					isSavedColorsOpen = false;
 				}}
 			>
-				{#if color === hex}
-					<div class="w-3 h-3 border-2 rounded-full bg-white border-black" />
-				{/if}
+				<ReturnIcon />
 			</button>
-		{/each}
+
+			{#each $savedColors as color (color)}
+				<button
+					class="button aspect-square"
+					style={`background-color: ${color};`}
+					out:scale={{ duration: 300 }}
+					animate:flip={{ duration: 300 }}
+					use:showTooltip={{ position: 'top', message: color }}
+					on:click={() => {
+						hex = color;
+						[h, s, v] = Color(hex).hsv().array();
+					}}
+				>
+					{#if color === hex}
+						<div
+							class="w-3 h-3 border-2 rounded-full bg-white border-black"
+							transition:scale={{ duration: 300 }}
+						/>
+					{/if}
+				</button>
+			{/each}
+		</div>
+
+		{#if $savedColors.includes(hex)}
+			<button
+				class="button mt-2"
+				style={`background-color: ${hex}; fill: ${contrastColor};`}
+				transition:slide={{ axis: 'y', duration: 300 }}
+				use:showTooltip={{ position: 'top', message: 'Delete Color' }}
+				on:click={async () => {
+					await deleteColor(hex);
+				}}
+			>
+				<TrashIcon />
+			</button>
+		{/if}
 	</div>
 {:else}
 	<div class="h-80 flex flex-col gap-y-4">
