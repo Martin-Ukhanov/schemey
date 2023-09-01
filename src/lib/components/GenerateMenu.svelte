@@ -64,7 +64,7 @@
 
 	let originalColorPickerHex: string;
 	let colorPickerColor: Color;
-	let colorPickerModalOpen = false;
+	let isColorPickerModalOpen = false;
 
 	function resizeMenuMouse(e: MouseEvent): void {
 		$isResizingMenu = true;
@@ -597,7 +597,7 @@
 							on:click={() => {
 								originalColorPickerHex = color.hex;
 								colorPickerColor = color;
-								colorPickerModalOpen = true;
+								isColorPickerModalOpen = true;
 							}}
 						>
 							<span class="text-xl">{color.hex}</span>
@@ -631,11 +631,11 @@
 	/>
 </Modal>
 
-<Modal title="Color Picker" bind:isOpen={colorPickerModalOpen} on:close={colorPicker}>
+<Modal title="Color Picker" bind:isOpen={isColorPickerModalOpen} on:close={colorPicker}>
 	<ColorPicker
 		bind:hex={colorPickerColor.hex}
 		on:close={() => {
-			colorPickerModalOpen = false;
+			isColorPickerModalOpen = false;
 		}}
 	/>
 </Modal>
