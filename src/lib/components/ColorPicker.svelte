@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
-	import { scale, slide } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
@@ -121,10 +121,41 @@
 </script>
 
 {#if isSavedColorsOpen}
-	<div class="h-80 flex flex-col">
-		<div class="flex-1 grid grid-cols-5 gap-2 overflow-y-auto" style="grid-auto-rows: min-content;">
+	<div class="h-80 flex flex-col gap-y-2">
+		<div
+			class="relative flex-1 p-2 grid grid-cols-5 gap-2 overflow-y-auto border-2 rounded-md border-black"
+			style="grid-auto-rows: min-content;"
+		>
+			{#if $savedColors.length === 0}
+				<p class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">No Colors</p>
+			{:else}
+				{#each $savedColors as color (color)}
+					<button
+						class="button aspect-square"
+						style={`background-color: ${color};`}
+						out:scale={{ duration: 300 }}
+						animate:flip={{ duration: 300 }}
+						use:showTooltip={{ position: 'top', message: color }}
+						on:click={() => {
+							hex = color;
+							[h, s, v] = Color(hex).hsv().array();
+						}}
+					>
+						{#if color === hex}
+							<div
+								class="w-3 h-3 border-2 rounded-full bg-white border-black"
+								transition:scale={{ duration: 300 }}
+							/>
+						{/if}
+					</button>
+				{/each}
+			{/if}
+		</div>
+
+		<div class="flex gap-x-2">
 			<button
-				class="button aspect-square"
+				class="button flex-1"
+				use:showTooltip={{ position: 'top', message: 'Return' }}
 				on:click={() => {
 					isSavedColorsOpen = false;
 				}}
@@ -132,41 +163,19 @@
 				<ReturnIcon />
 			</button>
 
-			{#each $savedColors as color (color)}
+			{#if $savedColors.includes(hex)}
 				<button
-					class="button aspect-square"
-					style={`background-color: ${color};`}
-					out:scale={{ duration: 300 }}
-					animate:flip={{ duration: 300 }}
-					use:showTooltip={{ position: 'top', message: color }}
-					on:click={() => {
-						hex = color;
-						[h, s, v] = Color(hex).hsv().array();
+					class="button flex-1"
+					style={`background-color: ${hex}; fill: ${contrastColor};`}
+					use:showTooltip={{ position: 'top', message: 'Delete Color' }}
+					on:click={async () => {
+						await deleteColor(hex);
 					}}
 				>
-					{#if color === hex}
-						<div
-							class="w-3 h-3 border-2 rounded-full bg-white border-black"
-							transition:scale={{ duration: 300 }}
-						/>
-					{/if}
+					<TrashIcon />
 				</button>
-			{/each}
+			{/if}
 		</div>
-
-		{#if $savedColors.includes(hex)}
-			<button
-				class="button mt-2"
-				style={`background-color: ${hex}; fill: ${contrastColor};`}
-				transition:slide={{ axis: 'y', duration: 300 }}
-				use:showTooltip={{ position: 'top', message: 'Delete Color' }}
-				on:click={async () => {
-					await deleteColor(hex);
-				}}
-			>
-				<TrashIcon />
-			</button>
-		{/if}
 	</div>
 {:else}
 	<div class="h-80 flex flex-col gap-y-4">
