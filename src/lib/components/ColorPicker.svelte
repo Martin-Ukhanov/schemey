@@ -216,8 +216,8 @@
 			/>
 
 			<div
-				class="absolute top-1/2 -translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
-				style={`left: ${(originH / 360) * (hueSliderWidth - 12)}px;`}
+				class="absolute top-1/2 translate-x-1/2 -translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
+				style={`left: ${(originH / 360) * (hueSliderWidth - 24)}px;`}
 			/>
 
 			<div
