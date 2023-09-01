@@ -25,8 +25,6 @@
 
 	let [h, s, v] = Color(hex).hsv().array();
 
-	h = 360;
-
 	const [originH, originS, originV] = [h, s, v];
 
 	function moveColorPickerCursorMouse(e: MouseEvent): void {
