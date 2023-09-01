@@ -502,21 +502,26 @@
 									</button>
 								{/if}
 
-								<button
-									class={contrastColor === '#000000'
-										? 'button-transparent-black'
-										: 'button-transparent-white'}
-									use:showTooltip={{ position: 'top', message: 'Save Color!!!?' }}
-									on:click={async () => {
-										await toggleSaveColor(color.hex);
-									}}
-								>
-									{#if $savedColors.includes(color.hex)}
-										<SavedIcon />
-									{:else}
-										<SaveIcon />
-									{/if}
-								</button>
+								{#key $savedColors.includes(color.hex)}
+									<button
+										class={contrastColor === '#000000'
+											? 'button-transparent-black'
+											: 'button-transparent-white'}
+										use:showTooltip={{
+											position: 'top',
+											message: $savedColors.includes(color.hex) ? 'Unsave Color' : 'Save Color'
+										}}
+										on:click={async () => {
+											await toggleSaveColor(color.hex);
+										}}
+									>
+										{#if $savedColors.includes(color.hex)}
+											<SavedIcon />
+										{:else}
+											<SaveIcon />
+										{/if}
+									</button>
+								{/key}
 							</div>
 
 							<div class="flex flex-col lg:flex-row">
