@@ -7,9 +7,9 @@
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { savedColors } from '$lib/stores/user';
+	import { isSignInModalOpen } from '$lib/stores/auth';
 	import LibraryIcon from './icons/LibraryIcon.svelte';
 	import ReturnIcon from './icons/ReturnIcon.svelte';
-	import { isSignInModalOpen } from '$lib/stores/auth';
 
 	export let hex: string;
 
