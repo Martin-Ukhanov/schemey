@@ -34,10 +34,10 @@
 			out:modalTransition
 		>
 			<div
-				class="relative left-1/2 -translate-x-1/2 w-screen sm:w-96 p-4 flex flex-col gap-y-4 border-t-2 sm:border-2 sm:rounded-md bg-white border-black"
+				class="relative left-1/2 -translate-x-1/2 w-screen sm:w-96 p-4 border-t-2 sm:border-2 sm:rounded-md bg-white border-black"
 				bind:clientHeight={modalHeight}
 			>
-				<div class="relative flex justify-center items-center">
+				<div class="relative mb-4 flex justify-center items-center">
 					<button
 						class="button absolute left-0 p-0 border-none"
 						on:click={() => {
