@@ -632,5 +632,10 @@
 </Modal>
 
 <Modal title="Color Picker" bind:isOpen={colorPickerModalOpen} on:close={colorPicker}>
-	<ColorPicker bind:hex={colorPickerColor.hex} />
+	<ColorPicker
+		bind:hex={colorPickerColor.hex}
+		on:close={() => {
+			colorPickerModalOpen = false;
+		}}
+	/>
 </Modal>

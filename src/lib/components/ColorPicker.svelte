@@ -1,18 +1,26 @@
 <script lang="ts">
 	import Color from 'color';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
+	import { createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
+	import { savedColors } from '$lib/stores/user';
 	import LibraryIcon from './icons/LibraryIcon.svelte';
+	import ReturnIcon from './icons/ReturnIcon.svelte';
+	import { isSignInModalOpen } from '$lib/stores/auth';
 
 	export let hex: string;
+
+	const dispatch = createEventDispatcher();
+
+	let isSavedColorsOpen = false;
 
 	let colorPickerElement: HTMLButtonElement;
 	let colorPickerWidth: number;
 	let colorPickerHeight: number;
 	let hueSliderWidth: number;
-	let hueSliderOriginWidth: number;
 	let hueSliderThumbWidth: number;
 	let hexInput: string;
 
@@ -92,92 +100,132 @@
 	$: contrastColor = contrastingColor(hex);
 </script>
 
-<div class="flex flex-col gap-y-4">
-	<button
-		class="relative h-48 border-2 rounded-md border-black group"
-		style={`background: linear-gradient(#ffffff00, #000000ff), linear-gradient(0.25turn, #ffffffff, #00000000), hsl(${h}, 100%, 50%);`}
-		bind:this={colorPickerElement}
-		bind:clientWidth={colorPickerWidth}
-		bind:clientHeight={colorPickerHeight}
-		on:mousedown|preventDefault={moveColorPickerCursorMouse}
-		on:touchstart|preventDefault={moveColorPickerCursorTouch}
-	>
-		{#if originH === h}
-			<div
-				class="absolute -translate-x-1/2 translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black"
-				style={`bottom: ${originV}%; left: ${originS}%;`}
-				transition:scale={{ duration: 300 }}
-			/>
-		{/if}
-
-		<div
-			class="absolute -translate-x-1/2 translate-y-1/2 w-6 h-6 border-2 rounded-full border-black cursor-grab group-active:cursor-grabbing"
-			style={`bottom: ${v}%; left: ${s}%; background-color: ${hex};`}
+{#if isSavedColorsOpen}
+	<div class="h-80 grid grid-cols-5 gap-2 overflow-y-auto">
+		<button
+			class="button aspect-square"
+			use:showTooltip={{ position: 'top', message: 'Return' }}
+			on:click={() => {
+				isSavedColorsOpen = false;
+			}}
 		>
-			<div class="w-full h-full border-4 rounded-full border-white">
-				<div
-					class="w-full h-full border-2 rounded-full border-black"
-					style={`background-color: ${hex};`}
-				/>
-			</div>
-		</div>
-	</button>
-
-	<div class="relative group" bind:clientWidth={hueSliderWidth}>
-		<input
-			type="range"
-			min="0"
-			max="360"
-			step="1"
-			class="appearance-none absolute w-full h-full outline-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
-			bind:value={h}
-		/>
-
-		<div
-			class="h-4 border-2 rounded-full border-black"
-			style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
-		/>
-
-		<div
-			class="absolute bottom-0.5 -translate-x-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
-			style={`left: ${
-				(originH / 360) * (hueSliderWidth - hueSliderOriginWidth) + hueSliderOriginWidth / 2
-			}px;`}
-			bind:clientWidth={hueSliderOriginWidth}
-		/>
-
-		<div
-			class="absolute -top-[4px] -translate-x-1/2 w-6 h-6 border-2 rounded-full border-black pointer-events-none"
-			style={`left: ${
-				(h / 360) * (hueSliderWidth - hueSliderThumbWidth) + hueSliderThumbWidth / 2
-			}px;`}
-			bind:clientWidth={hueSliderThumbWidth}
-		>
-			<div class="w-full h-full border-4 rounded-full border-white">
-				<div
-					class="w-full h-full border-2 rounded-full border-black"
-					style={`background-color: hsl(${h} 100% 50%);`}
-				/>
-			</div>
-		</div>
-	</div>
-
-	<div class="flex gap-x-2">
-		<input
-			type="text"
-			name="hex"
-			placeholder="#000000"
-			class="input flex-1 text-lg text-center font-bold uppercase !brightness-100"
-			class:placeholder-transparent-white={contrastColor === '#ffffff'}
-			class:placeholder-transparent-black={contrastColor === '#000000'}
-			style={`background-color: ${hex}; color: ${contrastColor};`}
-			bind:value={hexInput}
-			on:input={handleHexInput}
-			on:focusout={hexInputUnfocus}
-		/>
-
-		<button class="button" use:showTooltip={{ position: 'top', message: 'Library' }}>
-			<LibraryIcon />
+			<ReturnIcon />
 		</button>
+
+		{#each $savedColors as color}
+			<button
+				class="button aspect-square"
+				style={`background-color: ${color};`}
+				use:showTooltip={{ position: 'top', message: color }}
+				on:click={() => {
+					hex = color;
+					[h, s, v] = Color(hex).hsv().array();
+
+					isSavedColorsOpen = false;
+				}}
+			>
+				{#if color === hex}
+					<div class="w-3 h-3 border-2 rounded-full bg-white border-black" />
+				{/if}
+			</button>
+		{/each}
 	</div>
-</div>
+{:else}
+	<div class="h-80 flex flex-col gap-y-4">
+		<button
+			class="flex-1 relative border-2 rounded-md border-black group"
+			style={`background: linear-gradient(#ffffff00, #000000ff), linear-gradient(0.25turn, #ffffffff, #00000000), hsl(${h}, 100%, 50%);`}
+			bind:this={colorPickerElement}
+			bind:clientWidth={colorPickerWidth}
+			bind:clientHeight={colorPickerHeight}
+			on:mousedown|preventDefault={moveColorPickerCursorMouse}
+			on:touchstart|preventDefault={moveColorPickerCursorTouch}
+		>
+			{#if Math.round(originH) === Math.round(h)}
+				<div
+					class="absolute -translate-x-1/2 translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black"
+					style={`bottom: ${originV}%; left: ${originS}%;`}
+					transition:scale={{ duration: 300 }}
+				/>
+			{/if}
+
+			<div
+				class="absolute -translate-x-1/2 translate-y-1/2 w-6 h-6 border-2 rounded-full border-black cursor-grab group-active:cursor-grabbing"
+				style={`bottom: ${v}%; left: ${s}%; background-color: ${hex};`}
+			>
+				<div class="w-full h-full border-4 rounded-full border-white">
+					<div
+						class="w-full h-full border-2 rounded-full border-black"
+						style={`background-color: ${hex};`}
+					/>
+				</div>
+			</div>
+		</button>
+
+		<div class="relative group" bind:clientWidth={hueSliderWidth}>
+			<input
+				type="range"
+				min="0"
+				max="360"
+				step="1"
+				class="appearance-none absolute w-full h-full outline-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-transparent [&::-webkit-slider-thumb]:shadow-none [&::-webkit-slider-thumb]:cursor-grab group-active:[&::-webkit-slider-thumb]:cursor-grabbing"
+				bind:value={h}
+			/>
+
+			<div
+				class="h-4 border-2 rounded-full border-black"
+				style="background: linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%),hsl(360,100%,50%));"
+			/>
+
+			<div
+				class="absolute top-1/2 -translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black pointer-events-none"
+				style={`left: ${(originH / 360) * hueSliderWidth}px;`}
+			/>
+
+			<div
+				class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 border-2 rounded-full border-black pointer-events-none"
+				style={`left: ${
+					(h / 360) * (hueSliderWidth - hueSliderThumbWidth) + hueSliderThumbWidth / 2
+				}px;`}
+				bind:clientWidth={hueSliderThumbWidth}
+			>
+				<div class="w-full h-full border-4 rounded-full border-white">
+					<div
+						class="w-full h-full border-2 rounded-full border-black"
+						style={`background-color: hsl(${h} 100% 50%);`}
+					/>
+				</div>
+			</div>
+		</div>
+
+		<div class="flex gap-x-2">
+			<input
+				type="text"
+				name="hex"
+				placeholder="#000000"
+				class="input flex-1 text-lg text-center font-bold uppercase !brightness-100"
+				class:placeholder-transparent-white={contrastColor === '#ffffff'}
+				class:placeholder-transparent-black={contrastColor === '#000000'}
+				style={`background-color: ${hex}; color: ${contrastColor};`}
+				bind:value={hexInput}
+				on:input={handleHexInput}
+				on:focusout={hexInputUnfocus}
+			/>
+
+			<button
+				class="button"
+				use:showTooltip={{ position: 'top', message: 'Library' }}
+				on:click={() => {
+					if ($page.data.session) {
+						isSavedColorsOpen = true;
+					} else {
+						dispatch('close');
+						$isSignInModalOpen = true;
+					}
+				}}
+			>
+				<LibraryIcon />
+			</button>
+		</div>
+	</div>
+{/if}
