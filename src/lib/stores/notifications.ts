@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 
-type Icons = 'check' | 'x' | 'copied' | 'unlocked' | 'locked' | 'saved' | 'unsaved';
+type Icons = 'check' | 'x' | 'copied' | 'unlocked' | 'locked';
 
 type Notification = {
 	id: string;
@@ -12,7 +12,7 @@ type Notification = {
 
 export const notifications = writable(<Notification[]>[]);
 
-export function addNotification(message: string, icon: Icons = 'check', color = '#000000'): void {
+export function addNotification(message: string, icon: Icons, color = '#000000'): void {
 	const id = uuid();
 
 	notifications.update((values) => {

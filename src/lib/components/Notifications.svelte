@@ -8,8 +8,6 @@
 	import CopyIcon from './icons/CopyIcon.svelte';
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import LockedIcon from './icons/LockedIcon.svelte';
-	import SavedIcon from './icons/SavedIcon.svelte';
-	import SaveIcon from './icons/SaveIcon.svelte';
 </script>
 
 <div class="fixed top-4 left-4 right-4 flex flex-col items-center gap-y-4 z-10 pointer-events-none">
@@ -35,10 +33,6 @@
 				<UnlockedIcon />
 			{:else if notification.icon === 'locked'}
 				<LockedIcon />
-			{:else if notification.icon === 'saved'}
-				<SavedIcon />
-			{:else if notification.icon === 'unsaved'}
-				<SaveIcon />
 			{/if}
 
 			<span class="text-center uppercase">{notification.message}</span>
