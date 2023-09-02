@@ -33,11 +33,12 @@
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
 	import ColorSchemeLibrary from './ColorSchemeLibrary.svelte';
+	import { stringify } from 'postcss';
 
 	type Color = {
 		id: string;
 		hex: string;
-		locked: boolean;
+		isLocked: boolean;
 	};
 
 	export let initialColorScheme: string[];
@@ -60,7 +61,7 @@
 
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
-			return { id: uuid(), hex: color, locked: false };
+			return { id: uuid(), hex: color, isLocked: false };
 		})
 	];
 	let currentColorSchemeIndex = 0;
@@ -122,18 +123,41 @@
 	}
 
 	function newColorScheme(): Color[] {
-		const currentColorScheme = colorSchemes[currentColorSchemeIndex];
 		const newColorScheme = structuredClone(currentColorScheme);
-		const lockedColorsCount = currentColorScheme.filter((color) => color.locked).length;
+		const lockedColorsCount = currentColorScheme.filter((color) => color.isLocked).length;
 		const newColorsCount = currentColorScheme.length - lockedColorsCount;
 
 		if (newColorsCount > 0) {
 			const newColors = generateColorScheme(newColorsCount, $colorSpacePresets[currentColorSpace]);
 
 			for (let i = 0; i < newColorScheme.length; i++) {
-				if (!newColorScheme[i].locked) {
+				if (!newColorScheme[i].isLocked) {
 					newColorScheme[i].hex = <string>newColors.shift();
 				}
+			}
+		}
+
+		return newColorScheme;
+	}
+
+	function existingColorScheme(colorScheme: string[]): Color[] {
+		const newColorScheme = structuredClone(currentColorScheme);
+		const colorCountDifference = newColorScheme.length - colorScheme.length;
+
+		if (colorCountDifference > 0) {
+			newColorScheme.splice(colorScheme.length, colorCountDifference);
+		}
+
+		for (let i = 0; i < colorScheme.length; i++) {
+			if (newColorScheme[i]) {
+				newColorScheme[i].hex = colorScheme[i];
+				newColorScheme[i].isLocked = false;
+			} else {
+				newColorScheme.push({
+					id: uuid(),
+					hex: colorScheme[i],
+					isLocked: false
+				});
 			}
 		}
 
@@ -207,13 +231,11 @@
 	}
 
 	function addColor(): void {
-		const currentColorScheme = colorSchemes[currentColorSchemeIndex];
-
 		if (currentColorScheme.length < MAX_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.push(
 				...generateColorScheme(1, $colorSpacePresets[currentColorSpace]).map((color) => {
-					return { id: uuid(), hex: color, locked: false };
+					return { id: uuid(), hex: color, isLocked: false };
 				})
 			);
 
@@ -222,8 +244,6 @@
 	}
 
 	function removeColor(index: number): void {
-		const currentColorScheme = colorSchemes[currentColorSchemeIndex];
-
 		if (currentColorScheme.length > MIN_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.splice(index, 1);
@@ -233,7 +253,7 @@
 	}
 
 	function swapColors(index1: number, index2: number): void {
-		const newColorScheme = structuredClone(colorSchemes[currentColorSchemeIndex]);
+		const newColorScheme = structuredClone(currentColorScheme);
 		[newColorScheme[index1], newColorScheme[index2]] = [
 			newColorScheme[index2],
 			newColorScheme[index1]
@@ -243,8 +263,7 @@
 	}
 
 	function toggleLockedColor(index: number): void {
-		colorSchemes[currentColorSchemeIndex][index].locked =
-			!colorSchemes[currentColorSchemeIndex][index].locked;
+		currentColorScheme[index].isLocked = !currentColorScheme[index].isLocked;
 	}
 
 	async function toggleSaveColor(color: string): Promise<void> {
@@ -291,7 +310,7 @@
 
 	function colorPicker(): void {
 		if (colorPickerColor.hex !== originalColorPickerHex) {
-			const newColorScheme = structuredClone(colorSchemes[currentColorSchemeIndex]);
+			const newColorScheme = structuredClone(currentColorScheme);
 			colorPickerColor.hex = originalColorPickerHex;
 
 			addColorScheme(newColorScheme);
@@ -311,6 +330,8 @@
 			duration: 300
 		});
 	}
+
+	$: currentColorScheme = colorSchemes[currentColorSchemeIndex];
 
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
@@ -342,7 +363,9 @@
 			class="button w-1/2 border-t-0 border-x-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Generate' }}
 			on:click={() => {
-				addColorScheme(newColorScheme());
+				if (currentColorScheme.some((color) => !color.isLocked)) {
+					addColorScheme(newColorScheme());
+				}
 			}}
 		>
 			<GenerateIcon />
@@ -416,10 +439,10 @@
 					class="button flex-1"
 					use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}
 					on:click={() => {
-						toggleSaveColorScheme(colorSchemes[currentColorSchemeIndex].map((color) => color.hex));
+						toggleSaveColorScheme(currentColorScheme.map((color) => color.hex));
 					}}
 				>
-					{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)))}
+					{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
 						<SavedIcon />
 					{:else}
 						<SaveIcon />
@@ -441,7 +464,9 @@
 				class="button flex-1"
 				use:showTooltip={{ position: 'top', message: 'Generate' }}
 				on:click={() => {
-					addColorScheme(newColorScheme());
+					if (currentColorScheme.some((color) => !color.isLocked)) {
+						addColorScheme(newColorScheme());
+					}
 				}}
 			>
 				<GenerateIcon />
@@ -473,8 +498,7 @@
 			<div
 				class="flex-1 flex flex-col lg:flex-row gap-4 overflow-x-hidden sm:max-lg:overflow-y-auto"
 			>
-				{#each colorSchemes[currentColorSchemeIndex] as color, index (color.id)}
-					{@const colorSchemeLength = colorSchemes[currentColorSchemeIndex].length}
+				{#each currentColorScheme as color, index (color.id)}
 					{@const contrastColor = contrastingColor(color.hex)}
 
 					<div
@@ -486,7 +510,7 @@
 					>
 						<div class="flex flex-row lg:flex-col">
 							<div class="flex flex-col lg:flex-row justify-center items-center">
-								{#if colorSchemeLength > MIN_COLOR_SCHEME_SIZE}
+								{#if currentColorScheme.length > MIN_COLOR_SCHEME_SIZE}
 									<button
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
@@ -538,22 +562,25 @@
 									<CopyIcon />
 								</button>
 
-								{#key color.locked}
+								{#key color.isLocked}
 									<button
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
-										use:showTooltip={{ position: 'top', message: color.locked ? 'Unlock' : 'Lock' }}
+										use:showTooltip={{
+											position: 'top',
+											message: color.isLocked ? 'Unlock' : 'Lock'
+										}}
 										on:click={() => {
 											toggleLockedColor(index);
 											addNotification(
-												`${color.hex} ${color.locked ? 'Locked' : 'Unlocked'}`,
-												color.locked ? 'locked' : 'unlocked',
+												`${color.hex} ${color.isLocked ? 'Locked' : 'Unlocked'}`,
+												color.isLocked ? 'locked' : 'unlocked',
 												color.hex
 											);
 										}}
 									>
-										{#if color.locked}
+										{#if color.isLocked}
 											<LockedIcon />
 										{:else}
 											<UnlockedIcon />
@@ -569,7 +596,7 @@
 										: 'button-transparent-white'}
 									use:showTooltip={{ position: 'top', message: 'Shift Left' }}
 									on:click={() => {
-										const index2 = index - 1 < 0 ? colorSchemeLength - 1 : index - 1;
+										const index2 = index - 1 < 0 ? currentColorScheme.length - 1 : index - 1;
 										swapColors(index, index2);
 									}}
 								>
@@ -588,7 +615,7 @@
 										: 'button-transparent-white'}
 									use:showTooltip={{ position: 'top', message: 'Shift Right' }}
 									on:click={() => {
-										const index2 = index + 1 > colorSchemeLength - 1 ? 0 : index + 1;
+										const index2 = index + 1 > currentColorScheme.length - 1 ? 0 : index + 1;
 										swapColors(index, index2);
 									}}
 								>
@@ -620,7 +647,7 @@
 				{/each}
 			</div>
 
-			{#if colorSchemes[currentColorSchemeIndex].length < MAX_COLOR_SCHEME_SIZE}
+			{#if currentColorScheme.length < MAX_COLOR_SCHEME_SIZE}
 				<button
 					class="button mt-4 sm:mt-0 sm:ml-4"
 					in:addColorButtonTransition
@@ -636,7 +663,18 @@
 </menu>
 
 <Modal title="Library" bind:isOpen={isColorSchemeLibraryModalOpen}>
-	<ColorSchemeLibrary />
+	<ColorSchemeLibrary
+		currentColorScheme={currentColorScheme.map((color) => color.hex)}
+		on:selectColorScheme={(e) => {
+			const { colorScheme } = e.detail;
+
+			if (
+				JSON.stringify(colorScheme) !== JSON.stringify(currentColorScheme.map((color) => color.hex))
+			) {
+				addColorScheme(existingColorScheme(colorScheme));
+			}
+		}}
+	/>
 </Modal>
 
 <Modal title="Color Space" bind:isOpen={isColorSpaceModalOpen}>
