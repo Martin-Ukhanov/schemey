@@ -15,10 +15,7 @@
 
 	<nav class="hidden sm:flex items-center gap-x-2">
 		{#if $page.data.session}
-			<a
-				href="/"
-				class="w-10 h-10 flex justify-center items-center rounded-full text-xl font-bold bg-black text-white"
-			>
+			<a href="/" class="button w-10 h-10 text-xl font-bold">
 				{$page.data.session.user.user_metadata.name[0].toUpperCase()}
 			</a>
 
