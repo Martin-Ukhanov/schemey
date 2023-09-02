@@ -202,7 +202,7 @@
 					$savedColorSchemes = $savedColorSchemes.filter(
 						(savedColorScheme) => JSON.stringify(savedColorScheme) !== JSON.stringify(colorScheme)
 					);
-					addNotification('Color Scheme Deleted', 'check');
+					addNotification('Color Scheme Deleted', 'trash');
 				} else {
 					addNotification(`Failed to Delete Color Scheme`, 'x');
 				}
@@ -219,7 +219,7 @@
 
 				if (data.success) {
 					$savedColorSchemes = [...$savedColorSchemes, colorScheme];
-					addNotification('Color Scheme Saved', 'check');
+					addNotification('Color Scheme Saved', 'saved');
 				} else {
 					addNotification('Failed to Save Color Scheme', 'x');
 				}
@@ -280,7 +280,7 @@
 
 				if (data.success) {
 					$savedColors = $savedColors.filter((savedColor) => savedColor !== color);
-					addNotification(`${color} Deleted`, 'check', color);
+					addNotification(`${color} Deleted`, 'trash', color);
 				} else {
 					addNotification(`Failed to Delete ${color}`, 'x', color);
 				}
@@ -297,7 +297,7 @@
 
 				if (data.success) {
 					$savedColors = [...$savedColors, color];
-					addNotification(`${color} Saved`, 'check', color);
+					addNotification(`${color} Saved`, 'saved', color);
 				} else {
 					addNotification(`Failed to Save ${color}`, 'x', color);
 				}
@@ -545,7 +545,7 @@
 											: 'button-transparent-white'}
 										use:showTooltip={{
 											position: 'top',
-											message: $savedColors.includes(color.hex) ? 'Unsave Color' : 'Save Color'
+											message: $savedColors.includes(color.hex) ? 'Delete Color' : 'Save Color'
 										}}
 										on:click={async () => {
 											await toggleSaveColor(color.hex);
