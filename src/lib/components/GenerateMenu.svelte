@@ -428,7 +428,11 @@
 					class="button flex-1"
 					use:showTooltip={{ position: 'top', message: 'Library' }}
 					on:click={() => {
-						isColorSchemeLibraryModalOpen = true;
+						if ($page.data.session) {
+							isColorSchemeLibraryModalOpen = true;
+						} else {
+							$isSignInModalOpen = true;
+						}
 					}}
 				>
 					<LibraryIcon />
