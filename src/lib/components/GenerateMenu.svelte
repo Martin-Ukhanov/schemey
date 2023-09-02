@@ -33,7 +33,6 @@
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
 	import ColorSchemeLibrary from './ColorSchemeLibrary.svelte';
-	import { stringify } from 'postcss';
 
 	type Color = {
 		id: string;
@@ -189,7 +188,7 @@
 	async function toggleSaveColorScheme(colorScheme: string[]): Promise<void> {
 		if ($page.data.session) {
 			if (JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorScheme))) {
-				// Unsave color scheme
+				// Delete color scheme
 				const response = await fetch('/api/colorSchemes', {
 					method: 'DELETE',
 					body: JSON.stringify({ colorScheme: colorScheme }),
