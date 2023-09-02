@@ -42,11 +42,7 @@
 		return async ({ update, result }) => {
 			await update();
 
-			isLoading = false;
-
 			if (result.type === 'redirect') {
-				await applyAction(result);
-
 				const savedColorsResponse = await fetch('/api/colors', {
 					method: 'GET'
 				});
@@ -59,7 +55,11 @@
 				const savedColorSchemesData = await savedColorSchemesResponse.json();
 				$savedColorSchemes = savedColorSchemesData;
 
+				isLoading = false;
 				$isSignInModalOpen = false;
+
+				await applyAction(result);
+
 				addNotification('Successfully Signed In', 'check');
 			} else if (result.type === 'failure') {
 				failureData = result.data;
