@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
-	import { scale } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
@@ -156,21 +156,12 @@
 			{/if}
 		</div>
 
-		<div class="flex gap-x-2">
-			<button
-				class="button flex-1"
-				use:showTooltip={{ position: 'top', message: 'Return' }}
-				on:click={() => {
-					isSavedColorsOpen = false;
-				}}
-			>
-				<ReturnIcon />
-			</button>
-
+		<div class="flex flex-col">
 			{#if $savedColors.includes(hex)}
 				<button
-					class="button flex-1"
+					class="button mb-2"
 					style={`background-color: ${hex}; fill: ${contrastColor};`}
+					transition:slide={{ axis: 'y', duration: 300 }}
 					use:showTooltip={{ position: 'top', message: 'Delete Color' }}
 					on:click={async () => {
 						await deleteColor(hex);
@@ -179,6 +170,16 @@
 					<TrashIcon />
 				</button>
 			{/if}
+
+			<button
+				class="button"
+				use:showTooltip={{ position: 'top', message: 'Return' }}
+				on:click={() => {
+					isSavedColorsOpen = false;
+				}}
+			>
+				<ReturnIcon />
+			</button>
 		</div>
 	</div>
 {:else}
