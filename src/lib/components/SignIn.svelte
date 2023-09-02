@@ -62,6 +62,7 @@
 
 				addNotification('Successfully Signed In', 'check');
 			} else if (result.type === 'failure') {
+				isLoading = false;
 				failureData = result.data;
 			}
 		};
