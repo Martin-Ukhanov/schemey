@@ -67,7 +67,7 @@
 
 				await applyAction(result);
 
-				addNotification(`Successfully Signed Up`, 'check');
+				addNotification('Successfully Signed Up', 'check');
 			} else if (result.type === 'failure') {
 				isLoading = false;
 				failureData = result.data;
