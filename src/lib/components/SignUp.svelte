@@ -61,14 +61,15 @@
 		return async ({ update, result }) => {
 			await update();
 
-			isLoading = false;
-
 			if (result.type === 'redirect') {
+				isLoading = false;
+				$isSignUpModalOpen = false;
+
 				await applyAction(result);
 
-				$isSignUpModalOpen = false;
 				addNotification(`Successfully Signed Up`, 'check');
 			} else if (result.type === 'failure') {
+				isLoading = false;
 				failureData = result.data;
 			}
 		};
