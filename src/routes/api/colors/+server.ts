@@ -20,9 +20,12 @@ export const POST: RequestHandler = async ({ request, locals: { supabase } }) =>
 
 export const DELETE: RequestHandler = async ({ request, locals: { supabase } }) => {
 	const { color } = await request.json();
-	const { error } = await supabase.from('colors').delete().eq('color', color);
+	const { error, count } = await supabase
+		.from('colors')
+		.delete({ count: 'exact' })
+		.eq('color', color);
 
-	if (error) {
+	if (error || count === 0) {
 		return json({ success: false });
 	}
 
