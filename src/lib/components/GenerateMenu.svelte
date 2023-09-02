@@ -438,19 +438,28 @@
 					<LibraryIcon />
 				</button>
 
-				<button
-					class="button flex-1"
-					use:showTooltip={{ position: 'top', message: 'Save Color Scheme' }}
-					on:click={() => {
-						toggleSaveColorScheme(currentColorScheme.map((color) => color.hex));
-					}}
-				>
-					{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
-						<SavedIcon />
-					{:else}
-						<SaveIcon />
-					{/if}
-				</button>
+				{#key JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
+					<button
+						class="button flex-1"
+						use:showTooltip={{
+							position: 'top',
+							message: JSON.stringify($savedColorSchemes).includes(
+								JSON.stringify(currentColorScheme.map((color) => color.hex))
+							)
+								? 'Delete Color Scheme'
+								: 'Save Color Scheme'
+						}}
+						on:click={() => {
+							toggleSaveColorScheme(currentColorScheme.map((color) => color.hex));
+						}}
+					>
+						{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
+							<SavedIcon />
+						{:else}
+							<SaveIcon />
+						{/if}
+					</button>
+				{/key}
 			</div>
 
 			<button
