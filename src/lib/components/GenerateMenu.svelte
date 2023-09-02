@@ -676,6 +676,8 @@
 			) {
 				addColorScheme(existingColorScheme(colorScheme));
 			}
+
+			isColorSchemeLibraryModalOpen = false;
 		}}
 	/>
 </Modal>
