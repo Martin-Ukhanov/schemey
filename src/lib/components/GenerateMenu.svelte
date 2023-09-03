@@ -335,7 +335,6 @@
 	}
 
 	$: currentColorScheme = colorSchemes[currentColorSchemeIndex];
-	$: isToggleSaveColorLoading = new Array(currentColorScheme.length).fill(false);
 
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
