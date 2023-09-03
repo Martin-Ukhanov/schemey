@@ -33,11 +33,13 @@
 	import UnlockedIcon from './icons/UnlockedIcon.svelte';
 	import PlusIcon from './icons/PlusIcon.svelte';
 	import ColorSchemeLibrary from './ColorSchemeLibrary.svelte';
+	import Loader from './Loader.svelte';
 
 	type Color = {
 		id: string;
 		hex: string;
 		isLocked: boolean;
+		isToggleSaveLoading: boolean;
 	};
 
 	export let initialColorScheme: string[];
@@ -54,13 +56,14 @@
 	let isMenuOpen = true;
 
 	let isColorSchemeLibraryModalOpen = false;
+	let isToggleSaveColorSchemeLoading = false;
 
 	let currentColorSpace = 'all';
 	let isColorSpaceModalOpen = false;
 
 	let colorSchemes: Color[][] = [
 		initialColorScheme.map((color) => {
-			return { id: uuid(), hex: color, isLocked: false };
+			return { id: uuid(), hex: color, isLocked: false, isToggleSaveLoading: false };
 		})
 	];
 	let currentColorSchemeIndex = 0;
@@ -155,7 +158,8 @@
 				newColorScheme.push({
 					id: uuid(),
 					hex: colorScheme[i],
-					isLocked: false
+					isLocked: false,
+					isToggleSaveLoading: false
 				});
 			}
 		}
@@ -234,7 +238,7 @@
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.push(
 				...generateColorScheme(1, $colorSpacePresets[currentColorSpace]).map((color) => {
-					return { id: uuid(), hex: color, isLocked: false };
+					return { id: uuid(), hex: color, isLocked: false, isToggleSaveLoading: false };
 				})
 			);
 
@@ -331,6 +335,7 @@
 	}
 
 	$: currentColorScheme = colorSchemes[currentColorSchemeIndex];
+	$: isToggleSaveColorLoading = new Array(currentColorScheme.length).fill(false);
 
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
 		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
@@ -441,6 +446,7 @@
 				{#key JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
 					<button
 						class="button flex-1"
+						disabled={isToggleSaveColorSchemeLoading}
 						use:showTooltip={{
 							position: 'top',
 							message: JSON.stringify($savedColorSchemes).includes(
@@ -449,14 +455,22 @@
 								? 'Delete Color Scheme'
 								: 'Save Color Scheme'
 						}}
-						on:click={() => {
-							toggleSaveColorScheme(currentColorScheme.map((color) => color.hex));
+						on:click={async () => {
+							isToggleSaveColorSchemeLoading = true;
+							await toggleSaveColorScheme(currentColorScheme.map((color) => color.hex));
+							isToggleSaveColorSchemeLoading = false;
 						}}
 					>
-						{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
-							<SavedIcon />
-						{:else}
-							<SaveIcon />
+						<div class:opacity-0={isToggleSaveColorSchemeLoading}>
+							{#if JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
+								<SavedIcon />
+							{:else}
+								<SaveIcon />
+							{/if}
+						</div>
+
+						{#if isToggleSaveColorSchemeLoading}
+							<Loader color="black" />
 						{/if}
 					</button>
 				{/key}
@@ -543,18 +557,27 @@
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
+										disabled={color.isToggleSaveLoading}
 										use:showTooltip={{
 											position: 'top',
 											message: $savedColors.includes(color.hex) ? 'Delete Color' : 'Save Color'
 										}}
 										on:click={async () => {
+											color.isToggleSaveLoading = true;
 											await toggleSaveColor(color.hex);
+											color.isToggleSaveLoading = false;
 										}}
 									>
-										{#if $savedColors.includes(color.hex)}
-											<SavedIcon />
-										{:else}
-											<SaveIcon />
+										<div class:opacity-0={color.isToggleSaveLoading}>
+											{#if $savedColors.includes(color.hex)}
+												<SavedIcon />
+											{:else}
+												<SaveIcon />
+											{/if}
+										</div>
+
+										{#if color.isToggleSaveLoading}
+											<Loader color={contrastColor === '#ffffff' ? 'white' : 'black'} />
 										{/if}
 									</button>
 								{/key}
