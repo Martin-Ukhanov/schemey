@@ -34,6 +34,11 @@
 		@apply text-gray-400 fill-gray-400 !brightness-100 cursor-default;
 	}
 
+	.button-transparent-black:disabled,
+	.button-transparent-white:disabled {
+		@apply hover:bg-transparent active:bg-transparent;
+	}
+
 	.input:-webkit-autofill,
 	.input:-webkit-autofill:hover,
 	.input:-webkit-autofill:focus {
