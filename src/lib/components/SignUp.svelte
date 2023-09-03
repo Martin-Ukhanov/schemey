@@ -139,7 +139,7 @@
 		<button type="submit" class="button-primary" disabled={isLoading}>
 			<span class:opacity-0={isLoading}>Sign Up</span>
 			{#if isLoading}
-				<Loader />
+				<Loader color="black" />
 			{/if}
 		</button>
 
