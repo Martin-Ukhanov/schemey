@@ -1,10 +1,8 @@
-import { redirect } from '@sveltejs/kit';
-import { fail } from '@sveltejs/kit';
+import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import type { Actions } from '@sveltejs/kit';
 
 export const load = (() => {
-	throw redirect(303, '/');
+	throw error(404, 'Not Found');
 }) satisfies PageServerLoad;
 
 export const actions = {
