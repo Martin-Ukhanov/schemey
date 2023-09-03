@@ -3,6 +3,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
+	import { scale } from 'svelte/transition';
 	import { clamp, contrastingColor, validHex } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { savedColors } from '$lib/stores/user';
@@ -156,6 +157,7 @@
 				<div
 					class="absolute -translate-x-1/2 translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black"
 					style={`bottom: ${originV}%; left: ${originS}%;`}
+					transition:scale={{ duration: 300 }}
 				/>
 			{/if}
 
