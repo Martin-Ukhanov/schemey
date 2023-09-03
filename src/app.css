@@ -62,11 +62,11 @@
 	}
 
 	.button-transparent-black {
-		@apply button border-none bg-transparent hover:bg-black/20 active:bg-black/25 !brightness-100;
+		@apply button border-none bg-transparent hover:bg-black/10 active:bg-black/[0.15] !brightness-100;
 	}
 
 	.button-transparent-white {
-		@apply button-transparent-black hover:bg-white/20 active:bg-white/25 text-white fill-white;
+		@apply button-transparent-black hover:bg-white/[0.15] active:bg-white/20 text-white fill-white;
 	}
 
 	.link {
