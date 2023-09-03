@@ -28,16 +28,17 @@
 					return async ({ update, result }) => {
 						await update();
 
-						isLoading = false;
-
 						if (result.type === 'redirect') {
-							await applyAction(result);
-
 							$savedColors = [];
 							$savedColorSchemes = [];
 
+							isLoading = false;
+
+							await applyAction(result);
+
 							addNotification('Successfully Signed Out', 'check');
 						} else if (result.type === 'failure') {
+							isLoading = false;
 							addNotification('Sign Out Failed', 'x');
 						}
 					};
