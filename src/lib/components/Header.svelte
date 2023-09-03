@@ -21,9 +21,7 @@
 
 			<form
 				method="post"
-				action={`/auth/signout?redirect=${
-					$page.route.id ? $page.route.id.replace('[slug]', $page.params.slug) : '/'
-				}`}
+				action={`/auth/signout?redirect=${$page.route.id ? $page.url.pathname : '/'}`}
 				use:enhance={() => {
 					isLoading = true;
 
