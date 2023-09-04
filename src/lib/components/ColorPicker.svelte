@@ -216,6 +216,7 @@
 				class:placeholder-transparent-white={contrastColor === '#ffffff'}
 				class:placeholder-transparent-black={contrastColor === '#000000'}
 				style={`background-color: ${hex}; color: ${contrastColor};`}
+				use:showTooltip={{ position: 'top', message: 'Edit Hex' }}
 				bind:value={hexInput}
 				on:input={handleHexInput}
 				on:focusout={hexInputUnfocus}
