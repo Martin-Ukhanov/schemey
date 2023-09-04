@@ -58,7 +58,7 @@
 	}
 
 	.button-primary {
-		@apply button border-none bg-lime-500 text-white;
+		@apply button bg-lime-500 text-white border-lime-500;
 	}
 
 	.button-transparent-black {
