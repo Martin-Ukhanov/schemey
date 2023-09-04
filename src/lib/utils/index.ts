@@ -5,6 +5,15 @@ export function clamp(num: number, min: number, max: number): number {
 	return Math.min(Math.max(num, min), max);
 }
 
+export function stringToSlug(s: string): string {
+	return s
+		.toLowerCase()
+		.trim()
+		.replace(/[^\w\s-]/g, '')
+		.replace(/[\s_-]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+}
+
 export function validHex(hex: string): boolean {
 	return /^#?[0-9a-fA-F]{6}$/.test(hex);
 }

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { enhance, applyAction } from '$app/forms';
+	import { stringToSlug } from '$lib/utils';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import { savedColorSchemes, savedColors } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/notifications';
@@ -15,13 +16,17 @@
 
 	<nav class="hidden sm:flex items-center gap-x-2">
 		{#if $page.data.session}
-			<a href="/" class="button w-10 h-10 text-xl font-bold">
-				{$page.data.session.user.user_metadata.name[0].toUpperCase()}
+			{@const username = $page.data.session.user.user_metadata.name}
+
+			<a href={`/user/${stringToSlug(username)}`} class="button w-10 h-10 text-2xl font-normal">
+				{username[0].toUpperCase()}
 			</a>
 
 			<form
 				method="post"
-				action={`/auth/signout?redirect=${$page.route.id ? $page.url.pathname : '/'}`}
+				action={`/auth/signout?redirect=${
+					$page.route.id ? (/^\/user\/?/.test($page.url.pathname) ? '/' : $page.url.pathname) : '/'
+				}`}
 				use:enhance={() => {
 					isLoading = true;
 
