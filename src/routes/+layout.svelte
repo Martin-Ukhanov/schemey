@@ -1,16 +1,16 @@
 <script lang="ts">
 	import '../app.css';
-	import type { LayoutData } from './$types';
-	import { invalidate, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import Notifications from '$lib/components/Notifications.svelte';
+	import { invalidate, beforeNavigate } from '$app/navigation';
+	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import { clearNotifications } from '$lib/stores/notifications';
+	import Header from '$lib/components/Header.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import SignIn from '$lib/components/SignIn.svelte';
-	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import SignUp from '$lib/components/SignUp.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import Notifications from '$lib/components/Notifications.svelte';
+	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
 
