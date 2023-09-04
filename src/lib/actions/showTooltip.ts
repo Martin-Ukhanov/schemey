@@ -6,6 +6,8 @@ export function showTooltip(
 	element: HTMLElement,
 	{ position, message }: { position: 'top' | 'bottom'; message: string }
 ) {
+	const PADDING = 4;
+
 	let timeout: NodeJS.Timeout;
 	let scrollableParents: HTMLElement[];
 
@@ -57,8 +59,8 @@ export function showTooltip(
 					x: rect.left + documentElement.scrollLeft + element.offsetWidth / 2,
 					y:
 						position === 'top'
-							? rect.top + documentElement.scrollTop - 4
-							: rect.bottom + documentElement.scrollTop + 4,
+							? rect.top + documentElement.scrollTop - PADDING
+							: rect.bottom + documentElement.scrollTop + PADDING,
 					message: message
 				});
 
