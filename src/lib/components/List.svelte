@@ -10,7 +10,7 @@
 <div class="h-80 p-2 flex flex-col overflow-y-auto border-2 rounded-md border-black">
 	{#each items as item}
 		<button
-			class="button justify-start border-none text-left"
+			class="button justify-start border-transparent text-left"
 			class:brightness-90={item === selectedItem}
 			on:click={() => {
 				selectedItem = item;
