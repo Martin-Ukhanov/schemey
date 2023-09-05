@@ -388,7 +388,7 @@
 {/if}
 
 <menu
-	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.32))] py-2 border-t-2 z-10 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-7.5rem)] py-2 border-t-2 z-10 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!isMenuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
