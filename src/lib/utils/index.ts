@@ -48,5 +48,5 @@ export function slugToColorScheme(slug: string): string[] {
 }
 
 export function validColorSchemeSlug(slug: string): boolean {
-	return /^([0-9a-fA-F]{6})(-[0-9a-fA-F]{6}){1,4}$/.test(slug);
+	return /^([0-9a-fA-F]{6})(-[0-9a-fA-F]{6}){1,5}$/.test(slug);
 }
