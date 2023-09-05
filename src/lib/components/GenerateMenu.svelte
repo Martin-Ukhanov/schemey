@@ -45,7 +45,7 @@
 	export let initialColorScheme: string[];
 
 	const MIN_COLOR_SCHEME_SIZE = 2;
-	const MAX_COLOR_SCHEME_SIZE = 5;
+	const MAX_COLOR_SCHEME_SIZE = 6;
 	const MAX_COLOR_SCHEMES_LENGTH = 100;
 
 	$savedColors = $page.data.savedColors ?? [];
@@ -388,12 +388,12 @@
 {/if}
 
 <menu
-	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.32))] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-theme(height.32))] py-2 border-t-2 z-10 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!isMenuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
 >
-	<div class="absolute bottom-full left-4 flex gap-x-2">
+	<div class="absolute bottom-full left-2 flex gap-x-2">
 		{#key isMenuOpen}
 			<button
 				class="button rounded-b-none"
@@ -424,10 +424,10 @@
 	</div>
 
 	<div
-		class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto sm:overflow-y-visible"
+		class="w-full h-full px-2 flex flex-col sm:flex-row gap-2 overflow-y-auto sm:overflow-y-visible"
 	>
-		<div class="sm:w-40 flex flex-col gap-y-4">
-			<div class="flex gap-x-4">
+		<div class="sm:w-36 flex flex-col gap-y-2">
+			<div class="flex gap-x-2">
 				<button
 					class="button flex-1"
 					use:showTooltip={{ position: 'top', message: 'Library' }}
@@ -477,7 +477,7 @@
 
 			<button
 				class="button"
-				use:showTooltip={{ position: 'top', message: 'Change Color Space' }}
+				use:showTooltip={{ position: 'top', message: 'Color Space' }}
 				on:click={() => {
 					isColorSpaceModalOpen = true;
 				}}
@@ -497,7 +497,7 @@
 				<GenerateIcon />
 			</button>
 
-			<div class="flex gap-x-4">
+			<div class="flex gap-x-2">
 				<button
 					class="button flex-1"
 					disabled={colorSchemes.length === 1 ||
@@ -521,13 +521,13 @@
 
 		<div class="flex-1 flex flex-col sm:flex-row">
 			<div
-				class="flex-1 flex flex-col lg:flex-row gap-4 overflow-x-hidden sm:max-lg:overflow-y-auto"
+				class="flex-1 sm:max-lg:p-2 flex flex-col lg:flex-row gap-2 overflow-x-hidden sm:max-lg:overflow-y-auto sm:max-lg:border-2 rounded-md border-black"
 			>
 				{#each currentColorScheme as color, index (color.id)}
 					{@const contrastColor = contrastingColor(color.hex)}
 
 					<div
-						class="flex-1 p-4 flex flex-row-reverse lg:flex-col justify-between items-center gap-4 border-2 overflow-x-auto overflow-y-hidden sm:overflow-visible rounded-md border-black"
+						class="flex-1 p-2 flex flex-row-reverse lg:flex-col justify-between items-center gap-2 border-2 overflow-x-auto overflow-y-hidden sm:overflow-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
 						in:scale={{ duration: 300 }}
 						out:scale={{ duration: 300 }}
@@ -683,7 +683,7 @@
 
 			{#if currentColorScheme.length < MAX_COLOR_SCHEME_SIZE}
 				<button
-					class="button mt-4 sm:mt-0 sm:ml-4"
+					class="button mt-2 sm:mt-0 sm:ml-2"
 					in:addColorButtonTransition
 					out:addColorButtonTransition
 					use:showTooltip={{ position: 'top', message: 'Add Color' }}
