@@ -48,7 +48,7 @@
 >
 	<GenerateMenu initialColorScheme={data.currentColorScheme} />
 
-	<div class="w-full h-16 flex">
+	<div class="w-full h-14 flex">
 		<div class="flex-1" style={`background-color: ${primary.hex};`} />
 		{#if secondary}
 			<div class="flex-1" style={`background-color: ${secondary.hex};`} />
@@ -134,7 +134,7 @@
 		</div>
 	</div>
 
-	<div class="w-full h-16 flex">
+	<div class="w-full h-14 flex">
 		<div class="flex-1" style={`background-color: ${primary.hex};`} />
 		{#if secondary}
 			<div class="flex-1" style={`background-color: ${secondary.hex};`} />
