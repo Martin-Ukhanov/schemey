@@ -114,7 +114,7 @@
 			{:else}
 				{#each $savedColors as color (color)}
 					<button
-						class="button aspect-square"
+						class="button aspect-square !brightness-100"
 						style={`background-color: ${color};`}
 						use:showTooltip={{ position: 'top', message: color }}
 						on:click={() => {
