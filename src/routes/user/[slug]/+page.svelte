@@ -102,12 +102,12 @@
 >
 	{#if activePage === 'colors'}
 		<div
-			class="h-full p-2 grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(theme(width.60),1fr))] auto-rows-[theme(height.24)] gap-2 overflow-y-auto border-2 rounded-md border-black"
+			class="h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.40),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto border-2 rounded-md border-black"
 		>
 			{#each savedColors as savedColor (savedColor.hex)}
 				<div class="flex" out:scale={{ duration: 300 }} animate:flip={{ duration: 300 }}>
 					<button
-						class="flex-1 p-2 grid items-center overflow-x-auto border-2 rounded-l-md border-black cursor-pointer group"
+						class="flex-1 p-2 grid items-center border-2 rounded-l-md border-black cursor-pointer group"
 						style={`background-color: ${savedColor.hex};`}
 						use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
 						on:click={() => {
@@ -116,7 +116,7 @@
 						}}
 					>
 						<span
-							class="scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 text-center text-xl font-bold uppercase transition-all duration-300"
+							class="scale-0 group-hover:scale-100 text-center font-bold uppercase transition-transform duration-300"
 							style={`color: ${contrastingColor(savedColor.hex)};`}
 						>
 							{savedColor.hex}
@@ -144,14 +144,14 @@
 		</div>
 	{:else if activePage === 'colorSchemes'}
 		<div
-			class="h-full p-2 grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(theme(width.96),1fr))] auto-rows-[theme(height.36)] gap-2 overflow-y-auto border-2 rounded-md border-black"
+			class="h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.64),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto border-2 rounded-md border-black"
 		>
 			{#each savedColorSchemes as savedColorScheme (savedColorScheme.colorScheme)}
 				<div class="flex" out:scale={{ duration: 300 }} animate:flip={{ duration: 300 }}>
 					<div class="flex-1 flex overflow-x-auto border-2 rounded-md rounded-r-none border-black">
 						{#each savedColorScheme.colorScheme as color}
 							<button
-								class="flex-grow basis-4 hover:basis-28 p-2 grid items-center overflow-x-hidden hover:overflow-x-auto cursor-pointer transition-all duration-300 group"
+								class="flex-grow basis-4 hover:basis-24 p-2 flex justify-center items-center overflow-x-hidden cursor-pointer transition-all duration-300 group"
 								style={`background-color: ${color};`}
 								use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
 								on:click={() => {
@@ -160,7 +160,7 @@
 								}}
 							>
 								<span
-									class="scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 text-center uppercase text-xl font-bold transition-all duration-300"
+									class="scale-0 group-hover:scale-100 uppercase font-bold transition-all duration-300"
 									style={`color: ${contrastingColor(color)}`}
 								>
 									{color}
