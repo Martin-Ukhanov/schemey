@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { enhance, applyAction } from '$app/forms';
 	import { stringToSlug } from '$lib/utils';
+	import { showTooltip } from '$lib/actions/showTooltip';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import { savedColorSchemes, savedColors } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/notifications';
@@ -11,14 +12,28 @@
 	let isLoading = false;
 </script>
 
-<header class="h-16 p-2 flex justify-between items-center border-b-2 border-black">
-	<a href="/" class="button border-none text-2xl font-bold text-lime-500">Schemey</a>
+<header class="h-16 p-2 flex justify-between border-b-2 border-black">
+	<a
+		href="/"
+		class="button h-full border-transparent text-3xl font-bold text-lime-500"
+		use:showTooltip={{ position: 'bottom', message: 'Home' }}
+	>
+		Schemey
+	</a>
 
-	<nav class="hidden sm:flex items-center gap-x-2">
+	<nav class="hidden sm:flex gap-x-2">
 		{#if $page.data.session}
 			{@const username = $page.data.session.user.user_metadata.name}
 
-			<a href={`/user/${stringToSlug(username)}`} class="button w-10 h-10 text-2xl font-normal">
+			<a href="/" class="button text-lime-500 border-lime-500">Upgrade</a>
+
+			<div class="w-0.5 mx-1 rounded-md bg-black" />
+
+			<a
+				href={`/user/${stringToSlug(username)}`}
+				class="button aspect-square text-2xl font-normal"
+				use:showTooltip={{ position: 'bottom', message: username }}
+			>
 				{username[0].toUpperCase()}
 			</a>
 
@@ -49,7 +64,7 @@
 					};
 				}}
 			>
-				<button class="button-primary" disabled={isLoading}>
+				<button class="button-primary h-full" disabled={isLoading}>
 					<span class:opacity-0={isLoading}>Sign Out</span>
 					{#if isLoading}
 						<Loader color="black" />
@@ -58,7 +73,7 @@
 			</form>
 		{:else}
 			<button
-				class="button border-none"
+				class="button"
 				on:click={() => {
 					$isSignInModalOpen = true;
 				}}
@@ -77,7 +92,7 @@
 		{/if}
 	</nav>
 
-	<button class="button block sm:hidden border-none">
+	<button class="button h-full p-0 sm:hidden aspect-square border-transparent">
 		<MenuIcon />
 	</button>
 </header>
