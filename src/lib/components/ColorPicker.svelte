@@ -102,8 +102,7 @@
 {#if isSavedColorsOpen}
 	<div class="h-80 flex flex-col gap-y-2">
 		<div
-			class="relative flex-1 p-2 grid grid-cols-5 gap-2 overflow-y-auto border-2 rounded-md border-black"
-			style="grid-auto-rows: min-content;"
+			class="relative flex-1 p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.12),1fr))] auto-rows-min gap-2 overflow-y-auto border-2 rounded-md border-black"
 		>
 			{#if $savedColors.length === 0}
 				<p
