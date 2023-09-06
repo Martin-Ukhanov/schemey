@@ -102,7 +102,7 @@
 {#if isSavedColorsOpen}
 	<div class="h-80 flex flex-col gap-y-2">
 		<div
-			class="relative flex-1 p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.12),1fr))] auto-rows-min gap-2 overflow-y-auto border-2 rounded-md border-black"
+			class="relative flex-1 p-2 grid grid-cols-6 auto-rows-min gap-2 overflow-y-auto border-2 rounded-md border-black"
 		>
 			{#if $savedColors.length === 0}
 				<p
@@ -113,7 +113,7 @@
 			{:else}
 				{#each $savedColors as color (color)}
 					<button
-						class="button aspect-square !brightness-100"
+						class="button aspect-square"
 						style={`background-color: ${color};`}
 						use:showTooltip={{ position: 'top', message: color }}
 						on:click={() => {
