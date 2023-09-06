@@ -727,6 +727,7 @@
 	<ColorPicker
 		bind:hex={colorPickerColor.hex}
 		on:close={() => {
+			colorPicker();
 			isColorPickerModalOpen = false;
 		}}
 	/>
