@@ -62,7 +62,7 @@
 	}
 
 	.button-transparent-black {
-		@apply button border-none bg-transparent hover:bg-black/10 active:bg-black/[0.15] !brightness-100;
+		@apply button border-transparent bg-transparent hover:bg-black/10 active:bg-black/[0.15] !brightness-100;
 	}
 
 	.button-transparent-white {
