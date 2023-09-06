@@ -388,7 +388,7 @@
 {/if}
 
 <menu
-	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-7.5rem)] py-2 border-t-2 z-10 bg-white border-black transition-transform duration-300"
+	class="fixed bottom-0 w-full h-[291px] min-h-[291px] max-h-[calc(100%-7.5rem)] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-300"
 	class:translate-y-full={!isMenuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -424,7 +424,7 @@
 	</div>
 
 	<div
-		class="w-full h-full px-2 flex flex-col sm:flex-row gap-2 overflow-y-auto sm:overflow-y-visible"
+		class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto sm:overflow-y-visible"
 	>
 		<div class="sm:w-36 flex flex-col gap-y-2">
 			<div class="flex gap-x-2">
@@ -519,9 +519,9 @@
 			</div>
 		</div>
 
-		<div class="flex-1 flex flex-col sm:flex-row">
+		<div class="flex-1 flex flex-col sm:flex-row sm:overflow-x-hidden">
 			<div
-				class="flex-1 sm:max-lg:p-2 flex flex-col lg:flex-row gap-2 overflow-x-hidden sm:max-lg:overflow-y-auto sm:max-lg:border-2 rounded-md border-black"
+				class="flex-1 flex flex-col lg:flex-row gap-2 overflow-x-hidden sm:max-lg:overflow-y-auto"
 			>
 				{#each currentColorScheme as color, index (color.id)}
 					{@const contrastColor = contrastingColor(color.hex)}
