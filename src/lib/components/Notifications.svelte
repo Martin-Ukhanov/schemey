@@ -16,7 +16,7 @@
 	{#each $notifications as notification (notification.id)}
 		{@const contrastColor = contrastingColor(notification.color)}
 		<button
-			class="button gap-x-2 pointer-events-auto"
+			class="button gap-x-2 pointer-events-auto !brightness-100"
 			style={`background-color: ${notification.color}; color: ${contrastColor}; fill: ${contrastColor};`}
 			in:scale={{ duration: 300 }}
 			out:scale={{ duration: 300 }}
