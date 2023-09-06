@@ -69,9 +69,6 @@
 	}
 </script>
 
-<!-- <h1 class="text-4xl text-center uppercase font-bold overflow-x-auto">
-		{$page.data.session?.user.user_metadata.name}
-	</h1> -->
 <nav class="h-44 sm:h-20 p-4 flex flex-col sm:flex-row justify-center gap-2 sm:[&>button]:w-48">
 	<button
 		class={activePage === 'colors' ? 'button-primary' : 'button'}
@@ -106,55 +103,45 @@
 >
 	{#if activePage === 'colors'}
 		<div
-			class="h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.60),1fr))] auto-rows-[theme(height.24)] gap-2 overflow-y-auto border-2 rounded-md border-black"
+			class="h-full p-2 grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(theme(width.60),1fr))] auto-rows-[theme(height.24)] gap-2 overflow-y-auto border-2 rounded-md border-black"
 		>
 			{#each savedColors as savedColor (savedColor.hex)}
 				{@const contrastColor = contrastingColor(savedColor.hex)}
 
-				<div
-					class="p-2 flex justify-between items-center border-2 rounded-md border-black"
-					style={`background-color: ${savedColor.hex};`}
-					transition:scale={{ duration: 300 }}
-					animate:flip={{ duration: 300 }}
-				>
-					<p class="p-2 text-xl font-bold uppercase" style={`color: ${contrastColor};`}>
-						{savedColor.hex}
-					</p>
-
-					<div class="flex">
-						<button
-							class={contrastColor === '#000000'
-								? 'button-transparent-black'
-								: 'button-transparent-white'}
-							use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
-							on:click={() => {
-								navigator.clipboard.writeText(savedColor.hex.toUpperCase());
-								addNotification(`${savedColor.hex} Copied`, 'copied', savedColor.hex);
-							}}
+				<div class="flex" transition:scale={{ duration: 300 }} animate:flip={{ duration: 300 }}>
+					<button
+						class="flex-1 p-2 grid items-center overflow-x-auto border-2 rounded-l-md border-black cursor-pointer group"
+						style={`background-color: ${savedColor.hex};`}
+						use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
+						on:click={() => {
+							navigator.clipboard.writeText(savedColor.hex.toUpperCase());
+							addNotification(`${savedColor.hex} Copied`, 'copied', savedColor.hex);
+						}}
+					>
+						<span
+							class="scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 text-center text-xl font-bold uppercase transition-all duration-300"
+							style={`color: ${contrastColor};`}
 						>
-							<CopyIcon />
-						</button>
+							{savedColor.hex}
+						</span>
+					</button>
 
-						<button
-							class={contrastColor === '#000000'
-								? 'button-transparent-black'
-								: 'button-transparent-white'}
-							use:showTooltip={{ position: 'top', message: 'Delete Color' }}
-							on:click={async () => {
-								savedColor.isDeleteLoading = true;
-								await deleteColor(savedColor.hex);
-								savedColor.isDeleteLoading = false;
-							}}
-						>
-							<div class:opacity-0={savedColor.isDeleteLoading}>
-								<TrashIcon />
-							</div>
-
-							{#if savedColor.isDeleteLoading}
-								<Loader color={contrastColor === '#ffffff' ? 'white' : 'black'} />
-							{/if}
-						</button>
-					</div>
+					<button
+						class="button border-l-0 rounded-l-none"
+						use:showTooltip={{ position: 'top', message: 'Delete Color' }}
+						on:click={async () => {
+							savedColor.isDeleteLoading = true;
+							await deleteColor(savedColor.hex);
+							savedColor.isDeleteLoading = false;
+						}}
+					>
+						<div class:opacity-0={savedColor.isDeleteLoading}>
+							<TrashIcon />
+						</div>
+						{#if savedColor.isDeleteLoading}
+							<Loader color={contrastColor === '#ffffff' ? 'white' : 'black'} />
+						{/if}
+					</button>
 				</div>
 			{/each}
 		</div>
@@ -163,13 +150,13 @@
 			class="h-full p-2 grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(theme(width.96),1fr))] auto-rows-[theme(height.36)] gap-2 overflow-y-auto border-2 rounded-md border-black"
 		>
 			{#each savedColorSchemes as savedColorScheme (savedColorScheme.colorScheme)}
-				<div class="flex gap-x-2" animate:flip={{ duration: 300 }}>
-					<div class="flex-1 flex overflow-x-auto border-2 rounded-md border-black">
+				<div class="flex" transition:scale={{ duration: 300 }} animate:flip={{ duration: 300 }}>
+					<div class="flex-1 flex overflow-x-auto border-2 rounded-md rounded-r-none border-black">
 						{#each savedColorScheme.colorScheme as color}
 							{@const contrastColor = contrastingColor(color)}
 
 							<button
-								class="flex-grow basis-4 hover:basis-28 p-2 grid items-center overflow-x-hidden hover:overflow-x-auto cursor-pointer transition-[flex-basis] duration-300 group"
+								class="flex-grow basis-4 hover:basis-28 p-2 grid items-center overflow-x-hidden hover:overflow-x-auto cursor-pointer transition-all duration-300 group"
 								style={`background-color: ${color};`}
 								use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
 								on:click={() => {
@@ -178,7 +165,7 @@
 								}}
 							>
 								<span
-									class="opacity-0 group-hover:opacity-100 text-center uppercase text-xl font-bold transition-opacity duration-300"
+									class="scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 text-center uppercase text-xl font-bold transition-all duration-300"
 									style={`color: ${contrastColor}`}
 								>
 									{color}
@@ -188,7 +175,7 @@
 					</div>
 
 					<button
-						class="button"
+						class="button border-l-0 rounded-l-none"
 						use:showTooltip={{ position: 'top', message: 'Delete Color Scheme' }}
 						on:click={async () => {
 							savedColorScheme.isDeleteLoading = true;
@@ -207,5 +194,9 @@
 				</div>
 			{/each}
 		</div>
+	{:else if activePage === 'account'}
+		<h1 class="text-4xl text-center uppercase font-bold overflow-x-auto">
+			{$page.data.session?.user.user_metadata.name}
+		</h1>
 	{/if}
 </div>
