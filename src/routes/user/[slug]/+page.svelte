@@ -5,7 +5,6 @@
 	import { contrastingColor } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { addNotification } from '$lib/stores/notifications';
-	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
 	import Loader from '$lib/components/Loader.svelte';
 
