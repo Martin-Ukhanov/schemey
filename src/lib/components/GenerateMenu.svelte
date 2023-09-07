@@ -120,7 +120,7 @@
 		goto(
 			'/generate/' +
 				colorSchemeToSlug(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)),
-			{ replaceState: true }
+			{ replaceState: true, noScroll: true }
 		);
 	}
 
