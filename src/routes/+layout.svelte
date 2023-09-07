@@ -37,7 +37,7 @@
 
 <Header />
 
-<main class="min-h-[calc(100dvh-theme(height.16))] flex flex-col">
+<main class="relative min-h-[calc(100dvh-theme(height.16))] flex flex-col">
 	<slot />
 </main>
 
