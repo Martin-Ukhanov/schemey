@@ -351,14 +351,8 @@
 	}
 </script>
 
-<SimpleLayout
-	colorScheme={currentColorScheme.map((color) => {
-		return { id: color.id, hex: color.hex };
-	})}
-/>
-
 {#if !isMenuOpen}
-	<menu class="absolute top-0 w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
+	<menu class="w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
 		<button
 			class="button w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
@@ -394,6 +388,12 @@
 		</button>
 	</menu>
 {/if}
+
+<SimpleLayout
+	colorScheme={currentColorScheme.map((color) => {
+		return { id: color.id, hex: color.hex };
+	})}
+/>
 
 <menu
 	class="fixed bottom-0 w-full h-[266px] min-h-[266px] max-h-[calc(100%-7.5rem)] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-300"
