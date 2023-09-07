@@ -1,9 +1,18 @@
 <script lang="ts">
-	export let colorScheme: string[];
+	import { flip } from 'svelte/animate';
+	import { scale } from 'svelte/transition';
+
+	export let colorScheme: { id: string; hex: string }[];
 </script>
 
 <div class="flex-1 flex">
-	{#each colorScheme as color}
-		<div class="flex-1" style={`background-color: ${color}`} />
+	{#each colorScheme as color (color.id)}
+		<div
+			in:scale={{ duration: 300 }}
+			out:scale={{ duration: 300 }}
+			animate:flip={{ duration: 300 }}
+			class="flex-1"
+			style={`background-color: ${color.hex}`}
+		/>
 	{/each}
 </div>
