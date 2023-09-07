@@ -14,7 +14,7 @@
 	import { isResizingMenu } from '$lib/stores/generateMenu';
 	import { addNotification } from '$lib/stores/notifications';
 	import { showTooltip } from '$lib/actions/showTooltip';
-	import SimpleLayout from '$lib/components/layouts/SimpleLayout.svelte';
+	import ColumnLayout from '$lib/components/layouts/ColumnLayout.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import List from '$lib/components/List.svelte';
 	import ColorPicker from '$lib/components/ColorPicker.svelte';
@@ -389,7 +389,7 @@
 	</menu>
 {/if}
 
-<SimpleLayout
+<ColumnLayout
 	colorScheme={currentColorScheme.map((color) => {
 		return { id: color.id, hex: color.hex };
 	})}
