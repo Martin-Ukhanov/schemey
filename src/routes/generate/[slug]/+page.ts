@@ -14,5 +14,5 @@ export const load = (({ params, data }) => {
 		goto(`/generate/${slug.toLowerCase()}`);
 	}
 
-	return { currentColorScheme: slugToColorScheme(slug), ...data };
+	return { initialColorScheme: slugToColorScheme(slug), ...data };
 }) satisfies PageLoad;
