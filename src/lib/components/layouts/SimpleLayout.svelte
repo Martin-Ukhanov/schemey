@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { flip } from 'svelte/animate';
 	import { scale } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 
 	export let colorScheme: { id: string; hex: string }[];
 </script>
