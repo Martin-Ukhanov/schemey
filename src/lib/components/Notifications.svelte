@@ -13,7 +13,7 @@
 </script>
 
 <div
-	class="fixed top-20 left-4 right-4 flex flex-col items-center gap-y-4 z-10 pointer-events-none"
+	class="fixed top-10 left-4 right-4 flex flex-col items-center gap-y-4 z-10 pointer-events-none"
 >
 	{#each $notifications as notification (notification.id)}
 		{@const contrastColor = contrastingColor(notification.color)}
