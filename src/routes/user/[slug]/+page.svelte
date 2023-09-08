@@ -70,7 +70,7 @@
 
 <nav class="h-44 sm:h-20 p-4 flex flex-col sm:flex-row justify-center gap-2 sm:[&>button]:w-48">
 	<button
-		class={activePage === 'colors' ? 'button-primary' : 'button'}
+		class={activePage === 'colors' ? 'button-primary' : 'button-border'}
 		on:click={() => {
 			activePage = 'colors';
 		}}
@@ -79,7 +79,7 @@
 	</button>
 
 	<button
-		class={activePage === 'colorSchemes' ? 'button-primary' : 'button'}
+		class={activePage === 'colorSchemes' ? 'button-primary' : 'button-border'}
 		on:click={() => {
 			activePage = 'colorSchemes';
 		}}
@@ -88,7 +88,7 @@
 	</button>
 
 	<button
-		class={activePage === 'account' ? 'button-primary' : 'button'}
+		class={activePage === 'account' ? 'button-primary' : 'button-border'}
 		on:click={() => {
 			activePage = 'account';
 		}}
@@ -124,7 +124,7 @@
 					</button>
 
 					<button
-						class="button border-l-0 rounded-l-none"
+						class="button-border border-l-0 rounded-l-none"
 						use:showTooltip={{ position: 'top', message: 'Delete Color' }}
 						on:click={async () => {
 							savedColor.isDeleteLoading = true;
@@ -170,7 +170,7 @@
 					</div>
 
 					<button
-						class="button border-l-0 rounded-l-none"
+						class="button-border border-l-0 rounded-l-none"
 						use:showTooltip={{ position: 'top', message: 'Delete Color Scheme' }}
 						on:click={async () => {
 							savedColorScheme.isDeleteLoading = true;

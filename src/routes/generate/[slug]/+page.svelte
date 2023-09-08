@@ -354,7 +354,7 @@
 {#if !isMenuOpen}
 	<menu class="w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
 		<button
-			class="button w-1/4 border-t-0 border-x-0 rounded-none"
+			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
 			on:click={undoColorScheme}
@@ -365,7 +365,7 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button w-1/2 border-t-0 border-x-0 rounded-none"
+			class="button-border w-1/2 border-t-0 border-x-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Generate' }}
 			on:click={() => {
 				if (currentColorScheme.some((color) => !color.isLocked)) {
@@ -379,7 +379,7 @@
 		<div class="w-0.5 bg-black" />
 
 		<button
-			class="button w-1/4 border-t-0 border-x-0 rounded-none"
+			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={currentColorSchemeIndex === 0}
 			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
 			on:click={redoColorScheme}
@@ -404,7 +404,7 @@
 	<div class="absolute bottom-full left-2 flex gap-x-2">
 		{#key isMenuOpen}
 			<button
-				class="button rounded-b-none"
+				class="button-border rounded-b-none"
 				use:showTooltip={{ position: 'top', message: isMenuOpen ? 'Close' : 'Open' }}
 				on:click={() => {
 					isMenuOpen = !isMenuOpen;
@@ -420,7 +420,7 @@
 
 		{#if isMenuOpen}
 			<button
-				class="button rounded-b-none cursor-grab active:cursor-grabbing"
+				class="button-border rounded-b-none cursor-grab active:cursor-grabbing"
 				transition:scale={{ duration: 300 }}
 				use:showTooltip={{ position: 'top', message: 'Resize' }}
 				on:mousedown|preventDefault={resizeMenuMouse}
@@ -437,7 +437,7 @@
 		<div class="sm:w-36 flex flex-col gap-y-2">
 			<div class="flex gap-x-2">
 				<button
-					class="button flex-1"
+					class="button-border flex-1"
 					use:showTooltip={{ position: 'top', message: 'Library' }}
 					on:click={() => {
 						if ($page.data.session) {
@@ -452,7 +452,7 @@
 
 				{#key JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
 					<button
-						class="button flex-1"
+						class="button-border flex-1"
 						disabled={isToggleSaveColorSchemeLoading}
 						use:showTooltip={{
 							position: 'top',
@@ -484,7 +484,7 @@
 			</div>
 
 			<button
-				class="button"
+				class="button-border"
 				use:showTooltip={{ position: 'top', message: 'Color Space' }}
 				on:click={() => {
 					isColorSpaceModalOpen = true;
@@ -494,7 +494,7 @@
 			</button>
 
 			<button
-				class="button flex-1"
+				class="button-border flex-1"
 				use:showTooltip={{ position: 'top', message: 'Generate' }}
 				on:click={() => {
 					if (currentColorScheme.some((color) => !color.isLocked)) {
@@ -507,7 +507,7 @@
 
 			<div class="flex gap-x-2">
 				<button
-					class="button flex-1"
+					class="button-border flex-1"
 					disabled={colorSchemes.length === 1 ||
 						currentColorSchemeIndex === colorSchemes.length - 1}
 					use:showTooltip={{ position: 'top', message: 'Undo' }}
@@ -517,7 +517,7 @@
 				</button>
 
 				<button
-					class="button flex-1"
+					class="button-border flex-1"
 					disabled={currentColorSchemeIndex === 0}
 					use:showTooltip={{ position: 'top', message: 'Redo' }}
 					on:click={redoColorScheme}
@@ -691,7 +691,7 @@
 
 			{#if currentColorScheme.length < MAX_COLOR_SCHEME_SIZE}
 				<button
-					class="button mt-2 sm:mt-0 sm:ml-2"
+					class="button-border mt-2 sm:mt-0 sm:ml-2"
 					in:addColorButtonTransition
 					out:addColorButtonTransition
 					use:showTooltip={{ position: 'top', message: 'Add Color' }}

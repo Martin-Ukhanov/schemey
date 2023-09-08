@@ -20,7 +20,7 @@
 			</button>
 		{:else}
 			<button
-				class="button justify-start border-transparent text-left"
+				class="button justify-start text-left"
 				on:click={() => {
 					selectedItem = item;
 					dispatch('click');

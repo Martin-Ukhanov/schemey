@@ -39,7 +39,7 @@
 			>
 				<div class="relative mb-4 flex justify-center items-center">
 					<button
-						class="button absolute left-0 p-0 border-none"
+						class="button absolute left-0 p-0"
 						on:click={() => {
 							isOpen = false;
 							dispatch('close');

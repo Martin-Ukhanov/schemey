@@ -58,7 +58,11 @@
 
 @layer components {
 	.button {
-		@apply relative p-2 flex justify-center items-center border-2 outline-none rounded-md font-bold uppercase bg-white text-black border-black fill-black hover:brightness-95 active:brightness-90 cursor-pointer touch-manipulation;
+		@apply relative p-2 flex justify-center items-center border-2 outline-none rounded-md font-bold uppercase bg-white text-black fill-black border-white hover:brightness-95 active:brightness-90 cursor-pointer touch-manipulation;
+	}
+
+	.button-border {
+		@apply button border-black;
 	}
 
 	.button-primary {
@@ -66,7 +70,7 @@
 	}
 
 	.button-transparent-black {
-		@apply button border-transparent bg-transparent hover:bg-black/10 active:bg-black/[0.15] !brightness-100;
+		@apply button bg-transparent hover:bg-black/10 active:bg-black/[0.15] border-transparent !brightness-100;
 	}
 
 	.button-transparent-white {

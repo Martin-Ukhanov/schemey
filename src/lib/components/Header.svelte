@@ -15,7 +15,7 @@
 <header class="h-16 p-2 flex justify-between border-b-2 border-black">
 	<a
 		href="/"
-		class="button h-full border-transparent text-3xl font-bold text-lime-500"
+		class="button h-full text-3xl font-bold text-lime-500"
 		use:showTooltip={{ position: 'bottom', message: 'Home' }}
 	>
 		Schemey
@@ -25,13 +25,13 @@
 		{#if $page.data.session}
 			{@const username = $page.data.session.user.user_metadata.name}
 
-			<a href="/" class="button text-lime-500 border-lime-500">Upgrade</a>
+			<a href="/" class="button-primary bg-white text-lime-500">Upgrade</a>
 
 			<div class="w-0.5 mx-1 rounded-md bg-black" />
 
 			<a
 				href={`/user/${stringToSlug(username)}`}
-				class="button aspect-square text-2xl font-normal"
+				class="button-border aspect-square text-2xl font-normal"
 				use:showTooltip={{ position: 'bottom', message: username }}
 			>
 				{username[0].toUpperCase()}
@@ -73,7 +73,7 @@
 			</form>
 		{:else}
 			<button
-				class="button"
+				class="button-border"
 				on:click={() => {
 					$isSignInModalOpen = true;
 				}}
@@ -92,7 +92,7 @@
 		{/if}
 	</nav>
 
-	<button class="button h-full p-0 sm:hidden aspect-square border-transparent">
+	<button class="button h-full p-0 sm:hidden aspect-square">
 		<MenuIcon />
 	</button>
 </header>

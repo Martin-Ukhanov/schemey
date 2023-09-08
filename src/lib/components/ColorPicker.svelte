@@ -113,7 +113,7 @@
 			{:else}
 				{#each $savedColors as color (color)}
 					<button
-						class="button aspect-square !brightness-100"
+						class="button-border aspect-square !brightness-100"
 						style={`background-color: ${color};`}
 						use:showTooltip={{ position: 'top', message: color }}
 						on:click={() => {
@@ -132,7 +132,7 @@
 		</div>
 
 		<button
-			class="button"
+			class="button-border"
 			use:showTooltip={{ position: 'top', message: 'Return' }}
 			on:click={() => {
 				isSavedColorsOpen = false;
@@ -222,7 +222,7 @@
 			/>
 
 			<button
-				class="button"
+				class="button-border"
 				use:showTooltip={{ position: 'top', message: 'Library' }}
 				on:click={() => {
 					if ($page.data.session) {
