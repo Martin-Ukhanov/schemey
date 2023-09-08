@@ -9,15 +9,25 @@
 
 <div class="h-80 p-2 flex flex-col overflow-y-auto border-2 rounded-md border-black">
 	{#each items as item}
-		<button
-			class="button justify-start border-transparent text-left"
-			class:brightness-90={item === selectedItem}
-			on:click={() => {
-				selectedItem = item;
-				dispatch('click');
-			}}
-		>
-			{item}
-		</button>
+		{#if item === selectedItem}
+			<button
+				class="button-primary justify-start text-left"
+				on:click={() => {
+					dispatch('click');
+				}}
+			>
+				{item}
+			</button>
+		{:else}
+			<button
+				class="button justify-start border-transparent text-left"
+				on:click={() => {
+					selectedItem = item;
+					dispatch('click');
+				}}
+			>
+				{item}
+			</button>
+		{/if}
 	{/each}
 </div>
