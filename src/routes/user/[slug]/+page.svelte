@@ -105,7 +105,7 @@
 			class="h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.40),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 		>
 			{#each savedColors as savedColor (savedColor.hex)}
-				<div class="flex" out:scale={{ duration: 300 }} animate:flip={{ duration: 300 }}>
+				<div class="flex" out:scale={{ duration: 200 }} animate:flip={{ duration: 200 }}>
 					<button
 						class="flex-1 p-2 grid items-center border-2 rounded-l-md border-black cursor-pointer group"
 						style={`background-color: ${savedColor.hex};`}
@@ -116,7 +116,7 @@
 						}}
 					>
 						<span
-							class="scale-0 group-hover:scale-100 text-center font-bold uppercase transition-transform duration-300"
+							class="scale-0 group-hover:scale-100 text-center font-bold uppercase transition-transform duration-200"
 							style={`color: ${contrastingColor(savedColor.hex)};`}
 						>
 							{savedColor.hex}
@@ -147,11 +147,11 @@
 			class="h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.64),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 		>
 			{#each savedColorSchemes as savedColorScheme (savedColorScheme.colorScheme)}
-				<div class="flex" out:scale={{ duration: 300 }} animate:flip={{ duration: 300 }}>
+				<div class="flex" out:scale={{ duration: 200 }} animate:flip={{ duration: 200 }}>
 					<div class="flex-1 flex overflow-x-auto border-2 rounded-md rounded-r-none border-black">
 						{#each savedColorScheme.colorScheme as color}
 							<button
-								class="flex-grow basis-4 hover:basis-24 p-2 flex justify-center items-center overflow-x-hidden cursor-pointer transition-all duration-300 group"
+								class="flex-grow basis-4 hover:basis-24 p-2 flex justify-center items-center overflow-x-hidden cursor-pointer transition-all duration-200 group"
 								style={`background-color: ${color};`}
 								use:showTooltip={{ position: 'top', message: 'Copy Hex' }}
 								on:click={() => {
@@ -160,7 +160,7 @@
 								}}
 							>
 								<span
-									class="scale-0 group-hover:scale-100 uppercase font-bold transition-all duration-300"
+									class="scale-0 group-hover:scale-100 uppercase font-bold transition-all duration-200"
 									style={`color: ${contrastingColor(color)}`}
 								>
 									{color}

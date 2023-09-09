@@ -156,7 +156,7 @@
 				<div
 					class="absolute -translate-x-1/2 translate-y-1/2 w-3 h-3 border-2 rounded-full bg-white border-black"
 					style={`bottom: ${originV}%; left: ${originS}%;`}
-					transition:scale={{ duration: 300 }}
+					transition:scale={{ duration: 200 }}
 				/>
 			{/if}
 

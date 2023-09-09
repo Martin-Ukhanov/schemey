@@ -82,7 +82,7 @@
 		/>
 
 		{#if emailErrorMessage}
-			<p class="error mt-2" transition:slide={{ duration: 300, axis: 'y' }}>
+			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
 				{emailErrorMessage}
 			</p>
 		{/if}
@@ -102,7 +102,7 @@
 		/>
 
 		{#if passwordErrorMessage}
-			<p class="error mt-2" transition:slide={{ duration: 300, axis: 'y' }}>
+			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
 				{passwordErrorMessage}
 			</p>
 		{/if}
@@ -117,7 +117,7 @@
 		</button>
 
 		{#if failureData?.message}
-			<p class="error mt-2" transition:slide={{ duration: 300, axis: 'y' }}>
+			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
 				{failureData.message}
 			</p>
 		{/if}

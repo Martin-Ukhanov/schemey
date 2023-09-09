@@ -8,7 +8,7 @@
 		class="absolute -translate-x-1/2 flex flex-col items-center z-10 will-change-transform"
 		class:-translate-y-full={$tooltip.position === 'top'}
 		style={`top: ${$tooltip.y}px; left: ${$tooltip.x}px;`}
-		transition:scale={{ duration: 300 }}
+		transition:scale={{ duration: 200 }}
 	>
 		{#if $tooltip.position === 'bottom'}
 			<div

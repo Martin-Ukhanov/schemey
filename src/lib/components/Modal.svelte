@@ -14,8 +14,8 @@
 
 	function modalTransition(element: Element): TransitionConfig {
 		return windowWidth < parseInt(theme.screens.sm)
-			? fly(element, { y: modalHeight, duration: 300 })
-			: scale(element, { duration: 300 });
+			? fly(element, { y: modalHeight, duration: 200 })
+			: scale(element, { duration: 200 });
 	}
 </script>
 
@@ -25,7 +25,7 @@
 	<div class="fixed top-0 left-0 w-full h-full z-10">
 		<div
 			class="absolute top-0 left-0 w-full h-full bg-black/50"
-			transition:fade={{ duration: 300 }}
+			transition:fade={{ duration: 200 }}
 		/>
 
 		<div

@@ -8,9 +8,9 @@
 <div class="flex-1 flex">
 	{#each colorScheme as color (color.id)}
 		<div
-			in:scale={{ duration: 300 }}
-			out:scale={{ duration: 300 }}
-			animate:flip={{ duration: 300 }}
+			in:scale={{ duration: 200 }}
+			out:scale={{ duration: 200 }}
+			animate:flip={{ duration: 200 }}
 			class="flex-1"
 			style={`background-color: ${color.hex}`}
 		/>

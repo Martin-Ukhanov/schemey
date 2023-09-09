@@ -20,9 +20,9 @@
 		<button
 			class="button-border gap-x-2 pointer-events-auto !brightness-100"
 			style={`background-color: ${notification.color}; color: ${contrastColor}; fill: ${contrastColor};`}
-			in:scale={{ duration: 300 }}
-			out:scale={{ duration: 300 }}
-			animate:flip={{ duration: 300 }}
+			in:scale={{ duration: 200 }}
+			out:scale={{ duration: 200 }}
+			animate:flip={{ duration: 200 }}
 			on:click={() => {
 				dismissNotification(notification.id);
 			}}

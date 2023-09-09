@@ -330,14 +330,14 @@
 	function removeColorButtonTransition(element: Element): TransitionConfig {
 		return slide(element, {
 			axis: menuWidth < parseInt(theme.screens.lg) ? 'y' : 'x',
-			duration: 300
+			duration: 200
 		});
 	}
 
 	function addColorButtonTransition(element: Element): TransitionConfig {
 		return slide(element, {
 			axis: menuWidth < parseInt(theme.screens.sm) ? 'y' : 'x',
-			duration: 300
+			duration: 200
 		});
 	}
 
@@ -361,7 +361,7 @@
 </script>
 
 {#if !isMenuOpen}
-	<menu class="w-full flex bg-white" transition:slide={{ duration: 300, axis: 'y' }}>
+	<menu class="w-full flex bg-white" transition:slide={{ duration: 200, axis: 'y' }}>
 		<button
 			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
@@ -405,7 +405,7 @@
 />
 
 <menu
-	class="absolute bottom-0 w-full h-[266px] min-h-[266px] max-h-[calc(100%-theme(height.14))] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-300"
+	class="absolute bottom-0 w-full h-[266px] min-h-[266px] max-h-[calc(100%-theme(height.14))] py-4 border-t-2 z-10 bg-white border-black transition-transform duration-200"
 	class:translate-y-full={!isMenuOpen}
 	bind:this={menuElement}
 	bind:clientWidth={menuWidth}
@@ -430,7 +430,7 @@
 		{#if isMenuOpen}
 			<button
 				class="button-border rounded-b-none cursor-grab active:cursor-grabbing"
-				transition:scale={{ duration: 300 }}
+				transition:scale={{ duration: 200 }}
 				use:showTooltip={{ position: 'top', message: 'Resize' }}
 				on:mousedown|preventDefault={resizeMenuMouse}
 				on:touchstart|preventDefault={resizeMenuTouch}
@@ -546,9 +546,9 @@
 					<div
 						class="flex-1 p-2 flex flex-row-reverse lg:flex-col justify-between items-center gap-2 border-2 overflow-x-auto overflow-y-hidden sm:overflow-visible rounded-md border-black"
 						style={`background-color: ${color.hex};`}
-						in:scale={{ duration: 300 }}
-						out:scale={{ duration: 300 }}
-						animate:flip={{ duration: 300 }}
+						in:scale={{ duration: 200 }}
+						out:scale={{ duration: 200 }}
+						animate:flip={{ duration: 200 }}
 					>
 						<div class="flex flex-row lg:flex-col">
 							<div class="flex flex-col lg:flex-row justify-center items-center">
