@@ -9,7 +9,7 @@
 	{#each colorScheme as color, index1 (color.id)}
 		<div
 			class="flex-1 p-4 flex flex-row md:flex-col gap-4"
-			style={`background-color: ${color.hex}`}
+			style={`background-color: ${color.hex};`}
 			in:scale={{ duration: 200 }}
 			out:scale={{ duration: 200 }}
 			animate:flip={{ duration: 200 }}
@@ -18,7 +18,7 @@
 				<div
 					class="flex-1 rounded-md"
 					class:hidden={index1 === index2}
-					style={`background-color: ${color.hex}`}
+					style={`background-color: ${color.hex};`}
 					in:scale={{ duration: 200 }}
 					out:scale={{ duration: 200 }}
 					animate:flip={{ duration: 200 }}
