@@ -16,6 +16,7 @@
 	import { addNotification } from '$lib/stores/notifications';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import SimpleLayout from '$lib/components/layouts/SimpleLayout.svelte';
+	import GridLayout from '$lib/components/layouts/GridLayout.svelte';
 	import ContrastLayout from '$lib/components/layouts/ContrastLayout.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import List from '$lib/components/List.svelte';
@@ -59,7 +60,7 @@
 	let menuWidth: number;
 	let isMenuOpen = true;
 
-	const LAYOUTS = [SimpleLayout, ContrastLayout];
+	const LAYOUTS = [SimpleLayout, GridLayout, ContrastLayout];
 	let currentLayoutIndex = 0;
 
 	let isColorSchemeLibraryModalOpen = false;
