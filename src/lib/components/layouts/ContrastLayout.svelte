@@ -8,7 +8,7 @@
 <div class="flex-1 flex flex-col md:flex-row">
 	{#each colorScheme as color, index1 (color.id)}
 		<div
-			class="flex-1 p-8 flex flex-row md:flex-col gap-8"
+			class="flex-1 p-4 flex flex-row md:flex-col gap-4"
 			style={`background-color: ${color.hex}`}
 			in:scale={{ duration: 200 }}
 			out:scale={{ duration: 200 }}
