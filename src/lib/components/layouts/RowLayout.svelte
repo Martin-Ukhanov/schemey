@@ -12,7 +12,7 @@
 			out:scale={{ duration: 300 }}
 			animate:flip={{ duration: 300 }}
 			class="flex-1"
-			style={`background-color: ${color.hex}`}
+			style={`background-color: ${color.hex};`}
 		/>
 	{/each}
 </div>
