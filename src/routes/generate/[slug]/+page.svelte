@@ -15,6 +15,7 @@
 	import { isResizingMenu } from '$lib/stores/generateMenu';
 	import { addNotification } from '$lib/stores/notifications';
 	import { showTooltip } from '$lib/actions/showTooltip';
+	import RowLayout from '$lib/components/layouts/RowLayout.svelte';
 	import ColumnLayout from '$lib/components/layouts/ColumnLayout.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import List from '$lib/components/List.svelte';
@@ -57,6 +58,9 @@
 	let menuElement: HTMLMenuElement;
 	let menuWidth: number;
 	let isMenuOpen = true;
+
+	const LAYOUTS = [RowLayout, ColumnLayout];
+	let currentLayoutIndex = 0;
 
 	let isColorSchemeLibraryModalOpen = false;
 	let isToggleSaveColorSchemeLoading = false;
@@ -363,6 +367,16 @@
 {#if !isMenuOpen}
 	<menu class="w-full flex bg-white" transition:slide={{ duration: 200, axis: 'y' }}>
 		<button
+			class="button-border w-20 border-t-0 border-l-0 rounded-none"
+			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
+			on:click={() => {
+				currentLayoutIndex = currentLayoutIndex === 0 ? LAYOUTS.length - 1 : currentLayoutIndex - 1;
+			}}
+		>
+			<ArrowLeftIcon />
+		</button>
+
+		<button
 			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
@@ -371,10 +385,8 @@
 			<UndoIcon />
 		</button>
 
-		<div class="w-0.5 bg-black" />
-
 		<button
-			class="button-border w-1/2 border-t-0 border-x-0 rounded-none"
+			class="button-border w-1/2 border-t-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Generate' }}
 			on:click={() => {
 				if (currentColorScheme.some((color) => !color.isLocked)) {
@@ -385,8 +397,6 @@
 			<GenerateIcon />
 		</button>
 
-		<div class="w-0.5 bg-black" />
-
 		<button
 			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
 			disabled={currentColorSchemeIndex === 0}
@@ -395,10 +405,21 @@
 		>
 			<RedoIcon />
 		</button>
+
+		<button
+			class="button-border w-20 border-t-0 border-r-0 rounded-none"
+			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
+			on:click={() => {
+				currentLayoutIndex = currentLayoutIndex === LAYOUTS.length - 1 ? 0 : currentLayoutIndex + 1;
+			}}
+		>
+			<ArrowRightIcon />
+		</button>
 	</menu>
 {/if}
 
-<ColumnLayout
+<svelte:component
+	this={LAYOUTS[currentLayoutIndex]}
 	colorScheme={currentColorScheme.map((color) => {
 		return { id: color.id, hex: color.hex };
 	})}
