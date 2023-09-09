@@ -8,7 +8,9 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<div class="h-80 p-2 flex flex-col gap-y-2 overflow-y-auto border-2 rounded-md border-black">
+<div
+	class="h-80 p-2 flex flex-col gap-y-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
+>
 	{#if $savedColorSchemes.length === 0}
 		<p
 			class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center uppercase font-bold text-black"

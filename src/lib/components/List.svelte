@@ -7,7 +7,9 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<div class="h-80 p-2 flex flex-col overflow-y-auto border-2 rounded-md border-black">
+<div
+	class="h-80 p-2 flex flex-col overflow-y-auto overscroll-none border-2 rounded-md border-black"
+>
 	{#each items as item}
 		{#if item === selectedItem}
 			<button

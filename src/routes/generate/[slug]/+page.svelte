@@ -432,7 +432,7 @@
 	</div>
 
 	<div
-		class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto sm:overflow-y-visible"
+		class="w-full h-full px-4 flex flex-col sm:flex-row gap-4 overflow-y-auto sm:overflow-y-visible overscroll-none"
 	>
 		<div class="sm:w-36 flex flex-col gap-y-2">
 			<div class="flex gap-x-2">

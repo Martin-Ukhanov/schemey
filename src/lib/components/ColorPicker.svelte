@@ -102,7 +102,7 @@
 {#if isSavedColorsOpen}
 	<div class="h-80 flex flex-col gap-y-2">
 		<div
-			class="relative flex-1 p-2 grid grid-cols-6 auto-rows-min gap-2 overflow-y-auto border-2 rounded-md border-black"
+			class="relative flex-1 p-2 grid grid-cols-6 auto-rows-min gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 		>
 			{#if $savedColors.length === 0}
 				<p
