@@ -139,6 +139,8 @@
 				if (!newColorScheme[i].isLocked) {
 					newColorScheme[i].hex = <string>newColors.shift();
 				}
+
+				newColorScheme[i].isToggleSaveLoading = false;
 			}
 		}
 
@@ -157,6 +159,7 @@
 			if (newColorScheme[i]) {
 				newColorScheme[i].hex = colorScheme[i];
 				newColorScheme[i].isLocked = false;
+				newColorScheme[i].isToggleSaveLoading = false;
 			} else {
 				newColorScheme.push({
 					id: uuid(),
@@ -174,6 +177,7 @@
 		colorSchemes.splice(0, currentColorSchemeIndex);
 		colorSchemes = [colorScheme, ...colorSchemes];
 		currentColorSchemeIndex = 0;
+		isToggleSaveColorSchemeLoading = false;
 
 		goToColorScheme();
 	}
