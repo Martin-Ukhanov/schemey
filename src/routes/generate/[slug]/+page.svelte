@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { scale, slide, type TransitionConfig } from 'svelte/transition';
@@ -336,6 +337,14 @@
 		});
 	}
 
+	onMount(() => {
+		document.body.classList.add('no-scroll');
+
+		return () => {
+			document.body.classList.remove('no-scroll');
+		};
+	});
+
 	$: currentColorScheme = colorSchemes[currentColorSchemeIndex];
 
 	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
@@ -344,10 +353,6 @@
 
 	$: if (colorPickerColor) {
 		colorSchemes = colorSchemes;
-	}
-
-	$: if (browser) {
-		document.body.classList.toggle('no-scroll', isMenuOpen);
 	}
 </script>
 
