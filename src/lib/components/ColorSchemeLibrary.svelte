@@ -20,7 +20,7 @@
 	{:else}
 		{#each $savedColorSchemes as colorScheme}
 			<button
-				class="button-border min-h-20 p-0 overflow-hidden !brightness-100"
+				class="button-border min-h-28 p-0 overflow-hidden !brightness-100"
 				use:showTooltip={{ position: 'top', message: colorScheme.join(' ') }}
 				on:click={() => {
 					dispatch('selectColorScheme', {
