@@ -366,7 +366,7 @@
 </script>
 
 {#if !isMenuOpen}
-	<menu class="w-full flex" transition:slide={{ duration: 200, axis: 'y' }}>
+	<menu class="w-full flex" transition:slide={{ axis: 'y', duration: 200 }}>
 		<button
 			class="button-border flex-1 border-t-0 border-l-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
