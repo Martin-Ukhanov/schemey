@@ -60,7 +60,7 @@
 	let menuWidth: number;
 	let isMenuOpen = true;
 
-	const LAYOUTS = [SimpleLayout, GridLayout, ContrastLayout];
+	const LAYOUTS = [SimpleLayout, ContrastLayout, GridLayout];
 	let currentLayoutIndex = 0;
 
 	let isColorSchemeLibraryModalOpen = false;
