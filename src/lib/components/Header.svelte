@@ -33,6 +33,7 @@
 				href={`/user/${stringToSlug(username)}`}
 				class="button-border aspect-square text-2xl font-normal"
 				use:showTooltip={{ position: 'bottom', message: username }}
+				data-sveltekit-reload
 			>
 				{username[0].toUpperCase()}
 			</a>
