@@ -366,9 +366,9 @@
 </script>
 
 {#if !isMenuOpen}
-	<menu class="w-full flex bg-white" transition:slide={{ duration: 200, axis: 'y' }}>
+	<menu class="w-full flex" transition:slide={{ duration: 200, axis: 'y' }}>
 		<button
-			class="button-border w-20 border-t-0 border-l-0 rounded-none"
+			class="button-border flex-1 border-t-0 border-l-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
 			on:click={() => {
 				currentLayoutIndex = currentLayoutIndex === 0 ? LAYOUTS.length - 1 : currentLayoutIndex - 1;
@@ -378,7 +378,7 @@
 		</button>
 
 		<button
-			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
+			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
 			on:click={undoColorScheme}
@@ -387,7 +387,7 @@
 		</button>
 
 		<button
-			class="button-border w-1/2 border-t-0 rounded-none"
+			class="button-border flex-1 border-t-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Generate' }}
 			on:click={() => {
 				if (currentColorScheme.some((color) => !color.isLocked)) {
@@ -399,7 +399,7 @@
 		</button>
 
 		<button
-			class="button-border w-1/4 border-t-0 border-x-0 rounded-none"
+			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			disabled={currentColorSchemeIndex === 0}
 			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
 			on:click={redoColorScheme}
@@ -408,7 +408,7 @@
 		</button>
 
 		<button
-			class="button-border w-20 border-t-0 border-r-0 rounded-none"
+			class="button-border flex-1 border-t-0 border-r-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
 			on:click={() => {
 				currentLayoutIndex = currentLayoutIndex === LAYOUTS.length - 1 ? 0 : currentLayoutIndex + 1;
