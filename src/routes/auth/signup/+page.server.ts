@@ -17,7 +17,7 @@ export const actions = {
 			password: password,
 			options: {
 				data: {
-					name: name
+					name: name.trim()
 				}
 			}
 		});
