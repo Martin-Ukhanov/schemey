@@ -37,7 +37,7 @@
 		if (!name) {
 			nameErrorMessage = 'Please Enter Your Name';
 		} else if (name.length < 4 || name.length > 25) {
-			nameErrorMessage = 'Name Must be Between 4 and 25 Characters';
+			nameErrorMessage = 'Name Must be 4 - 25 Characters';
 		}
 
 		if (!email) {
