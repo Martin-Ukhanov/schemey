@@ -23,19 +23,18 @@
 
 	<nav class="hidden sm:flex gap-x-2">
 		{#if $page.data.session}
-			{@const username = $page.data.session.user.user_metadata.name}
+			{@const name = $page.data.session.user.user_metadata.name}
 
 			<a href="/" class="button-primary bg-white text-lime-500">Upgrade</a>
 
 			<div class="w-0.5 mx-1 rounded-md bg-black" />
 
 			<a
-				href={`/user/${stringToSlug(username)}`}
+				href={`/user/${stringToSlug(name)}`}
 				class="button-border aspect-square text-2xl font-normal"
-				use:showTooltip={{ position: 'bottom', message: username }}
 				data-sveltekit-reload
 			>
-				{username[0].toUpperCase()}
+				{name[0].toUpperCase()}
 			</a>
 
 			<form
