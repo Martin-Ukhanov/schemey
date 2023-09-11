@@ -1,12 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { enhance, applyAction } from '$app/forms';
 	import { stringToSlug } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
-	import { savedColorSchemes, savedColors } from '$lib/stores/user';
-	import { addNotification } from '$lib/stores/notifications';
-	import Loader from './Loader.svelte';
 	import MenuIcon from './icons/MenuIcon.svelte';
 
 	let isLoading = false;
