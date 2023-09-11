@@ -4,8 +4,6 @@
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
 	import MenuIcon from './icons/MenuIcon.svelte';
-
-	let isLoading = false;
 </script>
 
 <header class="h-16 p-2 flex justify-between border-b-2 border-black">
