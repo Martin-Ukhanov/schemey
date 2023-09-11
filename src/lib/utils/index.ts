@@ -11,6 +11,10 @@ export function isValidEmail(email: string): boolean {
 	);
 }
 
+export function isValidPassword(password: string): boolean {
+	return /^[a-zA-Z0-9!#$^*]{6,}$/.test(password);
+}
+
 export function stringToSlug(s: string): string {
 	return s
 		.toLowerCase()
