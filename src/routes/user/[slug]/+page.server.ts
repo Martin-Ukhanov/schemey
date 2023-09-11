@@ -90,7 +90,7 @@ export const actions = {
 
 		await supabase.auth.refreshSession();
 	},
-	signOut: async ({ locals: { supabase, getSession } }) => {
+	signOut: async ({ locals: { supabase } }) => {
 		const { error } = await supabase.auth.signOut();
 
 		if (error) {
