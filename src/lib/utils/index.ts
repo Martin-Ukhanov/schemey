@@ -5,6 +5,12 @@ export function clamp(num: number, min: number, max: number): number {
 	return Math.min(Math.max(num, min), max);
 }
 
+export function isValidEmail(email: string): boolean {
+	return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(
+		email
+	);
+}
+
 export function stringToSlug(s: string): string {
 	return s
 		.toLowerCase()
