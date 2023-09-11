@@ -5,6 +5,7 @@
 	import { isSignUpModalOpen, isSignInModalOpen } from '$lib/stores/auth';
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
+	import { fail } from '@sveltejs/kit';
 
 	export let redirect = $page.route.id ? $page.url.pathname : '/';
 
@@ -14,10 +15,6 @@
 
 	let failureData: Record<string, unknown> | undefined;
 	let isLoading = false;
-
-	function isValidEmail(email: FormDataEntryValue): boolean {
-		return /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(<string>email);
-	}
 </script>
 
 <form
@@ -36,20 +33,14 @@
 
 		if (!name) {
 			nameErrorMessage = 'Please Enter Your Name';
-		} else if (name.length < 4 || name.length > 25) {
-			nameErrorMessage = 'Name Must be 4 - 25 Characters';
 		}
 
 		if (!email) {
 			emailErrorMessage = 'Please Enter Your Email';
-		} else if (!isValidEmail(email)) {
-			emailErrorMessage = 'Please Enter a Valid Email';
 		}
 
 		if (!password) {
 			passwordErrorMessage = 'Please Enter a Password.';
-		} else if (password.length < 6) {
-			passwordErrorMessage = 'Password Must be Minimum 6 Characters';
 		}
 
 		if (nameErrorMessage || emailErrorMessage || passwordErrorMessage) {
@@ -88,9 +79,9 @@
 			disabled={isLoading}
 		/>
 
-		{#if nameErrorMessage}
+		{#if nameErrorMessage || failureData?.nameErrorMessage}
 			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-				{nameErrorMessage}
+				{nameErrorMessage ?? failureData?.nameErrorMessage}
 			</p>
 		{/if}
 	</label>
@@ -108,9 +99,9 @@
 			disabled={isLoading}
 		/>
 
-		{#if emailErrorMessage}
+		{#if emailErrorMessage || failureData?.emailErrorMessage}
 			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-				{emailErrorMessage}
+				{emailErrorMessage ?? failureData?.emailErrorMessage}
 			</p>
 		{/if}
 	</label>
@@ -128,9 +119,9 @@
 			disabled={isLoading}
 		/>
 
-		{#if passwordErrorMessage}
+		{#if passwordErrorMessage || failureData?.passwordErrorMessage}
 			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-				{passwordErrorMessage}
+				{passwordErrorMessage ?? failureData?.passwordErrorMessage}
 			</p>
 		{/if}
 	</label>
@@ -143,9 +134,9 @@
 			{/if}
 		</button>
 
-		{#if failureData?.message}
+		{#if failureData?.signUpErrorMessage}
 			<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-				{failureData.message}
+				{failureData.signUpErrorMessage}
 			</p>
 		{/if}
 	</div>
