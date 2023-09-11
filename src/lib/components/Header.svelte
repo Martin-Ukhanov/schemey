@@ -25,9 +25,7 @@
 		{#if $page.data.session}
 			{@const name = $page.data.session.user.user_metadata.name}
 
-			<a href="/" class="button-primary bg-white text-lime-500">Upgrade</a>
-
-			<div class="w-0.5 mx-1 rounded-md bg-black" />
+			<a href="/" class="button-primary">Upgrade</a>
 
 			<a
 				href={`/user/${stringToSlug(name)}`}
@@ -36,41 +34,6 @@
 			>
 				{name[0].toUpperCase()}
 			</a>
-
-			<form
-				method="post"
-				action={`/auth/signout?redirect=${
-					$page.route.id ? (/^\/user\/?/.test($page.url.pathname) ? '/' : $page.url.pathname) : '/'
-				}`}
-				use:enhance={() => {
-					isLoading = true;
-
-					return async ({ update, result }) => {
-						await update();
-
-						if (result.type === 'redirect') {
-							$savedColors = [];
-							$savedColorSchemes = [];
-
-							isLoading = false;
-
-							await applyAction(result);
-
-							addNotification('Successfully Signed Out', 'check');
-						} else if (result.type === 'failure') {
-							isLoading = false;
-							addNotification('Sign Out Failed', 'x');
-						}
-					};
-				}}
-			>
-				<button class="button-primary h-full" disabled={isLoading}>
-					<span class:opacity-0={isLoading}>Sign Out</span>
-					{#if isLoading}
-						<Loader color="black" />
-					{/if}
-				</button>
-			</form>
 		{:else}
 			<button
 				class="button-border"
