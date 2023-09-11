@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { scale } from 'svelte/transition';
+	import { enhance, applyAction } from '$app/forms';
+	import { scale, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { contrastingColor } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
+	import {
+		savedColors as savedColorsStore,
+		savedColorSchemes as savedColorSchemesStore
+	} from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/notifications';
 	import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
 	import Loader from '$lib/components/Loader.svelte';
@@ -27,6 +32,18 @@
 			return { colorScheme: savedColorScheme, isDeleteLoading: false };
 		}
 	);
+
+	let newNameErrorMessage: string | undefined;
+	let updateNameFailureData: Record<string, unknown> | undefined;
+	let isUpdateNameLoading = false;
+
+	let currentPasswordErrorMessage: string | undefined;
+	let newPasswordErrorMessage: string | undefined;
+	let updatePasswordFailureData: Record<string, unknown> | undefined;
+	let isUpdatePasswordLoading = false;
+
+	let isSignOutLoading = false;
+	let isDeleteUserLoading = false;
 
 	async function deleteColor(color: string): Promise<void> {
 		const response = await fetch('/api/colors', {
@@ -66,6 +83,15 @@
 			addNotification('Failed to Delete Color Scheme', 'x');
 		}
 	}
+
+	$: if (activePage !== 'account') {
+		newNameErrorMessage = undefined;
+		updateNameFailureData = undefined;
+
+		currentPasswordErrorMessage = undefined;
+		newPasswordErrorMessage = undefined;
+		updatePasswordFailureData = undefined;
+	}
 </script>
 
 <nav class="h-44 sm:h-20 p-4 flex flex-col sm:flex-row justify-center gap-2 sm:[&>button]:w-48">
@@ -98,7 +124,7 @@
 </nav>
 
 <div
-	class="h-[calc(100dvh-theme(height.60))] sm:h-[calc(100dvh-theme(height.36))] min-h-64 p-4 pt-0 w-full self-center"
+	class="h-[calc(100dvh-theme(height.60))] sm:h-[calc(100dvh-theme(height.36))] min-h-64 p-4 pt-0 flex flex-col"
 >
 	{#if activePage === 'colors'}
 		<div
@@ -190,8 +216,221 @@
 			{/each}
 		</div>
 	{:else if activePage === 'account'}
-		<h1 class="text-4xl text-center uppercase font-bold overflow-x-auto">
-			{$page.data.session?.user.user_metadata.name}
-		</h1>
+		{@const name = $page.data.session?.user.user_metadata.name}
+
+		<h1 class="mb-4 text-4xl text-center uppercase font-bold">{name}</h1>
+
+		<div class="w-full max-w-4xl pb-4 self-center flex flex-col gap-4">
+			<form
+				method="post"
+				action="?/updateName"
+				class="flex-1 p-4 flex flex-col border-2 rounded-md border-black"
+				use:enhance={({ formData, cancel }) => {
+					newNameErrorMessage = undefined;
+					updateNameFailureData = undefined;
+
+					if (!formData.get('name')) {
+						newNameErrorMessage = 'Please Enter a New Name';
+						cancel();
+					} else {
+						isUpdateNameLoading = true;
+					}
+
+					return async ({ update, result }) => {
+						await update();
+
+						if (result.type === 'redirect') {
+							await applyAction(result);
+							isUpdateNameLoading = false;
+							addNotification('Sucessfully Updated Name', 'check');
+						} else if (result.type === 'failure') {
+							isUpdateNameLoading = false;
+							updateNameFailureData = result.data;
+						}
+					};
+				}}
+			>
+				<label for="name" class="mb-4 flex flex-col">
+					<span class="mb-2 font-bold uppercase">Name</span>
+
+					<input type="text" name="name" id="name" value={name} autocomplete="name" class="input" />
+
+					{#if newNameErrorMessage || updateNameFailureData?.newNameErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{newNameErrorMessage ?? updateNameFailureData?.newNameErrorMessage}
+						</p>
+					{/if}
+				</label>
+
+				<div class="flex flex-col">
+					<button type="submit" class="button-primary" disabled={isUpdateNameLoading}>
+						<span class:opacity-0={isUpdateNameLoading}>Update Name</span>
+
+						{#if isUpdateNameLoading}
+							<Loader color="black" />
+						{/if}
+					</button>
+
+					{#if updateNameFailureData?.updateNameErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{updateNameFailureData.updateNameErrorMessage}
+						</p>
+					{/if}
+				</div>
+			</form>
+
+			<form
+				method="post"
+				action="?/updatePassword"
+				class="flex-1 p-4 flex flex-col border-2 rounded-md border-black"
+				use:enhance={({ formData, cancel }) => {
+					currentPasswordErrorMessage = undefined;
+					newPasswordErrorMessage = undefined;
+					updatePasswordFailureData = undefined;
+
+					if (!formData.get('currentPassword')) {
+						currentPasswordErrorMessage = 'Please Enter Your Password';
+					}
+
+					if (!formData.get('newPassword')) {
+						newPasswordErrorMessage = 'Please Enter a New Password';
+					}
+
+					if (currentPasswordErrorMessage || newPasswordErrorMessage) {
+						cancel();
+					} else {
+						isUpdatePasswordLoading = true;
+					}
+
+					return async ({ update, result }) => {
+						await update();
+
+						if (result.type === 'success') {
+							await applyAction(result);
+							isUpdatePasswordLoading = false;
+							addNotification('Sucessfully Updated Password', 'check');
+						} else if (result.type === 'failure') {
+							isUpdatePasswordLoading = false;
+							updatePasswordFailureData = result.data;
+						}
+					};
+				}}
+			>
+				<label for="current-password" class="mb-4 flex flex-col">
+					<span class="mb-2 font-bold uppercase">Current Password</span>
+
+					<input
+						type="password"
+						name="currentPassword"
+						id="current-password"
+						placeholder="••••••"
+						autocomplete="current-password"
+						class="input"
+					/>
+
+					{#if currentPasswordErrorMessage || updatePasswordFailureData?.currentPasswordErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{currentPasswordErrorMessage ??
+								updatePasswordFailureData?.currentPasswordErrorMessage}
+						</p>
+					{/if}
+				</label>
+
+				<label for="new-password" class="mb-4 flex flex-col">
+					<span class="mb-2 font-bold uppercase">New Password</span>
+
+					<input
+						type="password"
+						name="newPassword"
+						id="new-password"
+						placeholder="••••••"
+						autocomplete="new-password"
+						class="input"
+					/>
+
+					{#if newPasswordErrorMessage || updatePasswordFailureData?.newPasswordErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{newPasswordErrorMessage ?? updatePasswordFailureData?.newPasswordErrorMessage}
+						</p>
+					{/if}
+				</label>
+
+				<div class="flex flex-col">
+					<button type="submit" class="button-primary" disabled={isUpdatePasswordLoading}>
+						<span class:opacity-0={isUpdatePasswordLoading}>Update Password</span>
+
+						{#if isUpdatePasswordLoading}
+							<Loader color="black" />
+						{/if}
+					</button>
+
+					{#if updatePasswordFailureData?.updatePasswordErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{updatePasswordFailureData.updatePasswordErrorMessage}
+						</p>
+					{/if}
+				</div>
+			</form>
+
+			<div class="flex flex-col gap-y-2">
+				<form
+					method="post"
+					action="?/signOut"
+					use:enhance={() => {
+						isSignOutLoading = true;
+
+						return async ({ update, result }) => {
+							await update();
+
+							if (result.type === 'redirect') {
+								$savedColorsStore = [];
+								$savedColorSchemesStore = [];
+
+								isSignOutLoading = false;
+
+								await applyAction(result);
+
+								addNotification('Successfully Signed Out', 'check');
+							} else if (result.type === 'failure') {
+								isSignOutLoading = false;
+								addNotification('Sign Out Failed', 'x');
+							}
+						};
+					}}
+				>
+					<button type="submit" class="button-primary w-full">Sign Out</button>
+				</form>
+
+				<form
+					method="post"
+					action="?/deleteUser"
+					use:enhance={() => {
+						isDeleteUserLoading = true;
+
+						return async ({ update, result }) => {
+							await update();
+
+							if (result.type === 'redirect') {
+								$savedColorsStore = [];
+								$savedColorSchemesStore = [];
+
+								isDeleteUserLoading = false;
+
+								await applyAction(result);
+
+								addNotification('Successfully Deleted Account', 'check');
+							} else if (result.type === 'failure') {
+								isDeleteUserLoading = false;
+								addNotification('Account Deletion Failed', 'x');
+							}
+						};
+					}}
+				>
+					<button type="submit" class="button-primary w-full bg-red-500 border-red-500">
+						Delete Account
+					</button>
+				</form>
+			</div>
+		</div>
 	{/if}
 </div>
