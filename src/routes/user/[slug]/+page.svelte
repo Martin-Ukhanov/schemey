@@ -96,6 +96,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Schemey | {$page.data.session?.user.user_metadata.name}</title>
+</svelte:head>
+
 <nav class="p-4 flex flex-col sm:flex-row justify-center gap-2 sm:[&>button]:w-48">
 	<button
 		class={activePage === 'colors' ? 'button-primary' : 'button-border'}

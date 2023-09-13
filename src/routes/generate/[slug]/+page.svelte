@@ -365,6 +365,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Schemey | Generate</title>
+</svelte:head>
+
 {#if !isMenuOpen}
 	<menu class="w-full flex" transition:slide={{ axis: 'y', duration: 200 }}>
 		<button
