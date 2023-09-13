@@ -90,7 +90,7 @@
 		</div>
 
 		<button
-			aria-label="menu"
+			aria-label={isMenuOpen ? 'Close Menu' : 'Open Menu'}
 			class="button h-full p-0 sm:hidden aspect-square"
 			on:click={() => {
 				isMenuOpen = !isMenuOpen;
