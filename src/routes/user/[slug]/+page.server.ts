@@ -2,7 +2,7 @@ import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { isValidPassword, stringToSlug } from '$lib/utils';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ locals: { getSession }, params, fetch }) => {
+export const load = (async ({ locals: { getSession, supabase }, params, fetch }) => {
 	const session = await getSession();
 
 	if (!session || params.slug !== stringToSlug(session.user.user_metadata.name)) {
@@ -11,14 +11,20 @@ export const load = (async ({ locals: { getSession }, params, fetch }) => {
 		const savedColorsResponse = await fetch('/api/colors', {
 			method: 'GET'
 		});
-		const savedColorsData = await savedColorsResponse.json();
+		const savedColors = await savedColorsResponse.json();
 
 		const savedColorSchemesResponse = await fetch('/api/colorSchemes', {
 			method: 'GET'
 		});
-		const savedColorSchemesData = await savedColorSchemesResponse.json();
+		const savedColorSchemes = await savedColorSchemesResponse.json();
 
-		return { savedColors: savedColorsData, savedColorSchemes: savedColorSchemesData };
+		const { error, count } = await supabase
+			.from('user_deletion_requests')
+			.select('*', { count: 'exact' });
+
+		const isUserDeletionRequested = !(error || count === 0);
+
+		return { savedColors, savedColorSchemes, isUserDeletionRequested };
 	}
 }) satisfies PageServerLoad;
 
@@ -98,16 +104,23 @@ export const actions = {
 		}
 
 		throw redirect(303, '/');
+	},
+	requestUserDeletion: async ({ locals: { supabase } }) => {
+		const { error } = await supabase.from('user_deletion_requests').insert({});
+
+		if (error) {
+			return fail(500);
+		}
+	},
+	cancelUserDeletionRequest: async ({ locals: { getSession, supabase } }) => {
+		const session = await getSession();
+		const { error } = await supabase
+			.from('user_deletion_requests')
+			.delete()
+			.eq('user_id', session?.user.id);
+
+		if (error) {
+			return fail(500);
+		}
 	}
-	// deleteUser: async ({ locals: { supabase, getSession } }) => {
-	// 	const session = await getSession();
-
-	// 	const { error } = await supabase.from('user_deletion_requests').insert({});
-
-	// 	if (error) {
-	// 		return fail(500);
-	// 	}
-
-	// 	throw redirect(303, '/');
-	// }
 } satisfies Actions;

@@ -13,6 +13,8 @@
 	import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
 	import Loader from '$lib/components/Loader.svelte';
 
+	export let data;
+
 	type SavedColor = {
 		hex: string;
 		isDeleteLoading: boolean;
@@ -24,14 +26,16 @@
 	};
 
 	let activePage: 'colors' | 'colorSchemes' | 'account' = 'colors';
-	let savedColors: SavedColor[] = $page.data.savedColors.map((SavedColor: string) => {
+	let savedColors: SavedColor[] = data.savedColors.map((SavedColor: string) => {
 		return { hex: SavedColor, isDeleteLoading: false };
 	});
-	let savedColorSchemes: SavedColorScheme[] = $page.data.savedColorSchemes.map(
+	let savedColorSchemes: SavedColorScheme[] = data.savedColorSchemes.map(
 		(savedColorScheme: string[]) => {
 			return { colorScheme: savedColorScheme, isDeleteLoading: false };
 		}
 	);
+
+	let { isUserDeletionRequested } = data;
 
 	let newNameErrorMessage: string | undefined;
 	let updateNameFailureData: Record<string, unknown> | undefined;
@@ -43,7 +47,7 @@
 	let isUpdatePasswordLoading = false;
 
 	let isSignOutLoading = false;
-	let isDeleteUserLoading = false;
+	let isRequestDeleteUserLoading = false;
 
 	async function deleteColor(color: string): Promise<void> {
 		const response = await fetch('/api/colors', {
@@ -286,7 +290,7 @@
 						<span class:opacity-0={isUpdateNameLoading}>Update Name</span>
 
 						{#if isUpdateNameLoading}
-							<Loader color="black" />
+							<Loader color="white" />
 						{/if}
 					</button>
 
@@ -379,7 +383,7 @@
 						<span class:opacity-0={isUpdatePasswordLoading}>Update Password</span>
 
 						{#if isUpdatePasswordLoading}
-							<Loader color="black" />
+							<Loader color="white" />
 						{/if}
 					</button>
 
@@ -422,31 +426,49 @@
 
 				<form
 					method="post"
-					action="?/deleteUser"
+					action={data.isUserDeletionRequested
+						? '?/cancelUserDeletionRequest'
+						: '?/requestUserDeletion'}
 					use:enhance={() => {
-						isDeleteUserLoading = true;
+						isRequestDeleteUserLoading = true;
 
 						return async ({ update, result }) => {
 							await update();
 
-							if (result.type === 'redirect') {
-								$savedColorsStore = [];
-								$savedColorSchemesStore = [];
+							isRequestDeleteUserLoading = false;
 
-								isDeleteUserLoading = false;
+							if (result.type === 'success') {
+								// isUserDeletionRequested = !isUserDeletionRequested;
 
-								await applyAction(result);
-
-								addNotification('Successfully Deleted Account', 'check');
+								addNotification(
+									data.isUserDeletionRequested
+										? 'Successfully Requested Account Deletion'
+										: 'Successfully Canceled Account Deletion',
+									'check'
+								);
 							} else if (result.type === 'failure') {
-								isDeleteUserLoading = false;
-								addNotification('Account Deletion Failed', 'x');
+								addNotification(
+									data.isUserDeletionRequested
+										? 'Account Deletion Request Failed'
+										: 'Cancel Account Deletion Failed',
+									'x'
+								);
 							}
 						};
 					}}
 				>
 					<button type="submit" class="button-primary w-full bg-red-500 border-red-500">
-						Delete Account
+						<span class:opacity-0={isRequestDeleteUserLoading}>
+							{#if data.isUserDeletionRequested}
+								Cancel Account Deletion
+							{:else}
+								Request Account Deletion
+							{/if}
+						</span>
+
+						{#if isRequestDeleteUserLoading}
+							<Loader color="white" />
+						{/if}
 					</button>
 				</form>
 			</div>
