@@ -16,9 +16,12 @@
 </script>
 
 {#if isMenuOpen}
-	<div
-		class="fixed top-0 left-0 w-full h-full sm:hidden z-20 bg-black/50"
+	<button
+		class="fixed top-0 left-0 w-full h-full sm:hidden z-20 bg-black/50 cursor-default"
 		transition:fade={{ duration: 200 }}
+		on:click={() => {
+			isMenuOpen = false;
+		}}
 	/>
 {/if}
 
