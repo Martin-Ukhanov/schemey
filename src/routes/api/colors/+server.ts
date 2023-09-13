@@ -4,7 +4,7 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ locals: { supabase } }) => {
 	const { data } = await supabase.from('colors').select('color');
 
-	return json(data?.map((color) => color.color) ?? []);
+	return json(data?.reverse().map((color) => color.color) ?? []);
 };
 
 export const POST: RequestHandler = async ({ request, locals: { supabase } }) => {
