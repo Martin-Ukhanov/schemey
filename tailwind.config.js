@@ -17,6 +17,9 @@ export default {
 			}),
 			minHeight: (theme) => ({
 				...theme('spacing')
+			}),
+			gridAutoRows: (theme) => ({
+				...theme('spacing')
 			})
 		}
 	},
