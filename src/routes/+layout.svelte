@@ -10,9 +10,8 @@
 	import SignUp from '$lib/components/SignUp.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import Notifications from '$lib/components/Notifications.svelte';
-	import type { LayoutData } from './$types';
 
-	export let data: LayoutData;
+	export let data;
 
 	let { supabase, session } = data;
 
