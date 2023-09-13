@@ -179,7 +179,7 @@
 		</div>
 	{:else if activePage === 'colorSchemes'}
 		<div
-			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.64),1fr))] auto-rows-36 gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
+			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.64),1fr))] auto-rows-28 gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 		>
 			{#if savedColorSchemes.length === 0}
 				<p
