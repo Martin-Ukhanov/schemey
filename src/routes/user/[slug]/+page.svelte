@@ -35,8 +35,6 @@
 		}
 	);
 
-	let { isUserDeletionRequested } = data;
-
 	let newNameErrorMessage: string | undefined;
 	let updateNameFailureData: Record<string, unknown> | undefined;
 	let isUpdateNameLoading = false;
@@ -47,7 +45,7 @@
 	let isUpdatePasswordLoading = false;
 
 	let isSignOutLoading = false;
-	let isRequestDeleteUserLoading = false;
+	let isUserDeletionRequestLoading = false;
 
 	async function deleteColor(color: string): Promise<void> {
 		const response = await fetch('/api/colors', {
@@ -421,7 +419,13 @@
 						};
 					}}
 				>
-					<button type="submit" class="button-primary w-full">Sign Out</button>
+					<button type="submit" class="button-primary w-full">
+						<span class:opacity-0={isSignOutLoading}>Sign Out</span>
+
+						{#if isSignOutLoading}
+							<Loader color="white" />
+						{/if}
+					</button>
 				</form>
 
 				<form
@@ -430,12 +434,12 @@
 						? '?/cancelUserDeletionRequest'
 						: '?/requestUserDeletion'}
 					use:enhance={() => {
-						isRequestDeleteUserLoading = true;
+						isUserDeletionRequestLoading = true;
 
 						return async ({ update, result }) => {
 							await update();
 
-							isRequestDeleteUserLoading = false;
+							isUserDeletionRequestLoading = false;
 
 							if (result.type === 'success') {
 								addNotification(
@@ -456,7 +460,7 @@
 					}}
 				>
 					<button type="submit" class="button-primary w-full bg-red-500 border-red-500">
-						<span class:opacity-0={isRequestDeleteUserLoading}>
+						<span class:opacity-0={isUserDeletionRequestLoading}>
 							{#if data.isUserDeletionRequested}
 								Cancel Account Deletion
 							{:else}
@@ -464,7 +468,7 @@
 							{/if}
 						</span>
 
-						{#if isRequestDeleteUserLoading}
+						{#if isUserDeletionRequestLoading}
 							<Loader color="white" />
 						{/if}
 					</button>
