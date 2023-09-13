@@ -23,7 +23,9 @@
 {/if}
 
 <header class="relative h-16 z-20">
-	<nav class="w-full h-full p-2 flex justify-between border-b-2 bg-white border-black">
+	<nav
+		class="w-full h-full p-2 flex justify-between overflow-x-auto border-b-2 bg-white border-black"
+	>
 		<a
 			href="/"
 			class="button h-full text-3xl font-bold text-lime-500"
