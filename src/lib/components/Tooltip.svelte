@@ -5,7 +5,7 @@
 
 {#if $tooltip.isVisible}
 	<div
-		class="absolute -translate-x-1/2 flex flex-col items-center z-10 will-change-transform"
+		class="absolute -translate-x-1/2 flex flex-col items-center z-20 will-change-transform"
 		class:-translate-y-full={$tooltip.position === 'top'}
 		style={`top: ${$tooltip.y}px; left: ${$tooltip.x}px;`}
 		transition:scale={{ duration: 200 }}
