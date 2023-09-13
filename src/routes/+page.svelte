@@ -2,8 +2,10 @@
 	import { generateColorScheme } from '$lib/utils';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { onMount } from 'svelte';
+	import Loader from '$lib/components/Loader.svelte';
 
 	let colorScheme = generateColorScheme(6, $colorSpacePresets['all']);
+	let isLoading = false;
 
 	onMount(() => {
 		const interval = setInterval(() => {
@@ -33,5 +35,17 @@
 		Create beautiful color schemes with the click of a button
 	</p>
 
-	<a href="/generate" class="button-primary" data-sveltekit-reload> Start Generating </a>
+	<a
+		href="/generate"
+		class="button-primary"
+		on:click={() => {
+			isLoading = true;
+		}}
+	>
+		<span class:opacity-0={isLoading}>Start Generating</span>
+
+		{#if isLoading}
+			<Loader color="white" />
+		{/if}
+	</a>
 </div>
