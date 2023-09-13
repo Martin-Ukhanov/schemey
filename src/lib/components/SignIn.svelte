@@ -77,8 +77,8 @@
 			id="email"
 			placeholder="example@email.com"
 			autocomplete="email"
-			class="input"
 			disabled={isLoading}
+			class="input"
 		/>
 
 		{#if emailErrorMessage}
@@ -97,8 +97,8 @@
 			id="password"
 			placeholder="••••••"
 			autocomplete="current-password"
-			class="input"
 			disabled={isLoading}
+			class="input"
 		/>
 
 		{#if passwordErrorMessage}
@@ -109,7 +109,7 @@
 	</label>
 
 	<div class="mb-4 flex flex-col">
-		<button type="submit" class="button-primary" disabled={isLoading}>
+		<button type="submit" disabled={isLoading} class="button-primary">
 			<span class:opacity-0={isLoading}>Sign In</span>
 
 			{#if isLoading}

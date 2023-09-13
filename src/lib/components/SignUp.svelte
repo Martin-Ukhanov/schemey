@@ -75,8 +75,8 @@
 			id="name"
 			placeholder="John Doe"
 			autocomplete="name"
-			class="input"
 			disabled={isLoading}
+			class="input"
 		/>
 
 		{#if nameErrorMessage || failureData?.nameErrorMessage}
@@ -95,8 +95,8 @@
 			id="email"
 			placeholder="example@email.com"
 			autocomplete="email"
-			class="input"
 			disabled={isLoading}
+			class="input"
 		/>
 
 		{#if emailErrorMessage || failureData?.emailErrorMessage}
@@ -115,8 +115,8 @@
 			id="password"
 			placeholder="••••••"
 			autocomplete="new-password"
-			class="input"
 			disabled={isLoading}
+			class="input"
 		/>
 
 		{#if passwordErrorMessage || failureData?.passwordErrorMessage}
@@ -127,7 +127,7 @@
 	</label>
 
 	<div class="mb-4 flex flex-col">
-		<button type="submit" class="button-primary" disabled={isLoading}>
+		<button type="submit" disabled={isLoading} class="button-primary">
 			<span class:opacity-0={isLoading}>Sign Up</span>
 
 			{#if isLoading}

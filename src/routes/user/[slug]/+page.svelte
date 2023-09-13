@@ -285,7 +285,7 @@
 				</label>
 
 				<div class="flex flex-col">
-					<button type="submit" class="button-primary" disabled={isUpdateNameLoading}>
+					<button type="submit" disabled={isUpdateNameLoading} class="button-primary">
 						<span class:opacity-0={isUpdateNameLoading}>Update Name</span>
 
 						{#if isUpdateNameLoading}
@@ -378,7 +378,7 @@
 				</label>
 
 				<div class="flex flex-col">
-					<button type="submit" class="button-primary" disabled={isUpdatePasswordLoading}>
+					<button type="submit" disabled={isUpdatePasswordLoading} class="button-primary">
 						<span class:opacity-0={isUpdatePasswordLoading}>Update Password</span>
 
 						{#if isUpdatePasswordLoading}
@@ -420,7 +420,7 @@
 						};
 					}}
 				>
-					<button type="submit" class="button-primary w-full" disabled={isSignOutLoading}>
+					<button type="submit" disabled={isSignOutLoading} class="button-primary w-full">
 						<span class:opacity-0={isSignOutLoading}>Sign Out</span>
 
 						{#if isSignOutLoading}
@@ -462,8 +462,8 @@
 				>
 					<button
 						type="submit"
-						class="button-primary w-full bg-red-500 border-red-500"
 						disabled={isUserDeletionRequestLoading}
+						class="button-primary w-full bg-red-500 border-red-500"
 					>
 						<span class:opacity-0={isUserDeletionRequestLoading}>
 							{#if data.isUserDeletionRequested}

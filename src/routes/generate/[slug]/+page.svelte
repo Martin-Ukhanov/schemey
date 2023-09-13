@@ -378,8 +378,8 @@
 		</button>
 
 		<button
-			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
+			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
 			on:click={undoColorScheme}
 		>
@@ -399,8 +399,8 @@
 		</button>
 
 		<button
-			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			disabled={currentColorSchemeIndex === 0}
+			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
 			on:click={redoColorScheme}
 		>
@@ -538,9 +538,9 @@
 
 			<div class="flex gap-x-2">
 				<button
-					class="button-border flex-1"
 					disabled={colorSchemes.length === 1 ||
 						currentColorSchemeIndex === colorSchemes.length - 1}
+					class="button-border flex-1"
 					use:showTooltip={{ position: 'top', message: 'Undo' }}
 					on:click={undoColorScheme}
 				>
@@ -548,8 +548,8 @@
 				</button>
 
 				<button
-					class="button-border flex-1"
 					disabled={currentColorSchemeIndex === 0}
+					class="button-border flex-1"
 					use:showTooltip={{ position: 'top', message: 'Redo' }}
 					on:click={redoColorScheme}
 				>
@@ -592,10 +592,10 @@
 
 								{#key $savedColors.includes(color.hex)}
 									<button
+										disabled={color.isToggleSaveLoading}
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
-										disabled={color.isToggleSaveLoading}
 										use:showTooltip={{
 											position: 'top',
 											message: $savedColors.includes(color.hex) ? 'Delete Color' : 'Save Color'
