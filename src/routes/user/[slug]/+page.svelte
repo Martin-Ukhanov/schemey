@@ -128,7 +128,7 @@
 <div class="flex-1 min-h-64 p-4 pt-0 flex flex-col">
 	{#if activePage === 'colors'}
 		<div
-			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.40),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
+			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.40),1fr))] auto-rows-28 gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 		>
 			{#if savedColors.length === 0}
 				<p
@@ -179,7 +179,7 @@
 		</div>
 	{:else if activePage === 'colorSchemes'}
 		<div
-			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.64),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
+			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.64),1fr))] auto-rows-28 gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 		>
 			{#if savedColorSchemes.length === 0}
 				<p
