@@ -168,6 +168,7 @@
 							<div class:opacity-0={savedColor.isDeleteLoading}>
 								<TrashIcon />
 							</div>
+
 							{#if savedColor.isDeleteLoading}
 								<Loader color="black" />
 							{/if}
