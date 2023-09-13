@@ -28,6 +28,9 @@
 			href="/"
 			class="button h-full text-3xl font-bold text-lime-500"
 			use:showTooltip={{ position: 'bottom', message: 'Home' }}
+			on:click={() => {
+				isMenuOpen = false;
+			}}
 		>
 			Schemey
 		</a>
