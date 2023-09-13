@@ -47,6 +47,7 @@
 					href={`/user/${stringToSlug(name)}`}
 					class="button-border max-w-80"
 					data-sveltekit-reload
+					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 				>
 					<span class="truncate">{name.toUpperCase()}</span>
 				</a>
@@ -99,6 +100,7 @@
 					href={`/user/${stringToSlug(name)}`}
 					class="button-border flex-1 overflow-hidden"
 					data-sveltekit-reload
+					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 					on:click={() => {
 						isMenuOpen = false;
 					}}
