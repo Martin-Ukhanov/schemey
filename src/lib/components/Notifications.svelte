@@ -12,13 +12,12 @@
 	import SavedIcon from './icons/SavedIcon.svelte';
 </script>
 
-<div
-	class="fixed top-[5px] left-4 right-4 flex flex-col items-center gap-y-2 z-20 pointer-events-none"
->
+<div class="fixed top-[5px] left-4 right-4 flex flex-col gap-y-2 z-20 pointer-events-none">
 	{#each $notifications as notification (notification.id)}
 		{@const contrastColor = contrastingColor(notification.color)}
+
 		<button
-			class="button-border gap-x-2 pointer-events-auto !brightness-100"
+			class="button-border relative left-1/2 -translate-x-1/2 max-w-min gap-x-2 pointer-events-auto !brightness-100"
 			style={`background-color: ${notification.color}; color: ${contrastColor}; fill: ${contrastColor};`}
 			in:scale={{ duration: 200 }}
 			out:scale={{ duration: 200 }}
@@ -27,23 +26,25 @@
 				dismissNotification(notification.id);
 			}}
 		>
-			{#if notification.icon === 'check'}
-				<CheckSquareIcon />
-			{:else if notification.icon === 'x'}
-				<XSquareIcon />
-			{:else if notification.icon === 'trash'}
-				<TrashIcon />
-			{:else if notification.icon === 'copied'}
-				<CopyIcon />
-			{:else if notification.icon === 'unlocked'}
-				<UnlockedIcon />
-			{:else if notification.icon === 'locked'}
-				<LockedIcon />
-			{:else if notification.icon === 'saved'}
-				<SavedIcon />
-			{/if}
+			<div>
+				{#if notification.icon === 'check'}
+					<CheckSquareIcon />
+				{:else if notification.icon === 'x'}
+					<XSquareIcon />
+				{:else if notification.icon === 'trash'}
+					<TrashIcon />
+				{:else if notification.icon === 'copied'}
+					<CopyIcon />
+				{:else if notification.icon === 'unlocked'}
+					<UnlockedIcon />
+				{:else if notification.icon === 'locked'}
+					<LockedIcon />
+				{:else if notification.icon === 'saved'}
+					<SavedIcon />
+				{/if}
+			</div>
 
-			<span class="text-center uppercase">{notification.message}</span>
+			<span class="truncate">{notification.message}</span>
 		</button>
 	{/each}
 </div>
