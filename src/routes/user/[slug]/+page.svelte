@@ -438,8 +438,6 @@
 							isRequestDeleteUserLoading = false;
 
 							if (result.type === 'success') {
-								// isUserDeletionRequested = !isUserDeletionRequested;
-
 								addNotification(
 									data.isUserDeletionRequested
 										? 'Successfully Requested Account Deletion'
