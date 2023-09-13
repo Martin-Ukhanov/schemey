@@ -22,7 +22,7 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 {#if isOpen}
-	<div class="fixed top-0 left-0 w-full h-full z-10">
+	<div class="fixed top-0 left-0 w-full h-full z-20">
 		<div
 			class="absolute top-0 left-0 w-full h-full bg-black/50"
 			transition:fade={{ duration: 200 }}
@@ -37,9 +37,9 @@
 				class="relative left-1/2 -translate-x-1/2 w-screen sm:w-96 p-4 border-t-2 sm:border-2 sm:rounded-md bg-white border-black"
 				bind:clientHeight={modalHeight}
 			>
-				<div class="relative mb-4 flex justify-center items-center">
+				<div class="relative mb-4 flex justify-between items-center gap-x-2">
 					<button
-						class="button absolute left-0 p-0"
+						class="button p-0"
 						on:click={() => {
 							isOpen = false;
 							dispatch('close');
@@ -48,7 +48,11 @@
 						<XIcon />
 					</button>
 
-					<h2 class="text-center text-2xl font-bold uppercase text-black">{title}</h2>
+					<h2 class="text-center text-2xl font-bold uppercase text-black">
+						{title}
+					</h2>
+
+					<span class="w-9" />
 				</div>
 
 				<slot />
