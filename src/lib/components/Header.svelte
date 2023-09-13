@@ -5,10 +5,12 @@
 	import { stringToSlug } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
+	import Loader from './Loader.svelte';
 	import MenuIcon from './icons/MenuIcon.svelte';
 	import XIcon from './icons/XIcon.svelte';
 
 	let isMenuOpen = false;
+	let isLoading = false;
 
 	$: if (browser) {
 		document.body.classList.toggle('no-scroll', isMenuOpen);
@@ -51,8 +53,15 @@
 					class="button-border max-w-80"
 					data-sveltekit-reload
 					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
+					on:click={() => {
+						isLoading = true;
+					}}
 				>
-					<span class="truncate">{name.toUpperCase()}</span>
+					<span class="truncate" class:opacity-0={isLoading}>{name.toUpperCase()}</span>
+
+					{#if isLoading}
+						<Loader color="black" />
+					{/if}
 				</a>
 			{:else}
 				<button
@@ -105,10 +114,14 @@
 					data-sveltekit-reload
 					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 					on:click={() => {
-						isMenuOpen = false;
+						isLoading = true;
 					}}
 				>
-					<div class="truncate">{name.toUpperCase()}</div>
+					<span class="truncate" class:opacity-0={isLoading}>{name.toUpperCase()}</span>
+
+					{#if isLoading}
+						<Loader color="black" />
+					{/if}
 				</a>
 			{:else}
 				<button
