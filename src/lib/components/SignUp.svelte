@@ -129,8 +129,9 @@
 	<div class="mb-4 flex flex-col">
 		<button type="submit" class="button-primary" disabled={isLoading}>
 			<span class:opacity-0={isLoading}>Sign Up</span>
+
 			{#if isLoading}
-				<Loader color="black" />
+				<Loader color="white" />
 			{/if}
 		</button>
 

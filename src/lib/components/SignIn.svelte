@@ -113,7 +113,7 @@
 			<span class:opacity-0={isLoading}>Sign In</span>
 
 			{#if isLoading}
-				<Loader color="black" />
+				<Loader color="white" />
 			{/if}
 		</button>
 
