@@ -372,6 +372,7 @@
 {#if !isMenuOpen}
 	<menu class="w-full flex" transition:slide={{ axis: 'y', duration: 200 }}>
 		<button
+			aria-label="Layout"
 			class="button-border flex-1 border-t-0 border-l-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
 			on:click={() => {
@@ -382,6 +383,7 @@
 		</button>
 
 		<button
+			aria-label="Undo"
 			disabled={colorSchemes.length === 1 || currentColorSchemeIndex === colorSchemes.length - 1}
 			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Undo' }}
@@ -391,6 +393,7 @@
 		</button>
 
 		<button
+			aria-label="Generate"
 			class="button-border flex-1 border-t-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Generate' }}
 			on:click={() => {
@@ -403,6 +406,7 @@
 		</button>
 
 		<button
+			aria-label="Redo"
 			disabled={currentColorSchemeIndex === 0}
 			class="button-border flex-1 border-t-0 border-x-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Redo' }}
@@ -412,6 +416,7 @@
 		</button>
 
 		<button
+			aria-label="Layout"
 			class="button-border flex-1 border-t-0 border-r-0 rounded-none"
 			use:showTooltip={{ position: 'bottom', message: 'Layout' }}
 			on:click={() => {
@@ -439,6 +444,7 @@
 	<div class="absolute bottom-full left-2 flex gap-x-2">
 		{#key isMenuOpen}
 			<button
+				aria-label={isMenuOpen ? 'Close' : 'Open'}
 				class="button-border rounded-b-none"
 				use:showTooltip={{ position: 'top', message: isMenuOpen ? 'Close' : 'Open' }}
 				on:click={() => {
@@ -455,6 +461,7 @@
 
 		{#if isMenuOpen}
 			<button
+				aria-label="Resize"
 				class="button-border rounded-b-none cursor-grab active:cursor-grabbing"
 				transition:scale={{ duration: 200 }}
 				use:showTooltip={{ position: 'top', message: 'Resize' }}
@@ -472,6 +479,7 @@
 		<div class="sm:w-36 flex flex-col gap-y-2">
 			<div class="flex gap-x-2">
 				<button
+					aria-label="Library"
 					class="button-border flex-1"
 					use:showTooltip={{ position: 'top', message: 'Library' }}
 					on:click={() => {
@@ -487,8 +495,13 @@
 
 				{#key JSON.stringify($savedColorSchemes).includes(JSON.stringify(currentColorScheme.map((color) => color.hex)))}
 					<button
-						class="button-border flex-1"
+						aria-label={JSON.stringify($savedColorSchemes).includes(
+							JSON.stringify(currentColorScheme.map((color) => color.hex))
+						)
+							? 'Delete Color Scheme'
+							: 'Save Color Scheme'}
 						disabled={isToggleSaveColorSchemeLoading}
+						class="button-border flex-1"
 						use:showTooltip={{
 							position: 'top',
 							message: JSON.stringify($savedColorSchemes).includes(
@@ -529,6 +542,7 @@
 			</button>
 
 			<button
+				aria-label="Generate"
 				class="button-border flex-1"
 				use:showTooltip={{ position: 'top', message: 'Generate' }}
 				on:click={() => {
@@ -542,6 +556,7 @@
 
 			<div class="flex gap-x-2">
 				<button
+					aria-label="Generate"
 					disabled={colorSchemes.length === 1 ||
 						currentColorSchemeIndex === colorSchemes.length - 1}
 					class="button-border flex-1"
@@ -552,6 +567,7 @@
 				</button>
 
 				<button
+					aria-label="Redo"
 					disabled={currentColorSchemeIndex === 0}
 					class="button-border flex-1"
 					use:showTooltip={{ position: 'top', message: 'Redo' }}
@@ -580,6 +596,7 @@
 							<div class="flex flex-col lg:flex-row justify-center items-center">
 								{#if currentColorScheme.length > MIN_COLOR_SCHEME_SIZE}
 									<button
+										aria-label="Remove"
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
@@ -596,6 +613,7 @@
 
 								{#key $savedColors.includes(color.hex)}
 									<button
+										aria-label={$savedColors.includes(color.hex) ? 'Delete Color' : 'Save Color'}
 										disabled={color.isToggleSaveLoading}
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
@@ -627,6 +645,7 @@
 
 							<div class="flex flex-col lg:flex-row">
 								<button
+									aria-label="Copy Hex"
 									class={contrastColor === '#000000'
 										? 'button-transparent-black'
 										: 'button-transparent-white'}
@@ -641,6 +660,7 @@
 
 								{#key color.isLocked}
 									<button
+										aria-label={color.isLocked ? 'Unlock' : 'Lock'}
 										class={contrastColor === '#000000'
 											? 'button-transparent-black'
 											: 'button-transparent-white'}
@@ -667,43 +687,57 @@
 							</div>
 
 							<div class="flex flex-col lg:flex-row">
-								<button
-									class={contrastColor === '#000000'
-										? 'button-transparent-black'
-										: 'button-transparent-white'}
-									use:showTooltip={{ position: 'top', message: 'Shift Left' }}
-									on:click={() => {
-										const index2 = index - 1 < 0 ? currentColorScheme.length - 1 : index - 1;
-										swapColors(index, index2);
-									}}
-								>
-									<div class="lg:hidden">
-										<ArrowUpIcon />
-									</div>
+								{#key menuWidth < parseInt(theme.screens.lg)}
+									<button
+										aria-label={menuWidth < parseInt(theme.screens.lg) ? 'Shift Up' : 'Shift Left'}
+										class={contrastColor === '#000000'
+											? 'button-transparent-black'
+											: 'button-transparent-white'}
+										use:showTooltip={{
+											position: 'top',
+											message: menuWidth < parseInt(theme.screens.lg) ? 'Shift Up' : 'Shift Left'
+										}}
+										on:click={() => {
+											const index2 = index - 1 < 0 ? currentColorScheme.length - 1 : index - 1;
+											swapColors(index, index2);
+										}}
+									>
+										<div class="lg:hidden">
+											<ArrowUpIcon />
+										</div>
 
-									<div class="hidden lg:block">
-										<ArrowLeftIcon />
-									</div>
-								</button>
+										<div class="hidden lg:block">
+											<ArrowLeftIcon />
+										</div>
+									</button>
+								{/key}
 
-								<button
-									class={contrastColor === '#000000'
-										? 'button-transparent-black'
-										: 'button-transparent-white'}
-									use:showTooltip={{ position: 'top', message: 'Shift Right' }}
-									on:click={() => {
-										const index2 = index + 1 > currentColorScheme.length - 1 ? 0 : index + 1;
-										swapColors(index, index2);
-									}}
-								>
-									<div class="lg:hidden">
-										<ArrowDownIcon />
-									</div>
+								{#key menuWidth < parseInt(theme.screens.lg)}
+									<button
+										aria-label={menuWidth < parseInt(theme.screens.lg)
+											? 'Shift Down'
+											: 'Shift Right'}
+										class={contrastColor === '#000000'
+											? 'button-transparent-black'
+											: 'button-transparent-white'}
+										use:showTooltip={{
+											position: 'top',
+											message: menuWidth < parseInt(theme.screens.lg) ? 'Shift Down' : 'Shift Right'
+										}}
+										on:click={() => {
+											const index2 = index + 1 > currentColorScheme.length - 1 ? 0 : index + 1;
+											swapColors(index, index2);
+										}}
+									>
+										<div class="lg:hidden">
+											<ArrowDownIcon />
+										</div>
 
-									<div class="hidden lg:block">
-										<ArrowRightIcon />
-									</div>
-								</button>
+										<div class="hidden lg:block">
+											<ArrowRightIcon />
+										</div>
+									</button>
+								{/key}
 							</div>
 						</div>
 
@@ -726,6 +760,7 @@
 
 			{#if currentColorScheme.length < MAX_COLOR_SCHEME_SIZE}
 				<button
+					aria-label="Add Color"
 					class="button-border mt-2 sm:mt-0 sm:ml-2"
 					in:addColorButtonTransition
 					out:addColorButtonTransition

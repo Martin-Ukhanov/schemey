@@ -161,6 +161,7 @@
 						</button>
 
 						<button
+							aria-label="Delete Color"
 							class="button-border border-l-0 rounded-l-none"
 							use:showTooltip={{ position: 'top', message: 'Delete Color' }}
 							on:click={async () => {
@@ -218,6 +219,7 @@
 						</div>
 
 						<button
+							aria-label="Delete Color Scheme"
 							class="button-border border-l-0 rounded-l-none"
 							use:showTooltip={{ position: 'top', message: 'Delete Color Scheme' }}
 							on:click={async () => {
