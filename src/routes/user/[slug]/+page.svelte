@@ -420,7 +420,7 @@
 						};
 					}}
 				>
-					<button type="submit" class="button-primary w-full">
+					<button type="submit" class="button-primary w-full" disabled={isSignOutLoading}>
 						<span class:opacity-0={isSignOutLoading}>Sign Out</span>
 
 						{#if isSignOutLoading}
@@ -460,7 +460,11 @@
 						};
 					}}
 				>
-					<button type="submit" class="button-primary w-full bg-red-500 border-red-500">
+					<button
+						type="submit"
+						class="button-primary w-full bg-red-500 border-red-500"
+						disabled={isUserDeletionRequestLoading}
+					>
 						<span class:opacity-0={isUserDeletionRequestLoading}>
 							{#if data.isUserDeletionRequested}
 								Cancel Account Deletion
