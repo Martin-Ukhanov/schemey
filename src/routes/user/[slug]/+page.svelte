@@ -132,7 +132,7 @@
 		>
 			{#if savedColors.length === 0}
 				<p
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center uppercase font-bold text-black"
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center uppercase font-bold"
 				>
 					No Colors Saved
 				</p>
@@ -182,7 +182,7 @@
 		>
 			{#if savedColorSchemes.length === 0}
 				<p
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center uppercase font-bold text-black"
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center uppercase font-bold"
 				>
 					No Color Schemes Saved
 				</p>
