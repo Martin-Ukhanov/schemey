@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { stringToSlug } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
@@ -9,8 +10,13 @@
 	import MenuIcon from './icons/MenuIcon.svelte';
 	import XIcon from './icons/XIcon.svelte';
 
-	let isMenuOpen = false;
 	let isLoading = false;
+	let isMenuOpen = false;
+
+	afterNavigate(() => {
+		isLoading = false;
+		isMenuOpen = false;
+	});
 
 	$: if (browser) {
 		document.body.classList.toggle('no-scroll', isMenuOpen);
@@ -51,7 +57,6 @@
 				<a
 					href={`/user/${stringToSlug(name)}`}
 					class="button-border max-w-80"
-					data-sveltekit-reload
 					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 					on:click={() => {
 						isLoading = true;
@@ -111,7 +116,6 @@
 				<a
 					href={`/user/${stringToSlug(name)}`}
 					class="button-border flex-1 overflow-hidden"
-					data-sveltekit-reload
 					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 					on:click={() => {
 						isLoading = true;
