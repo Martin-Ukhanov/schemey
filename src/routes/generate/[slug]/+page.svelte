@@ -234,7 +234,7 @@
 				const data = await response.json();
 
 				if (data.success) {
-					$savedColorSchemes = [...$savedColorSchemes, colorScheme];
+					$savedColorSchemes = [colorScheme, ...$savedColorSchemes];
 					addNotification('Color Scheme Saved', 'saved');
 				} else {
 					addNotification('Failed to Save Color Scheme', 'x');
@@ -312,7 +312,7 @@
 				const data = await response.json();
 
 				if (data.success) {
-					$savedColors = [...$savedColors, color];
+					$savedColors = [color, ...$savedColors];
 					addNotification(`${color} Saved`, 'saved', color);
 				} else {
 					addNotification(`Failed to Save ${color}`, 'x', color);
