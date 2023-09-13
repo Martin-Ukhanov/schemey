@@ -73,7 +73,7 @@ export const actions = {
 		}
 
 		if (currentPassword === newPassword) {
-			updatePasswordErrorMessage = 'New Password Should be Different from the Current Password';
+			updatePasswordErrorMessage = 'New Password Must be Different from Current Password';
 		}
 
 		if (currentPasswordErrorMessage || newPasswordErrorMessage || updatePasswordErrorMessage) {
