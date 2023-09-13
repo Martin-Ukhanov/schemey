@@ -6,13 +6,15 @@
 	@font-face {
 		font-family: 'Nunito';
 		font-weight: normal;
-		src: url('/fonts/Nunito-Normal.ttf');
+		font-display: block;
+		src: url('/fonts/Nunito-Normal.woff2') format('woff2');
 	}
 
 	@font-face {
 		font-family: 'Nunito';
 		font-weight: bold;
-		src: url('/fonts/Nunito-Bold.ttf');
+		font-display: block;
+		src: url('/fonts/Nunito-Bold.woff2') format('woff2');
 	}
 
 	* {
