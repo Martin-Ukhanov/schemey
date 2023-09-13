@@ -21,7 +21,6 @@ export const load = (async ({ locals: { getSession, supabase }, params, fetch })
 		const { error, count } = await supabase
 			.from('user_deletion_requests')
 			.select('*', { count: 'exact' });
-
 		const isUserDeletionRequested = !(error || count === 0);
 
 		return { savedColors, savedColorSchemes, isUserDeletionRequested };
