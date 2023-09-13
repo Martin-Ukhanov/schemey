@@ -30,18 +30,18 @@ export const load = (async ({ locals: { getSession, supabase }, params, fetch })
 export const actions = {
 	updateName: async ({ request, locals: { getSession, supabase } }) => {
 		const formData = await request.formData();
-		const newName = <string>formData.get('name');
+		const newName = (<string>formData.get('name')).trim();
 
 		const session = await getSession();
 
-		if (newName.trim() === session?.user.user_metadata.name) {
+		if (newName === session?.user.user_metadata.name) {
 			return fail(500, { newNameErrorMessage: 'New Name Must be Different from Current Name' });
 		} else if (newName.length < 4 || newName.length > 25) {
 			return fail(500, { newNameErrorMessage: 'Name Must be 4-25 Characters Long' });
 		}
 
 		const { error } = await supabase.auth.updateUser({
-			data: { name: newName.trim() }
+			data: { name: newName }
 		});
 
 		if (error) {

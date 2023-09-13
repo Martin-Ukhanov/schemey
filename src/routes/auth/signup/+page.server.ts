@@ -9,7 +9,7 @@ export const load = (() => {
 export const actions = {
 	default: async ({ url, request, locals: { supabase } }) => {
 		const formData = await request.formData();
-		const name = <string>formData.get('name');
+		const name = (<string>formData.get('name')).trim();
 		const email = <string>formData.get('email');
 		const password = <string>formData.get('password');
 
@@ -40,7 +40,7 @@ export const actions = {
 			options: {
 				data: {
 					password: password,
-					name: name.trim()
+					name: name
 				}
 			}
 		});
