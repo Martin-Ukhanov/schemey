@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="h-80 p-2 flex flex-col gap-y-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
+	class="relative h-80 p-2 flex flex-col gap-y-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
 >
 	{#if $savedColorSchemes.length === 0}
 		<p
