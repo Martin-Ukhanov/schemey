@@ -96,7 +96,7 @@
 	}
 </script>
 
-<nav class="h-44 sm:h-20 p-4 flex flex-col sm:flex-row justify-center gap-2 sm:[&>button]:w-48">
+<nav class="p-4 flex flex-col sm:flex-row justify-center gap-2 sm:[&>button]:w-48">
 	<button
 		class={activePage === 'colors' ? 'button-primary' : 'button-border'}
 		on:click={() => {
@@ -125,9 +125,7 @@
 	</button>
 </nav>
 
-<div
-	class="h-[calc(100dvh-theme(height.60))] sm:h-[calc(100dvh-theme(height.36))] min-h-64 p-4 pt-0 flex flex-col"
->
+<div class="flex-1 min-h-64 p-4 pt-0 flex flex-col">
 	{#if activePage === 'colors'}
 		<div
 			class="relative h-full p-2 grid grid-cols-[repeat(auto-fit,minmax(theme(width.40),1fr))] auto-rows-[theme(height.28)] gap-2 overflow-y-auto overscroll-none border-2 rounded-md border-black"
@@ -237,11 +235,7 @@
 			{/if}
 		</div>
 	{:else if activePage === 'account'}
-		{@const name = $page.data.session?.user.user_metadata.name}
-
-		<h1 class="mb-4 text-4xl text-center uppercase font-bold">{name}</h1>
-
-		<div class="w-full max-w-4xl pb-4 self-center flex flex-col gap-4">
+		<div class="w-full max-w-3xl pb-4 self-center flex flex-col gap-4">
 			<form
 				method="post"
 				action="?/updateName"
@@ -274,7 +268,14 @@
 				<label for="name" class="mb-4 flex flex-col">
 					<span class="mb-2 font-bold uppercase">Name</span>
 
-					<input type="text" name="name" id="name" value={name} autocomplete="name" class="input" />
+					<input
+						type="text"
+						name="name"
+						id="name"
+						value={$page.data.session?.user.user_metadata.name}
+						autocomplete="name"
+						class="input"
+					/>
 
 					{#if newNameErrorMessage || updateNameFailureData?.newNameErrorMessage}
 						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
