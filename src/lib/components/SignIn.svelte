@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { applyAction, enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
-	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
+	import { isSignInModalOpen, isSignUpModalOpen, isSendMagicLinkModalOpen } from '$lib/stores/auth';
 	import { savedColors, savedColorSchemes } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
@@ -125,7 +125,15 @@
 	</div>
 
 	<p class="mb-2 text-xs text-center uppercase">
-		Forgot your password? <button class="link text-xs uppercase">Reset</button>
+		Forgot your password? <button
+			class="link text-xs uppercase"
+			on:click={() => {
+				$isSignInModalOpen = false;
+				$isSendMagicLinkModalOpen = true;
+			}}
+		>
+			Send Magic Link
+		</button>
 	</p>
 
 	<p class="text-xs text-center uppercase">

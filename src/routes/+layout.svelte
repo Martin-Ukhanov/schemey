@@ -2,12 +2,13 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { invalidate, beforeNavigate } from '$app/navigation';
-	import { isSignInModalOpen, isSignUpModalOpen } from '$lib/stores/auth';
+	import { isSignInModalOpen, isSignUpModalOpen, isSendMagicLinkModalOpen } from '$lib/stores/auth';
 	import { clearNotifications } from '$lib/stores/notifications';
 	import Header from '$lib/components/Header.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import SignIn from '$lib/components/SignIn.svelte';
 	import SignUp from '$lib/components/SignUp.svelte';
+	import SendMagicLink from '$lib/components/SendMagicLink.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import Notifications from '$lib/components/Notifications.svelte';
 
@@ -46,6 +47,10 @@
 
 <Modal title="Sign Up" bind:isOpen={$isSignUpModalOpen}>
 	<SignUp />
+</Modal>
+
+<Modal title="Send Magic Link" bind:isOpen={$isSendMagicLinkModalOpen}>
+	<SendMagicLink />
 </Modal>
 
 <Tooltip />
