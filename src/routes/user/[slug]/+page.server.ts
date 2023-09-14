@@ -54,33 +54,23 @@ export const actions = {
 	},
 	updatePassword: async ({ request, locals: { getSession, supabase } }) => {
 		const formData = await request.formData();
-		const currentPassword = <string>formData.get('currentPassword');
 		const newPassword = <string>formData.get('newPassword');
+		const confirmPassword = <string>formData.get('confirmPassword');
 
-		let currentPasswordErrorMessage: string | undefined;
-		let newPasswordErrorMessage: string | undefined;
-		let updatePasswordErrorMessage: string | undefined;
+		if (newPassword !== confirmPassword) {
+			return fail(500, { errorMessage: 'Passwords Do Not Match' });
+		}
 
 		const session = await getSession();
 
-		if (session?.user.user_metadata.password !== currentPassword) {
-			currentPasswordErrorMessage = 'Invalid Password';
+		if (newPassword === session?.user.user_metadata.password) {
+			return fail(500, { errorMessage: 'New Password Must be Different from Current Password' });
 		}
 
 		if (!isValidPassword(newPassword)) {
-			newPasswordErrorMessage =
-				'Password Must be at Least 6 Characters and Contain Only Letters, Numbers, and !#$^*';
-		}
-
-		if (currentPassword === newPassword) {
-			updatePasswordErrorMessage = 'New Password Must be Different from Current Password';
-		}
-
-		if (currentPasswordErrorMessage || newPasswordErrorMessage || updatePasswordErrorMessage) {
 			return fail(500, {
-				currentPasswordErrorMessage,
-				newPasswordErrorMessage,
-				updatePasswordErrorMessage
+				errorMessage:
+					'Password Must be at Least 6 Characters and Contain Only Letters, Numbers, and !#$^*'
 			});
 		}
 
@@ -90,7 +80,7 @@ export const actions = {
 		});
 
 		if (error) {
-			return fail(500, { updatePasswordErrorMessage: error.message });
+			return fail(500, { errorMessage: error.message });
 		}
 
 		await supabase.auth.refreshSession();

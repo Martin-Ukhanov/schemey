@@ -39,8 +39,8 @@
 	let updateNameFailureData: Record<string, unknown> | undefined;
 	let isUpdateNameLoading = false;
 
-	let currentPasswordErrorMessage: string | undefined;
 	let newPasswordErrorMessage: string | undefined;
+	let confirmPasswordErrorMessage: string | undefined;
 	let updatePasswordFailureData: Record<string, unknown> | undefined;
 	let isUpdatePasswordLoading = false;
 
@@ -90,8 +90,8 @@
 		newNameErrorMessage = undefined;
 		updateNameFailureData = undefined;
 
-		currentPasswordErrorMessage = undefined;
 		newPasswordErrorMessage = undefined;
+		confirmPasswordErrorMessage = undefined;
 		updatePasswordFailureData = undefined;
 	}
 </script>
@@ -312,19 +312,19 @@
 				action="?/updatePassword"
 				class="flex-1 p-4 flex flex-col border-2 rounded-md border-black"
 				use:enhance={({ formData, cancel }) => {
-					currentPasswordErrorMessage = undefined;
 					newPasswordErrorMessage = undefined;
+					confirmPasswordErrorMessage = undefined;
 					updatePasswordFailureData = undefined;
 
-					if (!formData.get('currentPassword')) {
-						currentPasswordErrorMessage = 'Please Enter Your Password';
-					}
-
 					if (!formData.get('newPassword')) {
-						newPasswordErrorMessage = 'Please Enter a New Password';
+						newPasswordErrorMessage = 'Please Enter A New Password';
 					}
 
-					if (currentPasswordErrorMessage || newPasswordErrorMessage) {
+					if (!formData.get('confirmPassword')) {
+						confirmPasswordErrorMessage = 'Please Confirm New Password';
+					}
+
+					if (newPasswordErrorMessage || confirmPasswordErrorMessage) {
 						cancel();
 					} else {
 						isUpdatePasswordLoading = true;
@@ -344,26 +344,6 @@
 					};
 				}}
 			>
-				<label for="current-password" class="mb-4 flex flex-col">
-					<span class="mb-2 font-bold uppercase">Current Password</span>
-
-					<input
-						type="password"
-						name="currentPassword"
-						id="current-password"
-						placeholder="••••••"
-						autocomplete="current-password"
-						class="input"
-					/>
-
-					{#if currentPasswordErrorMessage || updatePasswordFailureData?.currentPasswordErrorMessage}
-						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-							{currentPasswordErrorMessage ??
-								updatePasswordFailureData?.currentPasswordErrorMessage}
-						</p>
-					{/if}
-				</label>
-
 				<label for="new-password" class="mb-4 flex flex-col">
 					<span class="mb-2 font-bold uppercase">New Password</span>
 
@@ -376,9 +356,28 @@
 						class="input"
 					/>
 
-					{#if newPasswordErrorMessage || updatePasswordFailureData?.newPasswordErrorMessage}
+					{#if newPasswordErrorMessage}
 						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-							{newPasswordErrorMessage ?? updatePasswordFailureData?.newPasswordErrorMessage}
+							{newPasswordErrorMessage}
+						</p>
+					{/if}
+				</label>
+
+				<label for="confirm-password" class="mb-4 flex flex-col">
+					<span class="mb-2 font-bold uppercase">Confirm Password</span>
+
+					<input
+						type="password"
+						name="confirmPassword"
+						id="confirm-password"
+						placeholder="••••••"
+						autocomplete="new-password"
+						class="input"
+					/>
+
+					{#if confirmPasswordErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{confirmPasswordErrorMessage}
 						</p>
 					{/if}
 				</label>
@@ -392,9 +391,9 @@
 						{/if}
 					</button>
 
-					{#if updatePasswordFailureData?.updatePasswordErrorMessage}
+					{#if updatePasswordFailureData?.errorMessage}
 						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
-							{updatePasswordFailureData.updatePasswordErrorMessage}
+							{updatePasswordFailureData.errorMessage}
 						</p>
 					{/if}
 				</div>
