@@ -22,7 +22,7 @@
 	<title>Schemey | Home</title>
 </svelte:head>
 
-<div class="absolute w-full h-full flex flex-col md:flex-row brightness-[0.3]">
+<div class="absolute w-full h-full flex flex-col md:flex-row brightness-50">
 	{#each colorScheme as color}
 		<div class="flex-1" style={`background-color: ${color}`} />
 	{/each}
