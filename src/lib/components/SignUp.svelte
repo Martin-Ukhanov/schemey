@@ -7,7 +7,7 @@
 	import Loader from '$lib/components/Loader.svelte';
 	import { fail } from '@sveltejs/kit';
 
-	export let redirect = $page.route.id ? $page.url.pathname : '/';
+	export let redirect = !$page.error ? $page.url.pathname : '/';
 
 	let nameErrorMessage: string | undefined;
 	let emailErrorMessage: string | undefined;
