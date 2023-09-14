@@ -5,7 +5,6 @@
 	import { isSignUpModalOpen, isSignInModalOpen } from '$lib/stores/auth';
 	import { addNotification } from '$lib/stores/notifications.js';
 	import Loader from '$lib/components/Loader.svelte';
-	import { fail } from '@sveltejs/kit';
 
 	export let redirect = !$page.error ? $page.url.pathname : '/';
 
