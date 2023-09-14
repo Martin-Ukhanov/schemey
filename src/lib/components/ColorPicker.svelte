@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
-	import { clamp, contrastingColor, validHex } from '$lib/utils';
+	import { contrastingColor } from '$lib/utils';
 	import { showTooltip } from '$lib/actions/showTooltip';
 	import { savedColors } from '$lib/stores/user';
 	import { isSignInModalOpen } from '$lib/stores/auth';
@@ -26,6 +26,14 @@
 	let [h, s, v] = Color(hex).hsv().array();
 
 	const [originH, originS, originV] = [h, s, v];
+
+	function clamp(num: number, min: number, max: number): number {
+		return Math.min(Math.max(num, min), max);
+	}
+
+	function isValidHex(hex: string): boolean {
+		return /^#?[0-9a-fA-F]{6}$/.test(hex);
+	}
 
 	function moveColorPickerCursorMouse(e: MouseEvent): void {
 		const setSaturationAndValue = (e: MouseEvent): void => {
@@ -76,7 +84,7 @@
 	}
 
 	function handleHexInput(): void {
-		if (validHex(hexInput)) {
+		if (isValidHex(hexInput)) {
 			if (hexInput[0] !== '#') {
 				hexInput = '#' + hexInput;
 			}
@@ -86,7 +94,7 @@
 	}
 
 	function hexInputUnfocus(): void {
-		if (!validHex(hexInput)) {
+		if (!isValidHex(hexInput)) {
 			hexInput = hex;
 		}
 	}

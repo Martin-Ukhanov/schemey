@@ -7,7 +7,7 @@
 	import { flip } from 'svelte/animate';
 	import { v4 as uuid } from 'uuid';
 	import theme from 'tailwindcss/defaultTheme';
-	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
+	import { stringToSlug, generateColorScheme, contrastingColor } from '$lib/utils';
 	import { savedColors, savedColorSchemes } from '$lib/stores/user';
 	import { isSignInModalOpen } from '$lib/stores/auth';
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
@@ -126,7 +126,7 @@
 	function goToColorScheme(): void {
 		goto(
 			'/generate/' +
-				colorSchemeToSlug(colorSchemes[currentColorSchemeIndex].map((color) => color.hex)),
+				stringToSlug(colorSchemes[currentColorSchemeIndex].map((color) => color.hex).join(' ')),
 			{ replaceState: true, noScroll: true }
 		);
 	}
