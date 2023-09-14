@@ -68,7 +68,7 @@
 	}
 
 	.button-primary {
-		@apply button bg-primary text-white border-primary;
+		@apply button bg-primary text-white fill-white border-primary;
 	}
 
 	.button-transparent-black {
