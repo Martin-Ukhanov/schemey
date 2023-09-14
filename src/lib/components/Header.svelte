@@ -39,7 +39,7 @@
 	>
 		<a
 			href="/"
-			class="button h-full text-3xl font-bold text-lime-500"
+			class="button h-full text-3xl font-bold text-primary"
 			use:showTooltip={{ position: 'bottom', message: 'Home' }}
 			on:click={() => {
 				isMenuOpen = false;

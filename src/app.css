@@ -68,7 +68,7 @@
 	}
 
 	.button-primary {
-		@apply button bg-lime-500 text-white border-lime-500;
+		@apply button bg-primary text-white border-primary;
 	}
 
 	.button-transparent-black {
@@ -80,7 +80,7 @@
 	}
 
 	.link {
-		@apply outline-none text-lime-500 font-bold underline hover:brightness-95 active:brightness-90 cursor-pointer;
+		@apply outline-none text-primary font-bold underline hover:brightness-95 active:brightness-90 cursor-pointer;
 	}
 
 	.input {

@@ -426,11 +426,11 @@
 						};
 					}}
 				>
-					<button type="submit" disabled={isSignOutLoading} class="button-primary w-full">
+					<button type="submit" disabled={isSignOutLoading} class="button-border w-full">
 						<span class:opacity-0={isSignOutLoading}>Sign Out</span>
 
 						{#if isSignOutLoading}
-							<Loader color="white" />
+							<Loader color="black" />
 						{/if}
 					</button>
 				</form>
