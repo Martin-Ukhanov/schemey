@@ -23,7 +23,7 @@
 	$: generatePath =
 		/^\/generate\//.test(<string>$page.route.id) && !$page.error ? $page.url.pathname : '/generate';
 
-	$: if (browser) {
+	$: if (browser && !/^\/generate\//.test(<string>$page.route.id)) {
 		document.body.classList.toggle('no-scroll', isMenuOpen);
 	}
 </script>
