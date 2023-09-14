@@ -54,22 +54,22 @@
 		</a>
 
 		<div class="hidden sm:flex gap-x-2">
+			<a
+				href={generatePath}
+				class="button-primary"
+				on:click={() => {
+					isGenerateLoading = true;
+				}}
+			>
+				<span class:opacity-0={isGenerateLoading}>Generate</span>
+
+				{#if isGenerateLoading}
+					<Loader color="white" />
+				{/if}
+			</a>
+
 			{#if $page.data.session}
 				{@const name = $page.data.session.user.user_metadata.name}
-
-				<a
-					href={generatePath}
-					class="button-primary"
-					on:click={() => {
-						isGenerateLoading = true;
-					}}
-				>
-					<span class:opacity-0={isGenerateLoading}>Generate</span>
-
-					{#if isGenerateLoading}
-						<Loader color="white" />
-					{/if}
-				</a>
 
 				<a
 					href={`/user/${stringToSlug(name)}`}
@@ -86,6 +86,8 @@
 					{/if}
 				</a>
 			{:else}
+				<div class="w-0.5 h-full bg-black" />
+
 				<button
 					class="button-border"
 					on:click={() => {
@@ -126,22 +128,22 @@
 		class:-translate-y-full={!isMenuOpen}
 	>
 		<nav class="flex justify-center gap-x-2">
+			<a
+				href={generatePath}
+				class="button-primary flex-1"
+				on:click={() => {
+					isGenerateLoading = true;
+				}}
+			>
+				<span class:opacity-0={isGenerateLoading}>Generate</span>
+
+				{#if isGenerateLoading}
+					<Loader color="white" />
+				{/if}
+			</a>
+
 			{#if $page.data.session}
 				{@const name = $page.data.session.user.user_metadata.name}
-
-				<a
-					href={generatePath}
-					class="button-primary flex-1"
-					on:click={() => {
-						isGenerateLoading = true;
-					}}
-				>
-					<span class:opacity-0={isGenerateLoading}>Generate</span>
-
-					{#if isGenerateLoading}
-						<Loader color="white" />
-					{/if}
-				</a>
 
 				<a
 					href={`/user/${stringToSlug(name)}`}
@@ -158,8 +160,10 @@
 					{/if}
 				</a>
 			{:else}
+				<div class="w-0.5 h-full bg-black" />
+
 				<button
-					class="button-border flex-1"
+					class="button-border flex-1 whitespace-nowrap"
 					on:click={() => {
 						isMenuOpen = false;
 						$isSignInModalOpen = true;
@@ -169,7 +173,7 @@
 				</button>
 
 				<button
-					class="button-primary flex-1"
+					class="button-primary flex-1 whitespace-nowrap"
 					on:click={() => {
 						isMenuOpen = false;
 						$isSignUpModalOpen = true;
