@@ -7,7 +7,6 @@
 	import { flip } from 'svelte/animate';
 	import { v4 as uuid } from 'uuid';
 	import theme from 'tailwindcss/defaultTheme';
-	import type { PageData } from './$types';
 	import { generateColorScheme, colorSchemeToSlug, contrastingColor } from '$lib/utils';
 	import { savedColors, savedColorSchemes } from '$lib/stores/user';
 	import { isSignInModalOpen } from '$lib/stores/auth';
@@ -40,7 +39,7 @@
 	import ColorSchemeLibrary from '$lib/components/ColorSchemeLibrary.svelte';
 	import Loader from '$lib/components/Loader.svelte';
 
-	export let data: PageData;
+	export let data;
 
 	type Color = {
 		id: string;
