@@ -10,13 +10,18 @@
 	import MenuIcon from './icons/MenuIcon.svelte';
 	import XIcon from './icons/XIcon.svelte';
 
-	let isLoading = false;
 	let isMenuOpen = false;
+	let isProfileLoading = false;
+	let isGenerateLoading = false;
 
 	afterNavigate(() => {
-		isLoading = false;
 		isMenuOpen = false;
+		isProfileLoading = false;
+		isGenerateLoading = false;
 	});
+
+	$: generatePath =
+		/^\/generate\//.test(<string>$page.route.id) && !$page.error ? $page.url.pathname : '/generate';
 
 	$: if (browser) {
 		document.body.classList.toggle('no-scroll', isMenuOpen);
@@ -52,19 +57,31 @@
 			{#if $page.data.session}
 				{@const name = $page.data.session.user.user_metadata.name}
 
-				<a href="/" class="button-primary">Upgrade</a>
+				<a
+					href={generatePath}
+					class="button-primary"
+					on:click={() => {
+						isGenerateLoading = true;
+					}}
+				>
+					<span class:opacity-0={isGenerateLoading}>Generate</span>
+
+					{#if isGenerateLoading}
+						<Loader color="white" />
+					{/if}
+				</a>
 
 				<a
 					href={`/user/${stringToSlug(name)}`}
 					class="button-border max-w-80"
 					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 					on:click={() => {
-						isLoading = true;
+						isProfileLoading = true;
 					}}
 				>
-					<span class="truncate" class:opacity-0={isLoading}>{name.toUpperCase()}</span>
+					<span class="truncate" class:opacity-0={isProfileLoading}>{name.toUpperCase()}</span>
 
-					{#if isLoading}
+					{#if isProfileLoading}
 						<Loader color="black" />
 					{/if}
 				</a>
@@ -112,19 +129,31 @@
 			{#if $page.data.session}
 				{@const name = $page.data.session.user.user_metadata.name}
 
-				<a href="/" class="button-primary flex-1">Upgrade</a>
+				<a
+					href={generatePath}
+					class="button-primary flex-1"
+					on:click={() => {
+						isGenerateLoading = true;
+					}}
+				>
+					<span class:opacity-0={isGenerateLoading}>Generate</span>
+
+					{#if isGenerateLoading}
+						<Loader color="white" />
+					{/if}
+				</a>
 
 				<a
 					href={`/user/${stringToSlug(name)}`}
 					class="button-border flex-1 overflow-hidden"
 					use:showTooltip={{ position: 'bottom', message: 'Profile' }}
 					on:click={() => {
-						isLoading = true;
+						isProfileLoading = true;
 					}}
 				>
-					<span class="truncate" class:opacity-0={isLoading}>{name.toUpperCase()}</span>
+					<span class="truncate" class:opacity-0={isProfileLoading}>{name.toUpperCase()}</span>
 
-					{#if isLoading}
+					{#if isProfileLoading}
 						<Loader color="black" />
 					{/if}
 				</a>
