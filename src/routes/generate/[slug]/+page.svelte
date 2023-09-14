@@ -51,7 +51,7 @@
 
 	const MIN_COLOR_SCHEME_SIZE = 2;
 	const MAX_COLOR_SCHEME_SIZE = 6;
-	const MAX_COLOR_SCHEMES_LENGTH = 100;
+	const MAX_COLOR_SCHEMES_HISTORY_LENGTH = 100;
 
 	$savedColors = $page.data.savedColors ?? [];
 	$savedColorSchemes = $page.data.savedColorSchemes ?? [];
@@ -356,8 +356,11 @@
 
 	$: currentColorScheme = colorSchemes[currentColorSchemeIndex];
 
-	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_LENGTH) {
-		colorSchemes.splice(MAX_COLOR_SCHEMES_LENGTH, colorSchemes.length - MAX_COLOR_SCHEMES_LENGTH);
+	$: if (colorSchemes.length > MAX_COLOR_SCHEMES_HISTORY_LENGTH) {
+		colorSchemes.splice(
+			MAX_COLOR_SCHEMES_HISTORY_LENGTH,
+			colorSchemes.length - MAX_COLOR_SCHEMES_HISTORY_LENGTH
+		);
 	}
 
 	$: if (colorPickerColor) {
