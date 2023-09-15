@@ -245,7 +245,7 @@
 			{/if}
 		</div>
 	{:else if activePage === 'account'}
-		<div class="w-full max-w-3xl pb-4 self-center flex flex-col gap-4">
+		<div class="w-full max-w-4xl pb-4 self-center flex flex-col gap-4">
 			<form
 				method="post"
 				action="?/updateName"
