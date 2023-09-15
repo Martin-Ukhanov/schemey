@@ -89,7 +89,7 @@
 					{/if}
 				</a>
 			{:else}
-				<div class="w-0.5 bg-black" />
+				<div class="w-0.5 rounded-md bg-black" />
 
 				<button
 					class="button-border"
@@ -163,7 +163,7 @@
 					{/if}
 				</a>
 			{:else}
-				<div class="w-0.5 bg-black" />
+				<div class="w-0.5 rounded-md bg-black" />
 
 				<button
 					class="button-border flex-1 whitespace-nowrap"
