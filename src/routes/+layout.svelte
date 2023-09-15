@@ -1,9 +1,10 @@
 <script lang="ts">
 	import '../app.css';
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { invalidate, beforeNavigate } from '$app/navigation';
 	import { isSignInModalOpen, isSignUpModalOpen, isSendMagicLinkModalOpen } from '$lib/stores/auth';
-	import { clearNotifications } from '$lib/stores/notifications';
+	import { addNotification, clearNotifications } from '$lib/stores/notifications';
 	import Header from '$lib/components/Header.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import SignIn from '$lib/components/SignIn.svelte';
@@ -22,6 +23,12 @@
 				invalidate('supabase:auth');
 			}
 		});
+
+		if ($page.url.searchParams.has('signedIn')) {
+			addNotification('Successfully Signed In', 'check');
+		} else if ($page.url.searchParams.has('updatedEmail')) {
+			addNotification('Successfully Updated Email', 'check');
+		}
 
 		return () => data.subscription.unsubscribe();
 	});
