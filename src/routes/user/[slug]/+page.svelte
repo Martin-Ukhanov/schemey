@@ -39,6 +39,10 @@
 	let updateNameFailureData: Record<string, unknown> | undefined;
 	let isUpdateNameLoading = false;
 
+	let newEmailErrorMessage: string | undefined;
+	let updateEmailFailureData: Record<string, unknown> | undefined;
+	let isUpdateEmailLoading = false;
+
 	let newPasswordErrorMessage: string | undefined;
 	let confirmPasswordErrorMessage: string | undefined;
 	let updatePasswordFailureData: Record<string, unknown> | undefined;
@@ -302,6 +306,70 @@
 					{#if updateNameFailureData?.updateNameErrorMessage}
 						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
 							{updateNameFailureData.updateNameErrorMessage}
+						</p>
+					{/if}
+				</div>
+			</form>
+
+			<form
+				method="post"
+				action="?/updateEmail"
+				class="flex-1 p-4 flex flex-col border-2 rounded-md border-black"
+				use:enhance={({ formData, cancel }) => {
+					newEmailErrorMessage = undefined;
+					updateEmailFailureData = undefined;
+
+					if (!formData.get('email')) {
+						newNameErrorMessage = 'Please Enter a New Email';
+						cancel();
+					} else {
+						isUpdateEmailLoading = true;
+					}
+
+					return async ({ update, result }) => {
+						await update();
+
+						isUpdateEmailLoading = false;
+
+						if (result.type === 'success') {
+							addNotification('Confirmation Link Sent to New Email', 'check');
+						} else if (result.type === 'failure') {
+							updateEmailFailureData = result.data;
+						}
+					};
+				}}
+			>
+				<label for="email" class="mb-4 flex flex-col">
+					<span class="mb-2 font-bold uppercase">Email</span>
+
+					<input
+						type="text"
+						name="email"
+						id="email"
+						value={$page.data.session?.user.new_email ?? $page.data.session?.user.email}
+						autocomplete="email"
+						class="input"
+					/>
+
+					{#if newEmailErrorMessage || updateEmailFailureData?.newEmailErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{newEmailErrorMessage ?? updateEmailFailureData?.newEmailErrorMessage}
+						</p>
+					{/if}
+				</label>
+
+				<div class="flex flex-col">
+					<button type="submit" disabled={isUpdateEmailLoading} class="button-primary">
+						<span class:opacity-0={isUpdateEmailLoading}>Update Email</span>
+
+						{#if isUpdateEmailLoading}
+							<Loader color="white" />
+						{/if}
+					</button>
+
+					{#if updateEmailFailureData?.updateEmailErrorMessage}
+						<p class="error mt-2" transition:slide={{ duration: 200, axis: 'y' }}>
+							{updateEmailFailureData.updateEmailErrorMessage}
 						</p>
 					{/if}
 				</div>

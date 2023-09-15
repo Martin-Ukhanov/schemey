@@ -1,5 +1,5 @@
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
-import { isValidPassword, stringToSlug } from '$lib/utils';
+import { stringToSlug, isValidEmail, isValidPassword } from '$lib/utils';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals: { getSession, supabase }, params, fetch }) => {
@@ -51,6 +51,31 @@ export const actions = {
 		await supabase.auth.refreshSession();
 
 		throw redirect(303, `/user/${stringToSlug(newName)}`);
+	},
+	updateEmail: async ({ request, locals: { getSession, supabase }, url }) => {
+		const formData = await request.formData();
+		const newEmail = (<string>formData.get('email')).trim();
+
+		const session = await getSession();
+
+		if (newEmail === session?.user.email) {
+			return fail(500, {
+				newEmailErrorMessage: 'New Email Must be Different from Current Email'
+			});
+		} else if (!isValidEmail(newEmail)) {
+			return fail(500, { newEmailErrorMessage: 'Please Enter a Valid Email' });
+		}
+
+		const { error } = await supabase.auth.updateUser(
+			{ email: newEmail },
+			{ emailRedirectTo: `${url.origin}?updatedEmail=true` }
+		);
+
+		if (error) {
+			return fail(500, { updateEmailErrorMessage: error.message });
+		}
+
+		await supabase.auth.refreshSession();
 	},
 	updatePassword: async ({ request, locals: { getSession, supabase } }) => {
 		const formData = await request.formData();
