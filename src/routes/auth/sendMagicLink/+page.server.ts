@@ -15,9 +15,8 @@ export const actions = {
 			return fail(500, { emailErrorMessage: 'Please Enter a Valid Email' });
 		}
 
-		const { error } = await supabase.auth.signInWithOtp({
-			email,
-			options: { emailRedirectTo: `${url.origin}?signedIn=true` }
+		const { error } = await supabase.auth.resetPasswordForEmail(email, {
+			redirectTo: `${url.origin}?signedIn=true`
 		});
 
 		if (error) {
