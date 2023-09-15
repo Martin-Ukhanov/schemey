@@ -10,7 +10,7 @@ export const actions = {
 	default: async ({ url, request, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const name = (<string>formData.get('name')).trim();
-		const email = <string>formData.get('email');
+		const email = (<string>formData.get('email')).trim();
 		const password = <string>formData.get('password');
 
 		let nameErrorMessage: string | undefined;
