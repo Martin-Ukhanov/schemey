@@ -3,6 +3,8 @@
 	import { colorSpacePresets } from '$lib/stores/colorSpacePresets';
 	import { onMount } from 'svelte';
 	import Loader from '$lib/components/Loader.svelte';
+	import GitHubIcon from '$lib/components/icons/GitHubIcon.svelte';
+	import { showTooltip } from '$lib/actions/showTooltip';
 
 	let colorScheme = generateColorScheme(6, $colorSpacePresets['all']);
 	let isLoading = false;
@@ -47,5 +49,16 @@
 		{#if isLoading}
 			<Loader color="white" />
 		{/if}
+	</a>
+
+	<a
+		href="https://github.com/Martin-Ukhanov/schemey"
+		target="_blank"
+		rel="noopener noreferrer"
+		aria-label="GitHub Repository"
+		class="absolute bottom-4 fill-white hover:fill-primary active:fill-primary active:brightness-90"
+		use:showTooltip={{ position: 'top', message: 'GitHub Repository' }}
+	>
+		<GitHubIcon />
 	</a>
 </div>
