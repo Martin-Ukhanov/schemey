@@ -14,16 +14,19 @@
 	let isProfileLoading = false;
 	let isGenerateLoading = false;
 
+	function isGenerating() {
+		return /^\/generate\//.test(<string>$page.route.id);
+	}
+
 	afterNavigate(() => {
 		isMenuOpen = false;
 		isProfileLoading = false;
 		isGenerateLoading = false;
 	});
 
-	$: generatePath =
-		/^\/generate\//.test(<string>$page.route.id) && !$page.error ? $page.url.pathname : '/generate';
+	$: generatePath = isGenerating() && !$page.error ? $page.url.pathname : '/generate';
 
-	$: if (browser && !/^\/generate\//.test(<string>$page.route.id)) {
+	$: if (browser && !isGenerating) {
 		document.body.classList.toggle('no-scroll', isMenuOpen);
 	}
 </script>
