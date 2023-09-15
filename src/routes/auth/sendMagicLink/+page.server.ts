@@ -16,7 +16,7 @@ export const actions = {
 		}
 
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: `${url.origin}?signedIn=true`
+			redirectTo: `${url.origin}/auth/callback`
 		});
 
 		if (error) {

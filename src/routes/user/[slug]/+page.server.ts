@@ -68,7 +68,7 @@ export const actions = {
 
 		const { error } = await supabase.auth.updateUser(
 			{ email: newEmail },
-			{ emailRedirectTo: `${url.origin}?updatedEmail=true` }
+			{ emailRedirectTo: `${url.origin}/auth/callback` }
 		);
 
 		if (error) {
