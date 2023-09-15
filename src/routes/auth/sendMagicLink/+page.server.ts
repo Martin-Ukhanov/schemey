@@ -7,7 +7,7 @@ export const load = (() => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, locals: { supabase } }) => {
+	default: async ({ request, locals: { supabase }, url }) => {
 		const formData = await request.formData();
 		const email = (<string>formData.get('email')).trim();
 
@@ -15,7 +15,10 @@ export const actions = {
 			return fail(500, { emailErrorMessage: 'Please Enter a Valid Email' });
 		}
 
-		const { error } = await supabase.auth.signInWithOtp({ email });
+		const { error } = await supabase.auth.signInWithOtp({
+			email,
+			options: { emailRedirectTo: `${url.origin}?signedIn=true` }
+		});
 
 		if (error) {
 			return fail(500, { resetPasswordErrorMessage: error.message });
