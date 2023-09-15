@@ -36,7 +36,7 @@ export function showTooltip(
 			: getScrollableParents(<HTMLElement>element.parentNode, scrollableParents);
 	}
 
-	function hide(): void {
+	function hide() {
 		clearTimeout(timeout);
 		tooltip.update((value) => {
 			return { ...value, isVisible: false };
@@ -47,7 +47,7 @@ export function showTooltip(
 		window.removeEventListener('scroll', hide);
 	}
 
-	function onMouseEnter(): void {
+	function onMouseEnter() {
 		if (!get(isResizingMenu)) {
 			timeout = setTimeout(() => {
 				const rect = element.getBoundingClientRect();

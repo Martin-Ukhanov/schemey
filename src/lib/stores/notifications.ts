@@ -12,7 +12,7 @@ type Notification = {
 
 export const notifications = writable(<Notification[]>[]);
 
-export function addNotification(message: string, icon: Icons, color = '#000000'): void {
+export function addNotification(message: string, icon: Icons, color = '#000000') {
 	const id = uuid();
 
 	notifications.update((values) => {
@@ -31,10 +31,10 @@ export function addNotification(message: string, icon: Icons, color = '#000000')
 	}, 3000);
 }
 
-export function dismissNotification(id: string): void {
+export function dismissNotification(id: string) {
 	notifications.update((values) => values.filter((value) => value.id !== id));
 }
 
-export function clearNotifications(): void {
+export function clearNotifications() {
 	notifications.set([]);
 }

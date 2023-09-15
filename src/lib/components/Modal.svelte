@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade, fly, scale, type TransitionConfig } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import theme from 'tailwindcss/defaultTheme';
 	import XIcon from './icons/XIcon.svelte';
@@ -12,7 +12,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	function modalTransition(element: Element): TransitionConfig {
+	function modalTransition(element: Element) {
 		return windowWidth < parseInt(theme.screens.sm)
 			? fly(element, { y: modalHeight, duration: 200 })
 			: scale(element, { duration: 200 });

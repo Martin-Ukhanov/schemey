@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { scale, slide, type TransitionConfig } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { v4 as uuid } from 'uuid';
 	import theme from 'tailwindcss/defaultTheme';
@@ -79,7 +79,7 @@
 	let colorPickerColor: Color;
 	let isColorPickerModalOpen = false;
 
-	function resizeMenuMouse(e: MouseEvent): void {
+	function resizeMenuMouse(e: MouseEvent) {
 		$isResizingMenu = true;
 		let mouseY = e.y;
 
@@ -102,7 +102,7 @@
 		}
 	}
 
-	function resizeMenuTouch(e: TouchEvent): void {
+	function resizeMenuTouch(e: TouchEvent) {
 		$isResizingMenu = true;
 		let touchY = e.touches[0].clientY;
 
@@ -123,7 +123,7 @@
 		}
 	}
 
-	function goToColorScheme(): void {
+	function goToColorScheme() {
 		goto(
 			'/generate/' +
 				stringToSlug(colorSchemes[currentColorSchemeIndex].map((color) => color.hex).join(' ')),
@@ -131,7 +131,7 @@
 		);
 	}
 
-	function newColorScheme(): Color[] {
+	function newColorScheme() {
 		const newColorScheme = structuredClone(currentColorScheme);
 		const lockedColorsCount = currentColorScheme.filter((color) => color.isLocked).length;
 		const newColorsCount = currentColorScheme.length - lockedColorsCount;
@@ -151,7 +151,7 @@
 		return newColorScheme;
 	}
 
-	function existingColorScheme(colorScheme: string[]): Color[] {
+	function existingColorScheme(colorScheme: string[]) {
 		const newColorScheme = structuredClone(currentColorScheme);
 		const colorCountDifference = newColorScheme.length - colorScheme.length;
 
@@ -177,7 +177,7 @@
 		return newColorScheme;
 	}
 
-	function addColorScheme(colorScheme: Color[]): void {
+	function addColorScheme(colorScheme: Color[]) {
 		colorSchemes.splice(0, currentColorSchemeIndex);
 		colorSchemes = [colorScheme, ...colorSchemes];
 		currentColorSchemeIndex = 0;
@@ -186,21 +186,21 @@
 		goToColorScheme();
 	}
 
-	function undoColorScheme(): void {
+	function undoColorScheme() {
 		if (currentColorSchemeIndex < colorSchemes.length - 1) {
 			currentColorSchemeIndex++;
 			goToColorScheme();
 		}
 	}
 
-	function redoColorScheme(): void {
+	function redoColorScheme() {
 		if (currentColorSchemeIndex > 0) {
 			currentColorSchemeIndex--;
 			goToColorScheme();
 		}
 	}
 
-	async function toggleSaveColorScheme(colorScheme: string[]): Promise<void> {
+	async function toggleSaveColorScheme(colorScheme: string[]) {
 		if ($page.data.session) {
 			if (JSON.stringify($savedColorSchemes).includes(JSON.stringify(colorScheme))) {
 				// Delete color scheme
@@ -244,7 +244,7 @@
 		}
 	}
 
-	function addColor(): void {
+	function addColor() {
 		if (currentColorScheme.length < MAX_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.push(
@@ -257,7 +257,7 @@
 		}
 	}
 
-	function removeColor(index: number): void {
+	function removeColor(index: number) {
 		if (currentColorScheme.length > MIN_COLOR_SCHEME_SIZE) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			newColorScheme.splice(index, 1);
@@ -266,7 +266,7 @@
 		}
 	}
 
-	function swapColors(index1: number, index2: number): void {
+	function swapColors(index1: number, index2: number) {
 		const newColorScheme = structuredClone(currentColorScheme);
 		[newColorScheme[index1], newColorScheme[index2]] = [
 			newColorScheme[index2],
@@ -276,11 +276,11 @@
 		addColorScheme(newColorScheme);
 	}
 
-	function toggleLockedColor(index: number): void {
+	function toggleLockedColor(index: number) {
 		currentColorScheme[index].isLocked = !currentColorScheme[index].isLocked;
 	}
 
-	async function toggleSaveColor(color: string): Promise<void> {
+	async function toggleSaveColor(color: string) {
 		if ($page.data.session) {
 			if ($savedColors.includes(color)) {
 				// Delete color
@@ -322,7 +322,7 @@
 		}
 	}
 
-	function colorPicker(): void {
+	function colorPicker() {
 		if (colorPickerColor.hex !== originalColorPickerHex) {
 			const newColorScheme = structuredClone(currentColorScheme);
 			colorPickerColor.hex = originalColorPickerHex;
@@ -331,14 +331,14 @@
 		}
 	}
 
-	function removeColorButtonTransition(element: Element): TransitionConfig {
+	function removeColorButtonTransition(element: Element) {
 		return slide(element, {
 			axis: menuWidth < parseInt(theme.screens.lg) ? 'y' : 'x',
 			duration: 200
 		});
 	}
 
-	function addColorButtonTransition(element: Element): TransitionConfig {
+	function addColorButtonTransition(element: Element) {
 		return slide(element, {
 			axis: menuWidth < parseInt(theme.screens.sm) ? 'y' : 'x',
 			duration: 200

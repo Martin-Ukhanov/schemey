@@ -47,7 +47,7 @@
 	let isSignOutLoading = false;
 	let isUserDeletionRequestLoading = false;
 
-	async function deleteColor(color: string): Promise<void> {
+	async function deleteColor(color: string) {
 		const response = await fetch('/api/colors', {
 			method: 'DELETE',
 			body: JSON.stringify({ color: color }),
@@ -65,7 +65,7 @@
 		}
 	}
 
-	async function deleteColorScheme(colorScheme: string[]): Promise<void> {
+	async function deleteColorScheme(colorScheme: string[]) {
 		const response = await fetch('/api/colorSchemes', {
 			method: 'DELETE',
 			body: JSON.stringify({ colorScheme: colorScheme }),

@@ -27,15 +27,15 @@
 
 	const [originH, originS, originV] = [h, s, v];
 
-	function clamp(num: number, min: number, max: number): number {
+	function clamp(num: number, min: number, max: number) {
 		return Math.min(Math.max(num, min), max);
 	}
 
-	function isValidHex(hex: string): boolean {
+	function isValidHex(hex: string) {
 		return /^#?[0-9a-fA-F]{6}$/.test(hex);
 	}
 
-	function moveColorPickerCursorMouse(e: MouseEvent): void {
+	function moveColorPickerCursorMouse(e: MouseEvent) {
 		const setSaturationAndValue = (e: MouseEvent): void => {
 			const rect = colorPickerElement.getBoundingClientRect();
 			s = clamp(((e.clientX - rect.left) / colorPickerWidth) * 100, 0, 100);
@@ -60,7 +60,7 @@
 		}
 	}
 
-	function moveColorPickerCursorTouch(e: TouchEvent): void {
+	function moveColorPickerCursorTouch(e: TouchEvent) {
 		const setSaturationAndValue = (e: TouchEvent): void => {
 			const rect = colorPickerElement.getBoundingClientRect();
 			s = clamp(((e.touches[0].clientX - rect.left) / colorPickerWidth) * 100, 0, 100);
@@ -83,7 +83,7 @@
 		}
 	}
 
-	function handleHexInput(): void {
+	function handleHexInput() {
 		if (isValidHex(hexInput)) {
 			if (hexInput[0] !== '#') {
 				hexInput = '#' + hexInput;
@@ -93,7 +93,7 @@
 		}
 	}
 
-	function hexInputUnfocus(): void {
+	function hexInputUnfocus() {
 		if (!isValidHex(hexInput)) {
 			hexInput = hex;
 		}
