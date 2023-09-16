@@ -21,7 +21,10 @@ export const actions = {
 		});
 
 		if (error) {
-			return fail(500, { resetPasswordErrorMessage: error.message });
+			return fail(500, {
+				resetPasswordErrorMessage:
+					error.name === 'AuthApiError' ? 'Account Does Not Exist' : error.message
+			});
 		}
 	}
 } satisfies Actions;
