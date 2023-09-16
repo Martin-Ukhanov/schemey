@@ -33,8 +33,8 @@
 <div class="flex-1 p-4 flex flex-col justify-center items-center z-10">
 	<h1 class="mb-4 text-center text-5xl sm:text-7xl uppercase font-bold text-primary">Schemey</h1>
 
-	<p class="mb-6 text-center text-lg sm:text-xl uppercase text-white">
-		Create beautiful color schemes with the click of a button
+	<p class="mb-6 text-center text-lg sm:text-2xl uppercase font-bold text-white">
+		Create beautiful color schemes<br />with the click of a button
 	</p>
 
 	<a
