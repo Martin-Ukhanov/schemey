@@ -7,7 +7,7 @@ export const load = (() => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, locals: { supabase }, url }) => {
+	default: async ({ request, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const email = (<string>formData.get('email')).trim();
 
@@ -15,9 +15,7 @@ export const actions = {
 			return fail(500, { emailErrorMessage: 'Please Enter a Valid Email' });
 		}
 
-		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: `${url.origin}/auth/callback`
-		});
+		const { error } = await supabase.auth.resetPasswordForEmail(email);
 
 		if (error) {
 			return fail(500, { resetPasswordErrorMessage: error.message });

@@ -52,7 +52,7 @@ export const actions = {
 
 		throw redirect(303, `/user/${stringToSlug(newName)}`);
 	},
-	updateEmail: async ({ request, locals: { getSession, supabase }, url }) => {
+	updateEmail: async ({ request, locals: { getSession, supabase } }) => {
 		const formData = await request.formData();
 		const newEmail = (<string>formData.get('email')).trim();
 
@@ -66,10 +66,7 @@ export const actions = {
 			return fail(500, { newEmailErrorMessage: 'Please Enter a Valid Email' });
 		}
 
-		const { error } = await supabase.auth.updateUser(
-			{ email: newEmail },
-			{ emailRedirectTo: `${url.origin}/auth/callback` }
-		);
+		const { error } = await supabase.auth.updateUser({ email: newEmail });
 
 		if (error) {
 			return fail(500, { updateEmailErrorMessage: error.message });
