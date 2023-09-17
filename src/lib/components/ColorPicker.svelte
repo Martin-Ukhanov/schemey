@@ -219,7 +219,7 @@
 				type="text"
 				name="hex"
 				placeholder="#000000"
-				class="input flex-1 text-lg text-center font-bold uppercase !brightness-100"
+				class="input w-full text-lg text-center font-bold uppercase !brightness-100"
 				class:placeholder-transparent-white={contrastColor === '#ffffff'}
 				class:placeholder-transparent-black={contrastColor === '#000000'}
 				style={`background-color: ${hex}; color: ${contrastColor};`}
